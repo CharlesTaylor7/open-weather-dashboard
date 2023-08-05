@@ -1,5 +1,5 @@
-import hello from "@/hello"
+import hello from '@/hello';
 
-test("hello world", () => {
-  expect(hello()).toEqual("Hello, World!");
-})
+test('hello world', () => {
+  expect(hello()).toEqual('Hello, World!');
+});
