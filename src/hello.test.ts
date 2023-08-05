@@ -1,3 +1,5 @@
+import hello from "@/hello"
+
 test("hello world", () => {
-    expect(2 + 2).toEqual(4);
-  })
+  expect(hello()).toEqual("Hello, World!");
+})

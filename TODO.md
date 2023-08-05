@@ -1,5 +1,5 @@
+- [x] Setup Jest
+- [x] Setup Typescript path aliases
 - [ ] Setup Tailwind
-- [ ] Setup Typescript path aliases
-- [ ] Setup Jest
 - [ ] Setup OpenWeather API account
 - [ ] Make some test queries to the Geocoding & weather apis
