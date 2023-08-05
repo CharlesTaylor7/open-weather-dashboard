@@ -7,6 +7,7 @@ on:
       - .github/**
       - src/**
       - index.html
+      - vite.config.ts
 
 jobs:
   check-format:
