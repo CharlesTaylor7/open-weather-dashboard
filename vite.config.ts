@@ -6,6 +6,9 @@ import react from '@vitejs/plugin-react-swc';
 export default defineConfig({
   plugins: [react()],
   base: '/open-weather-dashboard/',
+  server: {
+    port: process.env.PORT,
+  },
   esbuild: {
     keepNames: true,
   },

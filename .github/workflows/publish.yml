@@ -79,7 +79,7 @@ jobs:
       - name: Build
         run: |
           yarn
-          #TODO: yarn tailwind
+          yarn tailwind
           yarn build
 
       - name: Deploy
