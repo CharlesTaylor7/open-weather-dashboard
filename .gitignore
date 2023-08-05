@@ -12,7 +12,10 @@ yarn-error.log
 styles/tailwind.css
 
 # Jest Coverage
-coverage/
+/coverage/
 
 # Mac OS
 .DS_Store
+
+# Environment
+.env

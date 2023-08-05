@@ -12,6 +12,9 @@ export default defineConfig({
   esbuild: {
     keepNames: true,
   },
+  define: {
+    OPEN_WEATHER_API_KEY: '"' + process.env.OPEN_WEATHER_API_KEY + '"',
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
