@@ -1,27 +1,19 @@
-# React + TypeScript + Vite
+# Open Weather Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a dashboard that uses Open Weather API to display weather conditions for nearly any city in the world.
 
-Currently, two official plugins are available:
+## Implementation Notes
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Import style
+Javascript doesn't provide absolute imports by default.
 
-## Expanding the ESLint configuration
+A lot of the code in the wild imports code relatively:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+```ts
+// In file src/bar.ts
+import foo from './foo'
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+This code works today, but if I want to move logic between files, the relative imports may become incorrect. You can make refactoring less of headache by using absolute imports everywhere.
+
+So the project sets up a path alias, so that any prefix of `@/foo` resolves to an absolute import of `src/foo.ts`.
