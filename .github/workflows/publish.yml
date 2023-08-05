@@ -62,12 +62,14 @@ jobs:
 
   deploy:
     name: Deploy to Github Pages
-    runs-on: ubuntu-latest
+    permissions:
+      pages: write
     needs:
       - check-format
       #TODO: - test
       - lint
       - typecheck
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -85,5 +87,3 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: dist
-          permissions:
-            pages: write
