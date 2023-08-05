@@ -1,5 +1,5 @@
 import { pathsToModuleNameMapper } from 'ts-jest';
-import { compilerOptions } from './tsconfig.node.json';
+import { compilerOptions } from './tsconfig.json';
 
 export default {
   roots: ['<rootDir>'],
