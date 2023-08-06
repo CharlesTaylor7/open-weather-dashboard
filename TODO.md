@@ -7,18 +7,19 @@
 - [x] Use local storage to cache OpenWeather queries
 - [x] Check if open weather calls can be made without violating google chromes' CORS detection
 - [x] Render my first apex chart
-- [ ] Learn relevant options for apex chart
+- [x] Learn relevant options for apex chart
 - [ ] Build ApexChart React component
-- [ ] Move index.html to public/
-- [ ] DDDify the app
-
-- [ ] Handle api errors
-- [ ] Validate latitude & longitude before making api calls
 
 
 ## Mprocs
 - [ ] Use nodemon or something for linting & formatting
 - [ ] Fix Jest code coverage command
+
+## Eventual
+- [ ] Move index.html to public/
+- [ ] Handle api errors
+- [ ] Validate latitude & longitude before making api calls
+- [ ] DDDify the app
 
 ## Not Doing
 - [ ] Implement simple express server to avoid leaking api key

@@ -1,32 +1,24 @@
 import { useRef, useCallback, useState, useEffect } from 'react';
 import { Forecast, forecast } from '@/api/weather';
-import { CityTemperatureChart } from '@/city-temperature-chart';
+import TimeSeriesLineChart from '@/components/TimeSeriesLineChart';
 
 type GeoCoordinates = {
   lat: number;
   lon: number;
 };
 
-export default function App() {
-  const apexChartDiv = useRef<HTMLDivElement>(null);
-  const apexChartInstance = useRef<CityTemperatureChart | null>(null);
+type TimeSeriesData = Record<string, Array<{ x: number; y: number }>>;
 
-  useEffect(() => {
-    if (apexChartInstance.current === null) {
-      const chart = new CityTemperatureChart(apexChartDiv.current!);
-      chart.render();
-      apexChartInstance.current = chart;
-    }
-  }, []);
+export default function App() {
+  const [timeSeriesData, setTimeSeriesData] = useState<TimeSeriesData>({});
 
   const onForecast = useCallback((coords: GeoCoordinates, name: string) => {
-    forecast(coords).then(
-      (hourly) => apexChartInstance.current?.appendCityForecast(name, hourly),
+    forecast(coords).then((hourly) =>
+      setTimeSeriesData((d) => ({
+        ...d,
+        [name]: hourly.map((h) => ({ x: h.dt, y: h.temp })),
+      })),
     );
-  }, []);
-
-  const onClear = useCallback(() => {
-    apexChartInstance.current?.clear();
   }, []);
 
   return (
@@ -52,10 +44,12 @@ export default function App() {
         Forecast C
       </button>
 
-      <button className="bg-green-200 w-[200px] mt-5" onClick={onClear}>
-        Clear
-      </button>
-      <div ref={apexChartDiv} />
+      <TimeSeriesLineChart
+        data={Object.entries(timeSeriesData).map(([name, data]) => ({
+          name,
+          data,
+        }))}
+      />
     </div>
   );
 }
