@@ -4,17 +4,19 @@
 - [x] Setup OpenWeather API account
 - [x] Geocoding api call 
 - [x] Forecast API call 
-- [ ] Use local storage to cache OpenWeather queries
+- [x] Use local storage to cache OpenWeather queries
+- [x] Check if open weather calls can be made without violating google chromes' CORS detection
 - [ ] Learn apex chart
 - [ ] Move index.html to public/
-- [ ] Implement simple express server to avoid leaking api key
-- [ ] Reimplement deployments on fly.io because of the need for a server
-- [ ] Check if open weather calls can be made without violating google chromes' CORS detection
 
 
 ## Mprocs
 - [ ] Use nodemon or something for linting & formatting
 - [ ] Fix Jest code coverage command
+
+## Not Doing
+- [ ] Implement simple express server to avoid leaking api key
+- [ ] Reimplement deployments on fly.io because of the need for a server
 
 # Design
 toggle between 3 day & 7 day forecast
