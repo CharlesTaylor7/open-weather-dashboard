@@ -1,4 +1,4 @@
-import { useRef, useCallback, useState, useEffect } from 'react';
+import { useCallback, useState } from 'react';
 import { Forecast, forecast } from '@/api/weather';
 import TimeSeriesLineChart from '@/components/TimeSeriesLineChart';
 
@@ -7,7 +7,8 @@ type GeoCoordinates = {
   lon: number;
 };
 
-type TimeSeriesData = Record<string, Array<{ x: number; y: number }>>;
+type TimeSeriesData = Record<string, Forecast>;
+//Array<{ x: number; y: number }>>;
 
 export default function App() {
   const [timeSeriesData, setTimeSeriesData] = useState<TimeSeriesData>({});
@@ -16,7 +17,7 @@ export default function App() {
     forecast(coords).then((hourly) =>
       setTimeSeriesData((d) => ({
         ...d,
-        [name]: hourly.map((h) => ({ x: h.dt, y: h.temp })),
+        [name]: hourly,
       })),
     );
   }, []);
@@ -47,7 +48,7 @@ export default function App() {
       <TimeSeriesLineChart
         data={Object.entries(timeSeriesData).map(([name, data]) => ({
           name,
-          data,
+          data: data.map((h) => ({ x: h.dt, y: h.temp })),
         }))}
       />
     </div>

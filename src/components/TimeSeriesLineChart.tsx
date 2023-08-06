@@ -1,6 +1,5 @@
-import { useRef, useCallback, useState, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import ApexChart from 'apexcharts';
-import { Forecast } from '@/api/weather';
 
 type Props = {
   data: TimeSeriesData[];
