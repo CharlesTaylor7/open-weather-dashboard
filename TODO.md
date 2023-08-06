@@ -2,8 +2,16 @@
 - [x] Setup Typescript path aliases
 - [x] Setup Tailwind
 - [x] Setup OpenWeather API account
-- [ ] Make some test queries to the Geocoding & weather apis
+- [x] Geocoding api call 
+- [x] Forecast API call 
+- [ ] Use local storage to cache OpenWeather queries
+- [ ] Use local storage to count OpenWeather queries and prevent exceeding rate limit
+- [ ] Learn apex chart
 - [ ] Move index.html to public/
+- [ ] Implement simple express server to avoid leaking api key
+- [ ] Reimplement deployments on fly.io because of the need for a server
+- [ ] Check if open weather calls can be made without violating google chromes' CORS detection
+
 
 ## Mprocs
 - [ ] Use nodemon or something for linting & formatting
@@ -21,6 +29,5 @@ Geocoding sample query:
 https://api.openweathermap.org/geo/1.0/direct?q=chattanooga,TN,US&limit=5&appid=32462e94fa616cc6f77157cc3c965959&lang=en
 
 Forecast data sample query:
-https://api.openweathermap.org/data/3.0/onecall?lat=35&lon=-8540&appid=32462e94fa616cc6f77157cc3c965959&lang=en
+https://api.openweathermap.org/data/3.0/onecall?lat=35&lon=-85&appid=32462e94fa616cc6f77157cc3c965959&lang=en
 
-lat":35.0457219,"lon":-85.3094883
