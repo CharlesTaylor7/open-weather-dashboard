@@ -7,6 +7,8 @@
 - [x] Use local storage to cache OpenWeather queries
 - [x] Check if open weather calls can be made without violating google chromes' CORS detection
 - [x] Render my first apex chart
+- [ ] Learn relevant options for apex chart
+- [ ] Build ApexChart React component
 - [ ] Move index.html to public/
 
 

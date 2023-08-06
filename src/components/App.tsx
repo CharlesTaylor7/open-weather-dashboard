@@ -1,4 +1,4 @@
-import { useRef, useCallback, useState } from 'react';
+import { useRef, useCallback, useState, useEffect } from 'react';
 import { Forecast, forecast } from '@/api/weather';
 import ApexCharts from 'apexcharts';
 
@@ -19,6 +19,14 @@ const chartOptions = {
 
 export default function App() {
   const apexChartDiv = useRef<HTMLDivElement>(null);
+  const apexChartInstance = useRef<ApexCharts>(null);
+
+  useEffect(() => {
+    if (apexChartInstance.current === null) {
+      apexChartInstance.current = new ApexCharts(apexChartDiv.current, chartOptions)
+      apexChartInstance.current.render()
+    }
+  }, [])
 
   const onForecast = useCallback(() => {
     forecast({ lat: 30, lon: 30 }).then(
