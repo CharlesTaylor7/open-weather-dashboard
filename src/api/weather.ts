@@ -12,23 +12,23 @@ type ForecastQuery = {
 
 // We only need an array of these to build a chart
 type Forecast = Array<{
-  dt: number,
-  temp: number,
+  dt: number;
+  temp: number;
 }>;
 
 // This type lists only fields of the api response that we are parsing into the forecast response. The actual response type is quite large
 type RawForecast = {
   hourly: Array<{
-    dt: number,
-    temp: number,
-  }>
+    dt: number;
+    temp: number;
+  }>;
+};
+
+export function forecast(query: ForecastQuery): Promise<Forecast> {
+  return rawForecast(query).then((forecast) => forecast.hourly);
 }
 
-export function forecastQuery(query: ForecastQuery): Promise<Forecast> {
-  return rawForecastQuery(query).then(forecast => forecast.hourly)
-}
-
-function rawForecastQuery(query: ForecastQuery): Promise<RawForecast> {
+function rawForecast(query: ForecastQuery): Promise<RawForecast> {
   return fetchFromOpenWeatherApi({
     route: '/data/3.0/onecall',
     query: {
@@ -36,5 +36,5 @@ function rawForecastQuery(query: ForecastQuery): Promise<RawForecast> {
       units: 'imperial',
       ...query,
     },
-  });
+  }) as Promise<RawForecast>;
 }
