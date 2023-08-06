@@ -12,7 +12,7 @@ type ForecastQuery = {
 
 // We only need an array of time against temperature to build a chart
 // TODO: rename these fields. Convert from unix epochs to datetimes.
-type Forecast = Array<{
+export type Forecast = Array<{
   dt: number;
   temp: number;
 }>;

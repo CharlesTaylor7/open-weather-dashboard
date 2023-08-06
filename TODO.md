@@ -6,7 +6,7 @@
 - [x] Forecast API call 
 - [x] Use local storage to cache OpenWeather queries
 - [x] Check if open weather calls can be made without violating google chromes' CORS detection
-- [ ] Learn apex chart
+- [x] Render my first apex chart
 - [ ] Move index.html to public/
 
 
