@@ -5,7 +5,6 @@
 - [x] Geocoding api call 
 - [x] Forecast API call 
 - [ ] Use local storage to cache OpenWeather queries
-- [ ] Use local storage to count OpenWeather queries and prevent exceeding rate limit
 - [ ] Learn apex chart
 - [ ] Move index.html to public/
 - [ ] Implement simple express server to avoid leaking api key

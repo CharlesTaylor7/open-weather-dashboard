@@ -1,26 +1,19 @@
 const OPEN_WEATHER_BASE_URL = 'https://api.openweathermap.org';
 
-type ApiParams = {
+type ApiCall = {
   route: string;
-  query: Record<string, number | string>;
+  query: Query;
 };
 
 type Query = Record<string, number | string>;
 
-export function fetchFromOpenWeatherApi({
-  route,
-  query,
-}: ApiParams): Promise<object> {
-  query = { appid: OPEN_WEATHER_API_KEY, ...query };
+export function fetchFromOpenWeatherApi(apiCall: ApiCall): Promise<object> {
+  const { route, query } = apiCall;
+  const queryWithApiKey = { appid: OPEN_WEATHER_API_KEY, ...query };
 
-  const previousCount = localStorage.getItem('open-weather-api-query-count');
-  const count = (Number(previousCount) || 0) + 1;
-  if (count >= 1000) {
-    throw new Error('Exceeded daily query count for Open Weather API');
-  }
-
-  localStorage.setItem('open-weather-api-query-count', String(count));
-  return fetch(`${OPEN_WEATHER_BASE_URL}${route}${toQueryString(query)}`);
+  return fetch(
+    `${OPEN_WEATHER_BASE_URL}${route}${toQueryString(queryWithApiKey)}`,
+  );
 }
 
 function toQueryString(query: Query) {
