@@ -13,7 +13,7 @@ export function fetchFromOpenWeatherApi(apiCall: ApiCall): Promise<object> {
 
   return fetch(
     `${OPEN_WEATHER_BASE_URL}${route}${toQueryString(queryWithApiKey)}`,
-  );
+  ).then((response) => response.json());
 }
 
 function toQueryString(query: Query) {

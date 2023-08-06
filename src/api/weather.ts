@@ -10,7 +10,8 @@ type ForecastQuery = {
 
 // IDEA: include feels_like / humidity
 
-// We only need an array of these to build a chart
+// We only need an array of time against temperature to build a chart
+// TODO: rename these fields. Convert from unix epochs to datetimes.
 type Forecast = Array<{
   dt: number;
   temp: number;
@@ -25,7 +26,31 @@ type RawForecast = {
 };
 
 export function forecast(query: ForecastQuery): Promise<Forecast> {
-  return rawForecast(query).then((forecast) => forecast.hourly);
+  let response;
+
+  if (process.env.NODE_ENV === 'production') {
+    response = rawForecast(query);
+  } else {
+    // local development uses localstorage to prevent excessive calls to the API
+    // stale data doesn't matter in a local dev context
+    // 7 day forecast is only free for the first 1000 calls each day.
+    response = rawForecastWithLocalStorage(query);
+  }
+
+  return response.then((forecast) => forecast.hourly);
+}
+
+async function rawForecastWithLocalStorage(
+  query: ForecastQuery,
+): Promise<RawForecast> {
+  const storageKey = `open-weather-forecast-${JSON.stringify(query)}`;
+  let forecastData = localStorage.getItem(storageKey);
+  if (forecastData === null) {
+    const forecast = await rawForecast(query);
+    forecastData = JSON.stringify(forecast);
+    localStorage.setItem(storageKey, forecastData);
+  }
+  return JSON.parse(forecastData);
 }
 
 function rawForecast(query: ForecastQuery): Promise<RawForecast> {
