@@ -10,6 +10,10 @@
 - [ ] Learn relevant options for apex chart
 - [ ] Build ApexChart React component
 - [ ] Move index.html to public/
+- [ ] DDDify the app
+
+- [ ] Handle api errors
+- [ ] Validate latitude & longitude before making api calls
 
 
 ## Mprocs
