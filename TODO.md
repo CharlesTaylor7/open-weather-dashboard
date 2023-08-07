@@ -4,7 +4,8 @@
 - [x] Initial exploration of the apex chart API
 - [x] Initial exploration of open weather API
 - [x] Design a mockup of the site, and present it to others for feedback
-- [ ] Build a static version of the site with no event handlers or dynamic state
+- [ ] Build a static version of the desktop site 
+- [ ] Responsive mobile layout
 - [ ] With TDD (unit tests), implement a Domain model for application state
 - [ ] With TDD (e2e tests), wire together the application state with the UI
 
@@ -30,8 +31,8 @@
 - [ ] Move index.html to public/
 - [ ] Handle api errors, 400, 429, 5xx, etc.
 - [ ] Validate latitude & longitude before making api calls
-- [ ] Responsive mobile layout
 - [ ] DDDify the app
+- [ ] Allow the user to pick between ambiguous city search results. Example: "London"
 
 ## Not Doing
 - [ ] Implement simple express server to avoid leaking api key
