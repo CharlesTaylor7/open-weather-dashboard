@@ -7,7 +7,7 @@ type Props = {
 
 type TimeSeriesData = {
   name: string;
-  data: Array<{ x: number; y: number }>;
+  data: Array<{ x: string; y: number }>;
 };
 
 // TODO: pass raw coordinates, not "Forecast" objects
@@ -38,7 +38,7 @@ function defaultChartOptions() {
     },
     series: [],
     xaxis: {
-      type: 'numeric',
+      type: 'datetime',
     },
   };
 }

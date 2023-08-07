@@ -1,3 +1,5 @@
+// @ts-nocheck
+// unused, salvage or delete later
 import ApexChart from 'apexcharts';
 import { Forecast } from '@/api/weather';
 

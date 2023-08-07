@@ -5,23 +5,25 @@ type ForecastQuery = {
   lat: number;
   lon: number;
   lang?: string;
+  // TODO: value object for unit types: Farenheight, Celsius, Standard
   units?: 'imperial' | 'metric';
 };
 
 // IDEA: include feels_like / humidity
 
 // We only need an array of time against temperature to build a chart
-// TODO: rename these fields. Convert from unix epochs to datetimes.
 export type Forecast = Array<{
-  dt: number;
-  temp: number;
+  timestamp: Date;
+  temperature: number;
 }>;
 
 // This type lists only fields of the api response that we are parsing into the forecast response. The actual response type is quite large
 type RawForecast = {
-  hourly: Array<{
+  daily: Array<{
     dt: number;
-    temp: number;
+    temp: {
+      day: number;
+    };
   }>;
 };
 
@@ -37,7 +39,12 @@ export function forecast(query: ForecastQuery): Promise<Forecast> {
     response = rawForecastWithLocalStorage(query);
   }
 
-  return response.then((forecast) => forecast.hourly);
+  return response.then((forecast) =>
+    forecast.daily.map((raw) => ({
+      timestamp: new Date(1000 * raw.dt),
+      temperature: raw.temp.day,
+    })),
+  );
 }
 
 async function rawForecastWithLocalStorage(

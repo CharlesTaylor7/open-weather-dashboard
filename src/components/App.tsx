@@ -12,6 +12,7 @@ type TimeSeriesData = Record<string, Forecast>;
 
 export default function App() {
   const [timeSeriesData, setTimeSeriesData] = useState<TimeSeriesData>({});
+  console.log(timeSeriesData);
 
   const onForecast = useCallback((coords: GeoCoordinates, name: string) => {
     forecast(coords).then((hourly) =>
@@ -48,7 +49,10 @@ export default function App() {
       <TimeSeriesLineChart
         data={Object.entries(timeSeriesData).map(([name, data]) => ({
           name,
-          data: data.map((h) => ({ x: h.dt, y: h.temp })),
+          data: data.map((h) => ({
+            x: h.timestamp.toDateString(),
+            y: h.temperature,
+          })),
         }))}
       />
     </div>
