@@ -1,6 +1,6 @@
 import { useId } from 'react';
-import caretIcon from '../../public/icons/dropdown-caret.svg';
-import searchIcon from '../../public/icons/search.svg';
+import caretIcon from '@/icons/dropdown-caret.svg';
+import searchIcon from '@/icons/search.svg';
 import TimeSeriesLineChart, {
   TimeSeries,
 } from '@/components/TimeSeriesLineChart';
@@ -73,9 +73,12 @@ type DropdownProps = {
 function Dropdown(props: DropdownProps) {
   return (
     <div className="flex items-center mr-2">
-      <select className="outline-0 appearance-none border rounded-lg bg-green-300 p-2 pr-9 -mr-9" defaultValue={props.default} >
+      <select
+        className="outline-0 appearance-none border rounded-lg bg-green-300 p-2 pr-9 -mr-9"
+        defaultValue={props.default}
+      >
         {props.options.map((o, i) => (
-          <option className="" key={i} value={o} >
+          <option className="" key={i} value={o}>
             {o}
           </option>
         ))}
@@ -106,7 +109,36 @@ type TableProps = {
 };
 
 function Table(props: TableProps) {
-  return <table></table>;
+  return (
+    <table className="rounded-2xl border border-separate border-spacing-0 border-slate-400">
+      <tbody>
+        {props.data.map(({ name, data }, j) => (
+          <tr key={j}>
+            <th 
+              className={`
+                border-slate-400 p-4
+                ${j !== 0 ? 'border-t' : ''} 
+              `}
+            >
+              {name}
+            </th>
+            {data.map((d, i) => (
+              <td
+                className={`
+                  border-slate-400 p-4
+                  border-l
+                  ${j !== 0 ? 'border-t' : ''} 
+                `}
+                key={i}
+              >
+                {d.y}℉
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
 }
 
 function randomTimeSeries(name: string): TimeSeries {
