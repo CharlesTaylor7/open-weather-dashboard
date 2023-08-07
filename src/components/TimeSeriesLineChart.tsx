@@ -2,10 +2,10 @@ import { useRef, useEffect } from 'react';
 import ApexChart from 'apexcharts';
 
 type Props = {
-  data: TimeSeriesData[];
+  data: TimeSeries[];
 };
 
-type TimeSeriesData = {
+export type TimeSeries = {
   name: string;
   data: Array<{ x: string; y: number }>;
 };
@@ -37,8 +37,21 @@ function defaultChartOptions() {
       type: 'line',
     },
     series: [],
+    yaxis: {
+      type: 'numeric',
+      title: { text: 'farenheight' },
+    },
     xaxis: {
       type: 'datetime',
+      categories: [
+        '01-01',
+        '01-02',
+        '01-03',
+        '01-04',
+        '01-05',
+        '01-06',
+        '01-07',
+      ],
     },
   };
 }

@@ -1,13 +1,15 @@
 import { useId } from 'react';
 import caretIcon from '../../public/icons/dropdown-caret.svg';
 import searchIcon from '../../public/icons/search.svg';
-import TimeSeriesLineChart from '@/components/TimeSeriesLineChart';
+import TimeSeriesLineChart, {
+  TimeSeries,
+} from '@/components/TimeSeriesLineChart';
 
-type Props = {
-};
+type Props = {};
 
-Mockup.defaultProps = {
-};
+Mockup.defaultProps = {};
+
+const cities = ['Chattanooga', 'Knoxville', 'Cleveland', 'Atlanta'];
 
 export default function Mockup(props: Props) {
   return (
@@ -16,22 +18,17 @@ export default function Mockup(props: Props) {
         <header className="self-center bold text-2xl">Weather Dashboard</header>
         <div className="flex gap-2 items-center w-full">
           <label className="block grow-0">City, State</label>
-          <input 
-            className="block grow border rounded p-2" 
-            
-            type="text"
-          />
+          <input className="block grow border rounded p-2" type="text" />
           <button className="p-2 bg-blue-200 border rounded-lg">
             <img src={searchIcon} height="20" width="20" />
           </button>
         </div>
         <div className="flex flex-wrap gap-2">
-          <Pill label="Chattanooga" />
-          <Pill label="Knoxville" />
-          <Pill label="Cleveland" />
-          <Pill label="Atlanta" />
+          {cities.map((city) => (
+            <Pill key={city} label={city} />
+          ))}
         </div>
-        <TimeSeriesLineChart data={[]} />
+        <TimeSeriesLineChart data={cities.map(randomTimeSeries)} />
         <div className="flex flex-wrap gap-3">
           <Dropdown
             options={['Chart View', 'Table View']}
@@ -92,4 +89,14 @@ function Pill(props: PillProps) {
       </button>
     </div>
   );
+}
+
+function randomTimeSeries(name: string): TimeSeries {
+  return {
+    name,
+    data: Array.from({ length: 7 }, (_, k) => ({
+      x: `01-${k + 1}`,
+      y: Math.random() * 100,
+    })),
+  };
 }
