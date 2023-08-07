@@ -1,3 +1,4 @@
+import { useId } from 'react';
 import TimeSeriesLineChart from '@/components/TimeSeriesLineChart';
 
 type Props = {
@@ -35,8 +36,14 @@ export default function Mockup(props: Props) {
             </>
           ) : (
             <>
-              <Dropdown options={['Chart View', 'Table View']} default="Chart View" />
-              <Dropdown options={['3 Day View', '7 Day View']} default="7 Day View" />
+              <Dropdown
+                options={['Chart View', 'Table View']}
+                default="Chart View"
+              />
+              <Dropdown
+                options={['3 Day View', '7 Day View']}
+                default="7 Day View"
+              />
             </>
           )}
         </div>
@@ -59,17 +66,21 @@ function ButtonToggle(props: ButtonToggleProps) {
 
 type DropdownProps = {
   options: Array<string>;
-  'default': string;
+  default: string;
 };
 function Dropdown(props: DropdownProps) {
+  const id = useId();
   return (
-    <select className="bg-green-300 p-2 after:p-2 border rounded-lg">
-      {props.options.map((o, i) => (
-        <option key={i} selected={o === props.default}>
-          {o}
-        </option>
-      ))}
-    </select>
+    <div className="p-2 border rounded-lg bg-green-300 ">
+      <select id={id} className="appearance-none bg-green-300 ">
+        {props.options.map((o, i) => (
+          <option className="" key={i} selected={o === props.default}>
+            {o}
+          </option>
+        ))}
+      </select>
+      <label htmlFor={id}>⌄</label>
+    </div>
   );
 }
 
