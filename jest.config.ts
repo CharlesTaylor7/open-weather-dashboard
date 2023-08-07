@@ -4,13 +4,12 @@ import { compilerOptions } from './tsconfig.json';
 export default {
   roots: ['<rootDir>'],
   transform: {
-    '^.+\\.(t|j)sx?$': ['@swc/jest'],
+    '^.+\\.tsx?$': ['@swc/jest'],
   },
   testRegex: 'test\\.tsx?$',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'json'],
   moduleNameMapper: {
-    ".+\\.svg$": "<rootDir>/__mocks__/empty.js",
-   // jest-transform-stub",
+    '.+\\.svg$': '<rootDir>/__mocks__/empty.js',
     ...pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }),
   },
 };

@@ -5,7 +5,7 @@ export default class WeatherDashboard {
 
   constructor(fields?: Fields<WeatherDashboard>) {
     if (fields !== undefined) {
-      Object.assign(this, fields)
+      Object.assign(this, fields);
     }
   }
 
@@ -20,14 +20,14 @@ export default class WeatherDashboard {
     return new WeatherDashboard({
       ...this,
       forecastDays,
-    })
+    });
   }
 
   appendCity(city: City): WeatherDashboard {
     return new WeatherDashboard({
       ...this,
-      cities: [...this.cities, city]
-    })
+      cities: [...this.cities, city],
+    });
   }
 }
 
@@ -40,5 +40,7 @@ export type City = {
   }>;
 };
 
-type FieldNames<T> = { [K in keyof T]: T[K] extends Function ? never : K }[keyof T];
+type FieldNames<T> = {
+  [K in keyof T]: T[K] extends Function ? never : K;
+}[keyof T];
 type Fields<T> = { [K in FieldNames<T>]: T[K] };

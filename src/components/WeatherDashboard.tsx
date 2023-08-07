@@ -8,7 +8,6 @@ import TimeSeriesLineChart, {
 type View = 'chart' | 'table';
 type Props = {};
 
-
 const cities = ['Chattanooga', 'Knoxville', 'Cleveland', 'Atlanta'];
 
 export default function Mockup(props: Props) {
@@ -20,8 +19,8 @@ export default function Mockup(props: Props) {
       <div className="flex flex-col gap-5 m-5 max-w-4/5 justify-center items-start">
         <header className="self-center bold text-2xl">Weather Dashboard</header>
         <div className="flex gap-2 items-center w-full">
-          <label className="block grow-0">City, State</label>
-          <input className="block grow border rounded p-2" type="text" />
+          <label>City, State</label>
+          <input className="grow border rounded p-2" type="text" />
           <button className="p-2 bg-blue-200 border rounded-lg">
             <img src={searchIcon} height="20" width="20" />
           </button>
@@ -42,6 +41,7 @@ export default function Mockup(props: Props) {
         )}
         <div className="flex flex-wrap gap-3">
           <Dropdown
+            data-testid="dropdown-view-type"
             options={[
               { value: 'chart', label: 'Chart View' },
               { value: 'table', label: 'Table View' },
@@ -50,6 +50,7 @@ export default function Mockup(props: Props) {
             onSelect={(v: string) => setView(v as View)}
           />
           <Dropdown
+            data-testid="dropdown-day-range"
             options={[
               { value: '3', label: '3 Day View' },
               { value: '7', label: '7 Day View' },
@@ -76,6 +77,7 @@ function ButtonToggle(props: ButtonToggleProps) {
 }
 
 type DropdownProps = {
+  'data-testid'?: string;
   options: Array<Option>;
   default: string;
   onSelect: (value: string) => void;
@@ -91,6 +93,7 @@ function Dropdown(props: DropdownProps) {
     <div className="flex items-center mr-2">
       <select
         className="outline-0 appearance-none border rounded-lg bg-green-300 p-2 pr-9 -mr-9"
+        data-testid={props['data-testid']}
         defaultValue={props.default}
         onChange={(e) => props.onSelect(e.target.value)}
       >
