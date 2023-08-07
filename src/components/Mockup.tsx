@@ -19,7 +19,7 @@ const cities = ['Chattanooga', 'Knoxville', 'Cleveland', 'Atlanta'];
 export default function Mockup(props: Props) {
   return (
     <div className="flex w-full justify-center items-center">
-      <div className="flex flex-col gap-5 m-5 max-w-lg justify-center items-start">
+      <div className="flex flex-col gap-5 m-5 justify-center items-start">
         <header className="self-center bold text-2xl">Weather Dashboard</header>
         <div className="flex gap-2 items-center w-full">
           <label className="block grow-0">City, State</label>
