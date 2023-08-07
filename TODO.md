@@ -5,7 +5,7 @@
 - [x] Initial exploration of open weather API
 - [x] Design a mockup of the site, and present it to others for feedback
 - [x] Build a static version of the site
-- [ ] Dynamic views: day range, & table/chart
+- [x] Dynamic views: day range, & table/chart
 - [ ] With TDD (unit tests), implement a Domain model for application state
 - [ ] With TDD (e2e tests), wire together the application state with the UI
 

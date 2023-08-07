@@ -1,4 +1,4 @@
-import { useId } from 'react';
+import { useState } from 'react';
 import caretIcon from '@/icons/dropdown-caret.svg';
 import searchIcon from '@/icons/search.svg';
 import TimeSeriesLineChart, {
@@ -6,17 +6,16 @@ import TimeSeriesLineChart, {
 } from '@/components/TimeSeriesLineChart';
 
 type View = 'chart' | 'table';
-type Props = {
-  view: View;
-};
+type Props = {};
 
-Mockup.defaultProps = {
-  view: 'table',
-};
+Mockup.defaultProps = {};
 
 const cities = ['Chattanooga', 'Knoxville', 'Cleveland', 'Atlanta'];
 
 export default function Mockup(props: Props) {
+  const [dayRange, setDayRange] = useState<number>(7);
+  const [view, setView] = useState<View>('table');
+
   return (
     <div className="flex w-full justify-center items-center">
       <div className="flex flex-col gap-5 m-5 justify-center items-start">
@@ -33,19 +32,27 @@ export default function Mockup(props: Props) {
             <Pill key={city} label={city} />
           ))}
         </div>
-        {props.view === 'chart' ? (
-          <TimeSeriesLineChart data={cities.map(randomTimeSeries)} />
+        {view === 'chart' ? (
+          <TimeSeriesLineChart data={cities.map(city => randomTimeSeries(city, dayRange))} />
         ) : (
-          <Table data={cities.map(randomTimeSeries)} />
+          <Table data={cities.map(city => randomTimeSeries(city, dayRange))} />
         )}
         <div className="flex flex-wrap gap-3">
           <Dropdown
-            options={['Chart View', 'Table View']}
-            default="Chart View"
+            options={[
+              { value: 'chart', label: 'Chart View' },
+              { value: 'table', label: 'Table View' },
+            ]}
+            default="table"
+            onSelect={(v: string) => setView(v as View)}
           />
           <Dropdown
-            options={['3 Day View', '7 Day View']}
-            default="7 Day View"
+            options={[
+              { value: '3', label: '3 Day View' },
+              { value: '7', label: '7 Day View' },
+            ]}
+            default="7"
+            onSelect={(n) => setDayRange(Number(n))}
           />
         </div>
       </div>
@@ -66,8 +73,14 @@ function ButtonToggle(props: ButtonToggleProps) {
 }
 
 type DropdownProps = {
-  options: Array<string>;
+  options: Array<Option>;
   default: string;
+  onSelect: (value: string) => void;
+};
+
+type Option = {
+  value: string;
+  label: string;
 };
 
 function Dropdown(props: DropdownProps) {
@@ -76,10 +89,11 @@ function Dropdown(props: DropdownProps) {
       <select
         className="outline-0 appearance-none border rounded-lg bg-green-300 p-2 pr-9 -mr-9"
         defaultValue={props.default}
+        onChange={(e) => props.onSelect(e.target.value)}
       >
         {props.options.map((o, i) => (
-          <option className="" key={i} value={o}>
-            {o}
+          <option className="" key={o.value} value={o.value}>
+            {o.label}
           </option>
         ))}
       </select>
@@ -143,10 +157,10 @@ function Table(props: TableProps) {
   );
 }
 
-function randomTimeSeries(name: string): TimeSeries {
+function randomTimeSeries(name: string, length: number): TimeSeries {
   return {
     name,
-    data: Array.from({ length: 7 }, (_, k) => ({
+    data: Array.from({ length }, (_, k) => ({
       x: `01-${k + 1}`,
       y: Math.floor(Math.random() * 100),
     })),
