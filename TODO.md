@@ -9,9 +9,6 @@
 - [ ] With TDD (unit tests), implement a Domain model for application state
 - [ ] With TDD (e2e tests), wire together the application state with the UI
 
-## Bugs
-- [ ] Table view is not responsive on mobile
-
 ## UI Functionality
 - [x] City Temperature Chart with dates/times on the x axis
 - [ ] Table view for Temperatures

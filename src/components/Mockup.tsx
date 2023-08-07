@@ -18,7 +18,7 @@ export default function Mockup(props: Props) {
 
   return (
     <div className="flex w-full justify-center items-center">
-      <div className="flex flex-col gap-5 m-5 justify-center items-start">
+      <div className="flex flex-col gap-5 m-5 max-w-4/5 justify-center items-start">
         <header className="self-center bold text-2xl">Weather Dashboard</header>
         <div className="flex gap-2 items-center w-full">
           <label className="block grow-0">City, State</label>
@@ -124,7 +124,7 @@ type TableProps = {
 
 function Table(props: TableProps) {
   return (
-    <div className="border border-slate-400 rounded-2xl w-full overflow-x-scroll">
+    <div className="border border-slate-400 rounded-2xl max-w-full overflow-x-scroll">
       <table className="border-separate border-spacing-0">
         <tbody>
           {props.data.map(({ name, data }, j) => (

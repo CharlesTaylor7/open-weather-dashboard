@@ -2,7 +2,11 @@
 export default {
   content: ['./src/**/*.tsx'],
   theme: {
-    extend: {},
+    extend: {
+      maxWidth: {
+        '4/5': '80%',
+      }
+    },
   },
   plugins: [],
 };
