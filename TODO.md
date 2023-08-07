@@ -4,10 +4,13 @@
 - [x] Initial exploration of the apex chart API
 - [x] Initial exploration of open weather API
 - [x] Design a mockup of the site, and present it to others for feedback
-- [ ] Build a static version of the desktop site 
-- [ ] Responsive mobile layout
+- [x] Build a static version of the site
+- [ ] Dynamic views: day range, & table/chart
 - [ ] With TDD (unit tests), implement a Domain model for application state
 - [ ] With TDD (e2e tests), wire together the application state with the UI
+
+## Bugs
+- [ ] Table view is not responsive on mobile
 
 ## UI Functionality
 - [x] City Temperature Chart with dates/times on the x axis

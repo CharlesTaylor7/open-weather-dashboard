@@ -111,35 +111,35 @@ type TableProps = {
 function Table(props: TableProps) {
   return (
     <div className="border border-slate-400 rounded-2xl w-full overflow-x-scroll">
-    <table className="border-separate border-spacing-0">
-      <tbody>
-        {props.data.map(({ name, data }, j) => (
-          <tr key={j}>
-            <th 
-              className={`
+      <table className="border-separate border-spacing-0">
+        <tbody>
+          {props.data.map(({ name, data }, j) => (
+            <tr key={j}>
+              <th
+                className={`
                 border-slate-400 p-4
                 ${j !== 0 ? 'border-t' : ''} 
               `}
-            >
-              {name}
-            </th>
-            {data.map((d, i) => (
-              <td
-                className={`
+              >
+                {name}
+              </th>
+              {data.map((d, i) => (
+                <td
+                  className={`
                   border-slate-400 p-4
                   border-l
                   ${j !== 0 ? 'border-t' : ''} 
                 `}
-                key={i}
-              >
-                {d.y}℉
-              </td>
-            ))}
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
+                  key={i}
+                >
+                  {d.y}℉
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 
