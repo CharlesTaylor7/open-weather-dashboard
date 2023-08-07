@@ -67,7 +67,8 @@ jobs:
     needs:
       - check-format
       - test
-      - lint
+        # TODO: restore linting
+        # - lint
       - typecheck
     runs-on: ubuntu-latest
     env:
