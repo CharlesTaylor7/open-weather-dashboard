@@ -66,14 +66,14 @@ type DropdownProps = {
 function Dropdown(props: DropdownProps) {
   return (
     <div className="flex items-center mr-2">
-      <select className="outline-0 appearance-none border rounded-lg bg-green-300 p-2 pr-7 -mr-7">
+      <select className="outline-0 appearance-none border rounded-lg bg-green-300 p-2 pr-9 -mr-9">
         {props.options.map((o, i) => (
           <option className="" key={i} value={o} selected={o === props.default}>
             {o}
           </option>
         ))}
       </select>
-      <span className="pointer-events-none">
+      <span className="pointer-events-none pl-2">
         <img src={caretIcon} height="20" width="20" />
       </span>
     </div>
