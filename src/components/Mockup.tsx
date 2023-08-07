@@ -18,12 +18,24 @@ export default function Mockup() {
         <Pill label="Atlanta" />
       </div>
       <TimeSeriesLineChart data={[]} />
-      <div>
-        <button>Table View</button>
-        <button>3 Day View</button>
+      <div className="flex gap-3" >
+        <ButtonToggle label="Table View"/>
+        <ButtonToggle label="3 Day View"/>
       </div>
     </div>
   );
+}
+
+type ButtonToggleProps = {
+  label: string;
+}
+
+function ButtonToggle(props: ButtonToggleProps) {
+  return (
+    <button className="bg-green-300 p-2 border rounded-lg">
+      {props.label}
+    </button>
+  )
 }
 
 
