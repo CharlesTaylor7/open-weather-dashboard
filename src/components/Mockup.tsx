@@ -1,4 +1,6 @@
 import { useId } from 'react';
+//import dropdownCaret from '@/icons/dropdown-caret.svg'
+import dropdownCaret from '../../public/icons/dropdown-caret.svg'
 import TimeSeriesLineChart from '@/components/TimeSeriesLineChart';
 
 type Props = {
@@ -71,7 +73,7 @@ type DropdownProps = {
 function Dropdown(props: DropdownProps) {
   const id = useId();
   return (
-    <div className="p-2 border rounded-lg bg-green-300 ">
+    <div className="p-2 border rounded-lg bg-green-300 flex">
       <select id={id} className="appearance-none bg-green-300 ">
         {props.options.map((o, i) => (
           <option className="" key={i} selected={o === props.default}>
@@ -79,10 +81,13 @@ function Dropdown(props: DropdownProps) {
           </option>
         ))}
       </select>
-      <label htmlFor={id}>⌄</label>
+      <span className="pointer-events-none">
+        <img src={dropdownCaret} height="20" width="20"/>
+      </span>
     </div>
   );
 }
+// <label htmlFor={id}>
 
 type PillProps = {
   label: string;
