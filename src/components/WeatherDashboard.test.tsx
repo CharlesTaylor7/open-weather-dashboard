@@ -14,7 +14,6 @@ jest.mock(
     },
 );
 
-
 describe('WeatherDashboard', () => {
   test('Toggle Chart/Table view', async () => {
     const dom = render(<WeatherDashboard />);

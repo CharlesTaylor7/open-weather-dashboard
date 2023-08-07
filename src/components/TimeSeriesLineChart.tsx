@@ -2,6 +2,7 @@ import { useRef, useEffect } from 'react';
 import ApexChart from 'apexcharts';
 
 type Props = {
+  'data-testid'?: string;
   data: TimeSeries[];
 };
 
@@ -25,7 +26,13 @@ export default function TimeSeriesLineChart(props: Props) {
     chart.updateSeries(props.data);
   }, [props.data]);
 
-  return <div className="w-full" ref={chartRootDivRef} />;
+  return (
+    <div
+      className="w-full"
+      data-testid={props['data-testid']}
+      ref={chartRootDivRef}
+    />
+  );
 }
 
 function defaultChartOptions() {

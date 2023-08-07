@@ -32,10 +32,12 @@ export default function Mockup(props: Props) {
         </div>
         {view === 'chart' ? (
           <TimeSeriesLineChart
+            data-testid="chart"
             data={cities.map((city) => randomTimeSeries(city, dayRange))}
           />
         ) : (
           <Table
+            data-testid="table"
             data={cities.map((city) => randomTimeSeries(city, dayRange))}
           />
         )}
@@ -125,12 +127,16 @@ function Pill(props: PillProps) {
 }
 
 type TableProps = {
+  'data-testid'?: string;
   data: Array<TimeSeries>;
 };
 
 function Table(props: TableProps) {
   return (
-    <div className="border border-slate-400 rounded-2xl max-w-full overflow-x-scroll">
+    <div
+      className="border border-slate-400 rounded-2xl max-w-full overflow-x-scroll"
+      data-testid={props['data-testid']}
+    >
       <table className="border-separate border-spacing-0">
         <tbody>
           {props.data.map(({ name, data }, j) => (
