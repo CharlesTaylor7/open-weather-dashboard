@@ -9,7 +9,8 @@ export default {
   testRegex: 'test\\.tsx?$',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'json'],
   moduleNameMapper: {
-    '\\.(css|less|sass|scss)$': '<rootDir>/__mocks__/styleMock.js',
+    ".+\\.svg$": "<rootDir>/__mocks__/empty.js",
+   // jest-transform-stub",
     ...pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }),
   },
 };

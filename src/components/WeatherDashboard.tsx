@@ -8,7 +8,6 @@ import TimeSeriesLineChart, {
 type View = 'chart' | 'table';
 type Props = {};
 
-Mockup.defaultProps = {};
 
 const cities = ['Chattanooga', 'Knoxville', 'Cleveland', 'Atlanta'];
 
