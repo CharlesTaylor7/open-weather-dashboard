@@ -4,9 +4,12 @@ export default function Mockup() {
   return (
     <div className="flex flex-col gap-5 mt-5 w-full justify-center items-center">
       <header className="bold text-2xl"> Open Weather Dashboard</header>
-      <div>
-        <label className="mr-2">City, State</label>
-        <input className="border" />
+      <div className="flex gap-2 items-center">
+        <label className="">City, State</label>
+        <input className="border rounded" />
+        <button className="flex items-center justify-center px-2 border rounded-2xl">
+          Search
+        </button>
       </div>
       <div className="flex flex-wrap gap-2">
         <Pill label="Chattanooga" />
@@ -22,6 +25,7 @@ export default function Mockup() {
     </div>
   );
 }
+
 
 type PillProps = {
   label: string;
