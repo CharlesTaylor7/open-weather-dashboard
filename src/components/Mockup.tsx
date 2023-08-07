@@ -5,9 +5,14 @@ import TimeSeriesLineChart, {
   TimeSeries,
 } from '@/components/TimeSeriesLineChart';
 
-type Props = {};
+type View = 'chart' | 'table';
+type Props = {
+  view: View;
+};
 
-Mockup.defaultProps = {};
+Mockup.defaultProps = {
+  view: 'table',
+};
 
 const cities = ['Chattanooga', 'Knoxville', 'Cleveland', 'Atlanta'];
 
@@ -28,7 +33,11 @@ export default function Mockup(props: Props) {
             <Pill key={city} label={city} />
           ))}
         </div>
-        <TimeSeriesLineChart data={cities.map(randomTimeSeries)} />
+        {props.view === 'chart' ? (
+          <TimeSeriesLineChart data={cities.map(randomTimeSeries)} />
+        ) : (
+          <Table data={cities.map(randomTimeSeries)} />
+        )}
         <div className="flex flex-wrap gap-3">
           <Dropdown
             options={['Chart View', 'Table View']}
@@ -60,12 +69,13 @@ type DropdownProps = {
   options: Array<string>;
   default: string;
 };
+
 function Dropdown(props: DropdownProps) {
   return (
     <div className="flex items-center mr-2">
-      <select className="outline-0 appearance-none border rounded-lg bg-green-300 p-2 pr-9 -mr-9">
+      <select className="outline-0 appearance-none border rounded-lg bg-green-300 p-2 pr-9 -mr-9" defaultValue={props.default} >
         {props.options.map((o, i) => (
-          <option className="" key={i} value={o} selected={o === props.default}>
+          <option className="" key={i} value={o} >
             {o}
           </option>
         ))}
@@ -89,6 +99,14 @@ function Pill(props: PillProps) {
       </button>
     </div>
   );
+}
+
+type TableProps = {
+  data: Array<TimeSeries>;
+};
+
+function Table(props: TableProps) {
+  return <table></table>;
 }
 
 function randomTimeSeries(name: string): TimeSeries {

@@ -10,7 +10,6 @@ export type TimeSeries = {
   data: Array<{ x: string; y: number }>;
 };
 
-
 export default function TimeSeriesLineChart(props: Props) {
   const chartRootDivRef = useRef<HTMLDivElement>(null);
   const apexChartRef = useRef<ApexChart | null>(null);
