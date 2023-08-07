@@ -33,9 +33,13 @@ export default function Mockup(props: Props) {
           ))}
         </div>
         {view === 'chart' ? (
-          <TimeSeriesLineChart data={cities.map(city => randomTimeSeries(city, dayRange))} />
+          <TimeSeriesLineChart
+            data={cities.map((city) => randomTimeSeries(city, dayRange))}
+          />
         ) : (
-          <Table data={cities.map(city => randomTimeSeries(city, dayRange))} />
+          <Table
+            data={cities.map((city) => randomTimeSeries(city, dayRange))}
+          />
         )}
         <div className="flex flex-wrap gap-3">
           <Dropdown

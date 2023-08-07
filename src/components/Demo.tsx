@@ -10,7 +10,7 @@ type GeoCoordinates = {
 type TimeSeriesData = Record<string, Forecast>;
 //Array<{ x: number; y: number }>>;
 
-export default function App() {
+export default function Demo() {
   const [timeSeriesData, setTimeSeriesData] = useState<TimeSeriesData>({});
   console.log(timeSeriesData);
 
