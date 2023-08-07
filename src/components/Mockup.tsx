@@ -2,7 +2,7 @@ import TimeSeriesLineChart from '@/components/TimeSeriesLineChart';
 
 export default function Mockup() {
   return (
-    <div className="flex flex-col gap-5 mt-5 justify-content align-items">
+    <div className="flex flex-col gap-5 mt-5 w-full justify-center items-center">
       <header>Open Weather Dashboard</header>
       <div>
         <label>City, State</label>
