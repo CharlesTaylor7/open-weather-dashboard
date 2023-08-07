@@ -110,7 +110,8 @@ type TableProps = {
 
 function Table(props: TableProps) {
   return (
-    <table className="rounded-2xl border border-separate border-spacing-0 border-slate-400">
+    <div className="border border-slate-400 rounded-2xl w-full overflow-x-scroll">
+    <table className="border-separate border-spacing-0">
       <tbody>
         {props.data.map(({ name, data }, j) => (
           <tr key={j}>
@@ -138,6 +139,7 @@ function Table(props: TableProps) {
         ))}
       </tbody>
     </table>
+  </div>
   );
 }
 
