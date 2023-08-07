@@ -96,7 +96,7 @@ function randomTimeSeries(name: string): TimeSeries {
     name,
     data: Array.from({ length: 7 }, (_, k) => ({
       x: `01-${k + 1}`,
-      y: Math.random() * 100,
+      y: Math.floor(Math.random() * 100),
     })),
   };
 }

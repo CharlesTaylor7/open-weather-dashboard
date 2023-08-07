@@ -39,7 +39,10 @@ function defaultChartOptions() {
     series: [],
     yaxis: {
       type: 'numeric',
-      title: { text: 'farenheight' },
+      //title: { text: 'farenheight' },
+      labels: {
+        formatter: (value: number) => `${value}℉`,
+      },
     },
     xaxis: {
       type: 'datetime',
