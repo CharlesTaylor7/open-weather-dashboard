@@ -2,8 +2,8 @@ import TimeSeriesLineChart from '@/components/TimeSeriesLineChart';
 
 export default function Mockup() {
   return (
-    <div className="flex flex-col gap-5 mt-5 w-full justify-center items-center">
-      <header className="bold text-2xl"> Open Weather Dashboard</header>
+    <div className="flex flex-col gap-5 m-5 max-w-lg justify-center items-start">
+      <header className="self-center bold text-2xl">Open Weather Dashboard</header>
       <div className="flex gap-2 items-center">
         <label className="">City, State</label>
         <input className="border rounded" />
@@ -18,9 +18,9 @@ export default function Mockup() {
         <Pill label="Atlanta" />
       </div>
       <TimeSeriesLineChart data={[]} />
-      <div className="flex gap-3" >
-        <ButtonToggle label="Table View"/>
-        <ButtonToggle label="3 Day View"/>
+      <div className="flex gap-3">
+        <ButtonToggle label="Table View" />
+        <ButtonToggle label="3 Day View" />
       </div>
     </div>
   );
@@ -28,16 +28,15 @@ export default function Mockup() {
 
 type ButtonToggleProps = {
   label: string;
-}
+};
 
 function ButtonToggle(props: ButtonToggleProps) {
   return (
     <button className="bg-green-300 p-2 border rounded-lg">
       {props.label}
     </button>
-  )
+  );
 }
-
 
 type PillProps = {
   label: string;
@@ -46,7 +45,9 @@ function Pill(props: PillProps) {
   return (
     <div className="flex items-center border rounded-3xl p-1 gap-2">
       <span>{props.label}</span>
-      <button className="flex items-center justify-center h-5 w-5 border rounded-full">×</button>
+      <button className="flex items-center justify-center h-5 w-5 border rounded-full">
+        ×
+      </button>
     </div>
   );
 }
