@@ -1,3 +1,13 @@
+## Shortlist
+- [x] Setup tooling
+- [x] Setup CI/CD deployments to github pages
+- [x] Initial exploration of the apex chart API
+- [x] Initial exploration of open weather API
+- [ ] Design a mockup of the site, and present it to others for feedback
+- [ ] Build a static version of the site with no event handlers or dynamic state
+- [ ] With TDD (unit tests), implement a Domain model for application state
+- [ ] With TDD (e2e tests), wire together the application state with the UI
+
 ## UI Functionality
 - [ ] City Temperature Chart with dates/times on the x axis
 - [ ] City Search Input
