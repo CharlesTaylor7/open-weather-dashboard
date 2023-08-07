@@ -4,10 +4,10 @@ export default function Mockup() {
   return (
     <div className="flex flex-col gap-5 m-5 max-w-lg justify-center items-start">
       <header className="self-center bold text-2xl">Open Weather Dashboard</header>
-      <div className="flex gap-2 items-center">
-        <label className="">City, State</label>
-        <input className="border rounded" />
-        <button className="flex items-center justify-center px-2 border rounded-2xl">
+      <div className="flex gap-2 items-center w-full">
+        <label className="block grow-0">City, State</label>
+        <input className="block grow border rounded" />
+        <button className="block grow-0 flex items-center justify-center px-2 border rounded-2xl">
           Search
         </button>
       </div>
