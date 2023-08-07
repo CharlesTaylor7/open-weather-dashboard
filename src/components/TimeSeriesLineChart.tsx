@@ -34,6 +34,9 @@ function defaultChartOptions() {
     chart: {
       type: 'line',
     },
+    stroke: {
+      curve: 'smooth',
+    },
     series: [],
     yaxis: {
       type: 'numeric',
