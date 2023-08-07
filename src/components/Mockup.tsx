@@ -1,6 +1,6 @@
 import { useId } from 'react';
 //import dropdownCaret from '@/icons/dropdown-caret.svg'
-import dropdownCaret from '../../public/icons/dropdown-caret.svg'
+import dropdownCaret from '../../public/icons/dropdown-caret.svg';
 import TimeSeriesLineChart from '@/components/TimeSeriesLineChart';
 
 type Props = {
@@ -82,7 +82,7 @@ function Dropdown(props: DropdownProps) {
         ))}
       </select>
       <span className="pointer-events-none">
-        <img src={dropdownCaret} height="20" width="20"/>
+        <img src={dropdownCaret} height="20" width="20" />
       </span>
     </div>
   );
