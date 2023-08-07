@@ -10,8 +10,6 @@ export type TimeSeries = {
   data: Array<{ x: string; y: number }>;
 };
 
-// TODO: pass raw coordinates, not "Forecast" objects
-// don't couple domain to this
 
 export default function TimeSeriesLineChart(props: Props) {
   const chartRootDivRef = useRef<HTMLDivElement>(null);
@@ -28,7 +26,7 @@ export default function TimeSeriesLineChart(props: Props) {
     chart.updateSeries(props.data);
   }, [props.data]);
 
-  return <div ref={chartRootDivRef} />;
+  return <div className="w-full" ref={chartRootDivRef} />;
 }
 
 function defaultChartOptions() {
@@ -39,7 +37,6 @@ function defaultChartOptions() {
     series: [],
     yaxis: {
       type: 'numeric',
-      //title: { text: 'farenheight' },
       labels: {
         formatter: (value: number) => `${value}℉`,
       },
