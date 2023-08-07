@@ -4,11 +4,9 @@ import dropdownCaret from '../../public/icons/dropdown-caret.svg';
 import TimeSeriesLineChart from '@/components/TimeSeriesLineChart';
 
 type Props = {
-  viewOptions: 'dropdown' | 'button';
 };
 
 Mockup.defaultProps = {
-  viewOptions: 'dropdown',
 };
 
 export default function Mockup(props: Props) {
@@ -31,23 +29,14 @@ export default function Mockup(props: Props) {
         </div>
         <TimeSeriesLineChart data={[]} />
         <div className="flex flex-wrap gap-3">
-          {props.viewOptions === 'button' ? (
-            <>
-              <ButtonToggle label="Table View" />
-              <ButtonToggle label="3 Day View" />
-            </>
-          ) : (
-            <>
-              <Dropdown
-                options={['Chart View', 'Table View']}
-                default="Chart View"
-              />
-              <Dropdown
-                options={['3 Day View', '7 Day View']}
-                default="7 Day View"
-              />
-            </>
-          )}
+          <Dropdown
+            options={['Chart View', 'Table View']}
+            default="Chart View"
+          />
+          <Dropdown
+            options={['3 Day View', '7 Day View']}
+            default="7 Day View"
+          />
         </div>
       </div>
     </div>
@@ -71,10 +60,9 @@ type DropdownProps = {
   default: string;
 };
 function Dropdown(props: DropdownProps) {
-  const id = useId();
   return (
     <div className="flex items-center">
-      <select id={id} className="outline-0 appearance-none border rounded-lg bg-green-300 p-2 pr-7 -mr-7">
+      <select className="outline-0 appearance-none border rounded-lg bg-green-300 p-2 pr-7 -mr-7">
         {props.options.map((o, i) => (
           <option className="" key={i} value={o} selected={o === props.default}>
             {o}
