@@ -73,10 +73,10 @@ type DropdownProps = {
 function Dropdown(props: DropdownProps) {
   const id = useId();
   return (
-    <div className="p-2 border rounded-lg bg-green-300 flex">
-      <select id={id} className="appearance-none bg-green-300 ">
+    <div className="flex items-center">
+      <select id={id} className="outline-0 appearance-none border rounded-lg bg-green-300 p-2 pr-7 -mr-7">
         {props.options.map((o, i) => (
-          <option className="" key={i} selected={o === props.default}>
+          <option className="" key={i} value={o} selected={o === props.default}>
             {o}
           </option>
         ))}
