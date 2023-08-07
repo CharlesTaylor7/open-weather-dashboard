@@ -1,12 +1,18 @@
 import TimeSeriesLineChart from '@/components/TimeSeriesLineChart';
 
-export default function Mockup() {
+type Props = {
+  viewOptions: 'dropdown' | 'button';
+};
+
+Mockup.defaultProps = {
+  viewOptions: 'dropdown',
+};
+
+export default function Mockup(props: Props) {
   return (
     <div className="flex w-full justify-center items-center">
       <div className="flex flex-col gap-5 m-5 max-w-lg justify-center items-start">
-        <header className="self-center bold text-2xl">
-          Weather Dashboard
-        </header>
+        <header className="self-center bold text-2xl">Weather Dashboard</header>
         <div className="flex gap-2 items-center w-full">
           <label className="block grow-0">City, State</label>
           <input className="block grow border rounded" />
@@ -22,8 +28,17 @@ export default function Mockup() {
         </div>
         <TimeSeriesLineChart data={[]} />
         <div className="flex flex-wrap gap-3">
-          <ButtonToggle label="Table View" />
-          <ButtonToggle label="3 Day View" />
+          {props.viewOptions === 'button' ? (
+            <>
+              <ButtonToggle label="Table View" />
+              <ButtonToggle label="3 Day View" />
+            </>
+          ) : (
+            <>
+              <Dropdown options={['Chart View', 'Table View']} default="Chart View" />
+              <Dropdown options={['3 Day View', '7 Day View']} default="7 Day View" />
+            </>
+          )}
         </div>
       </div>
     </div>
@@ -39,6 +54,22 @@ function ButtonToggle(props: ButtonToggleProps) {
     <button className="bg-green-300 p-2 border rounded-lg">
       {props.label}
     </button>
+  );
+}
+
+type DropdownProps = {
+  options: Array<string>;
+  'default': string;
+};
+function Dropdown(props: DropdownProps) {
+  return (
+    <select className="bg-green-300 p-2 after:p-2 border rounded-lg">
+      {props.options.map((o, i) => (
+        <option key={i} selected={o === props.default}>
+          {o}
+        </option>
+      ))}
+    </select>
   );
 }
 
