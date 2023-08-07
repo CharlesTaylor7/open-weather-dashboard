@@ -1,6 +1,6 @@
 import { useId } from 'react';
-//import dropdownCaret from '@/icons/dropdown-caret.svg'
-import dropdownCaret from '../../public/icons/dropdown-caret.svg';
+import caretIcon from '../../public/icons/dropdown-caret.svg';
+import searchIcon from '../../public/icons/search.svg';
 import TimeSeriesLineChart from '@/components/TimeSeriesLineChart';
 
 type Props = {
@@ -16,9 +16,13 @@ export default function Mockup(props: Props) {
         <header className="self-center bold text-2xl">Weather Dashboard</header>
         <div className="flex gap-2 items-center w-full">
           <label className="block grow-0">City, State</label>
-          <input className="block grow border rounded" />
-          <button className="block grow-0 flex items-center justify-center px-2 border rounded-2xl">
-            Search
+          <input 
+            className="block grow border rounded p-2" 
+            
+            type="text"
+          />
+          <button className="p-2 bg-blue-200 border rounded-lg">
+            <img src={searchIcon} height="20" width="20" />
           </button>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -61,7 +65,7 @@ type DropdownProps = {
 };
 function Dropdown(props: DropdownProps) {
   return (
-    <div className="flex items-center">
+    <div className="flex items-center mr-2">
       <select className="outline-0 appearance-none border rounded-lg bg-green-300 p-2 pr-7 -mr-7">
         {props.options.map((o, i) => (
           <option className="" key={i} value={o} selected={o === props.default}>
@@ -70,12 +74,11 @@ function Dropdown(props: DropdownProps) {
         ))}
       </select>
       <span className="pointer-events-none">
-        <img src={dropdownCaret} height="20" width="20" />
+        <img src={caretIcon} height="20" width="20" />
       </span>
     </div>
   );
 }
-// <label htmlFor={id}>
 
 type PillProps = {
   label: string;
