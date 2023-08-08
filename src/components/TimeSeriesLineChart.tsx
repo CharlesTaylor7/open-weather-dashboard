@@ -1,14 +1,10 @@
 import { useRef, useEffect } from 'react';
 import ApexChart from 'apexcharts';
+import type { TimeSeries } from '@/weather-dashboard';
 
 type Props = {
   'data-testid'?: string;
   data: TimeSeries[];
-};
-
-export type TimeSeries = {
-  name: string;
-  data: Array<{ x: string; y: number }>;
 };
 
 export default function TimeSeriesLineChart(props: Props) {

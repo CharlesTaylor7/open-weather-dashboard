@@ -1,18 +1,17 @@
 import { useState } from 'react';
 import caretIcon from '@/icons/dropdown-caret.svg';
 import searchIcon from '@/icons/search.svg';
-import TimeSeriesLineChart, {
-  TimeSeries,
-} from '@/components/TimeSeriesLineChart';
+import TimeSeriesLineChart  from '@/components/TimeSeriesLineChart';
 import WeatherDashboardState from '@/weather-dashboard';
+import type { TimeSeries } from '@/weather-dashboard';
 
 type View = 'chart' | 'table';
 type Props = {};
 
-const cities = ['Chattanooga', 'Knoxville', 'Cleveland', 'Atlanta'];
+//const cities = ['Chattanooga', 'Knoxville', 'Cleveland', 'Atlanta'];
 
-export default function Mockup(props: Props) {
-  const [state, setState] = useState<WeatherDashboardState>(
+export default function WeatherDashboard(props: Props) {
+  const [dashboard, setState] = useState<WeatherDashboardState>(
     new WeatherDashboardState(),
   );
 
@@ -28,19 +27,16 @@ export default function Mockup(props: Props) {
           </button>
         </div>
         <div className="flex flex-wrap gap-2">
-          {cities.map((city) => (
-            <Pill key={city} label={city} />
+          {dashboard.cities.map((city, i) => (
+            <Pill key={i} label={city.label} />
           ))}
         </div>
-        {view === 'chart' ? (
-          <TimeSeriesLineChart
-            data-testid="chart"
-            data={cities.map((city) => randomTimeSeries(city, dayRange))}
-          />
+        {dashboard.view === 'chart' ? (
+          <TimeSeriesLineChart data-testid="chart" data={dashboard.allCityTimeSeries()} />
         ) : (
           <Table
             data-testid="table"
-            data={cities.map((city) => randomTimeSeries(city, dayRange))}
+            data={dashboard.allCityTimeSeries()}
           />
         )}
         <div className="flex flex-wrap gap-3">
@@ -50,7 +46,7 @@ export default function Mockup(props: Props) {
               { value: 'chart', label: 'Chart View' },
               { value: 'table', label: 'Table View' },
             ]}
-            default={state.view}
+            default={dashboard.view}
             onSelect={(v: string) =>
               setState((dashboard) => dashboard.changeView(v as View))
             }
@@ -173,14 +169,4 @@ function Table(props: TableProps) {
       </table>
     </div>
   );
-}
-
-function randomTimeSeries(name: string, length: number): TimeSeries {
-  return {
-    name,
-    data: Array.from({ length }, (_, k) => ({
-      x: `01-${k + 1}`,
-      y: Math.floor(Math.random() * 100),
-    })),
-  };
 }

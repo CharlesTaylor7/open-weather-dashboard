@@ -8,6 +8,7 @@
 - [x] Dynamic views: day range, & table/chart
 - [ ] With TDD (unit tests), implement a Domain model for application state
 - [ ] With TDD (e2e tests), wire together the application state with the UI
+- [ ] Gif recording of responsive screensize
 
 ## UI Functionality
 - [x] City Temperature Chart with dates/times on the x axis

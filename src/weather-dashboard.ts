@@ -29,6 +29,10 @@ export default class WeatherDashboard {
       cities: [...this.cities, city],
     });
   }
+
+  allCityTimeSeries(): Array<TimeSeries> {
+    return this.cities.map((city) => randomTimeSeries(city.label, this.forecastDays));
+  }
 }
 
 export type View = 'chart' | 'table';
@@ -40,6 +44,11 @@ export type City = {
   }>;
 };
 
+export type TimeSeries = {
+  name: string;
+  data: Array<{ x: string; y: number }>;
+};
+
 // This type magic grabs every property of a class that isn't a method.
 // This allows me to use typechecked "keyword argument" style initialization.
 // e.g.
@@ -47,3 +56,13 @@ export type City = {
 type Fields<T> = {
   [K in keyof T as T[K] extends Function ? never : K]: T[K];
 };
+
+function randomTimeSeries(name: string, length: number): TimeSeries {
+  return {
+    name,
+    data: Array.from({ length }, (_, k) => ({
+      x: `01-${k + 1}`,
+      y: Math.floor(Math.random() * 100),
+    })),
+  };
+}
