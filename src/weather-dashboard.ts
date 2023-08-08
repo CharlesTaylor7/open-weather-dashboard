@@ -43,7 +43,9 @@ export default class WeatherDashboard {
   forecasted(): Array<TimeSeries> {
     return this.cities.map((city) => ({
       name: city.label,
-      data: city.data.map(d => ({ x: d.datetime, y: d.temperature })).slice(0, this.forecastDays),
+      data: city.data
+        .map((d) => ({ x: d.datetime, y: d.temperature }))
+        .slice(0, this.forecastDays),
     }));
   }
 
