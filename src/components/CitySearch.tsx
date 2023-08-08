@@ -13,17 +13,16 @@ export default function CitySearch() {
   });
 
   const textInputRef = useRef<HTMLInputElement>(null);
-  const search = useCallback(async () => {
-    const textInput = textInputRef.current;
-    if (!textInput) {
-      return;
-    }
-    const query = textInput.value;
-    textInput.value = '';
-    const locations = await geocode({ q: textInput.value });
+  const search = useCallback(async (query: string) => {
+    const locations = await geocode({ q: query });
     updateCityQueryResult({ type: 'geocoding', locations})
 
     const first = locations[0];
+    if (!first) {
+      updateCityQueryResult({ type: 'error'})
+      return
+    }
+
     const data = await forecast({ lat: first.lat, lon: first.lon });
     const city = {
       label: cityLabel(first),
@@ -43,12 +42,13 @@ export default function CitySearch() {
           autoFocus
           className="grow border rounded p-2"
           type="text"
-          ref={textInputRef}
-          onKeyDown={(e) => (e.key === 'Enter' ? search() : undefined)}
+          value={searchTerm}
+          onChange={e => setSearchTerm(e.target.value)}
+          onKeyDown={(e) => (e.key === 'Enter' ? search(searchTerm) : undefined)}
         />
         <button 
           className="p-2 bg-blue-200 border rounded-lg" 
-          onClick={search}
+          onClick={() => search(searchTerm)}
           disabled={searchTerm === '' || cityQueryResult.type === 'loading' }
         >
           <img src={searchIcon} height="20" width="20" />
