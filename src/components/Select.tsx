@@ -1,7 +1,7 @@
 import caretIcon from '@/icons/dropdown-caret.svg';
 
 type Props = {
-  'data-testid'?: string;
+  testId?: string;
   options: Array<Option>;
   default: string;
   onSelect: (value: string) => void;
@@ -23,7 +23,7 @@ export default function Select(props: Props) {
     <div className="flex items-center mr-2">
       <select
         className="outline-0 appearance-none border rounded-lg bg-green-300 p-2 pr-9 -mr-9"
-        data-testid={props['data-testid']}
+        data-testid={props.testId}
         defaultValue={props.default}
         onChange={(e) => props.onSelect(e.target.value)}
       >

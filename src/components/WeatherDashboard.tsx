@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import searchIcon from '@/icons/search.svg';
-import TimeSeriesLineChart from '@/components/TimeSeriesLineChart';
 import Pill from '@/components/Pill';
 import Select from '@/components/Select';
+import ForecastChart from '@/components/TimeSeriesLineChart';
+import ForecastTable from '@/components/ForecastTable';
 import WeatherDashboardState from '@/weather-dashboard';
 import type { TimeSeries } from '@/weather-dashboard';
 
@@ -37,16 +38,13 @@ export default function WeatherDashboard(props: Props) {
           ))}
         </div>
         {dashboard.view === 'chart' ? (
-          <TimeSeriesLineChart
-            data-testid="chart"
-            data={dashboard.allCityTimeSeries()}
-          />
+          <ForecastChart testId="chart" data={dashboard.allCityTimeSeries()} />
         ) : (
-          <Table data-testid="table" data={dashboard.allCityTimeSeries()} />
+          <ForecastTable testId="table" data={dashboard.allCityTimeSeries()} />
         )}
         <div className="flex flex-wrap gap-3">
           <Select
-            data-testid="dropdown-view-type"
+            testId="dropdown-view-type"
             options={[
               { value: 'chart', label: 'Chart View' },
               { value: 'table', label: 'Table View' },
@@ -69,53 +67,6 @@ export default function WeatherDashboard(props: Props) {
           />
         </div>
       </div>
-    </div>
-  );
-}
-
-type TableProps = {
-  'data-testid'?: string;
-  data: Array<TimeSeries>;
-};
-
-function Table(props: TableProps) {
-  return (
-    <div
-      className="border border-slate-400 rounded-2xl max-w-full overflow-x-scroll"
-      data-testid={props['data-testid']}
-    >
-      <table className="border-separate border-spacing-0">
-        <thead>
-          <tr>
-            <th scope="col" />
-            {props.data[0].data.map((d) => (
-              <th scope="col" className="border-slate-400 p-4 border-l">
-                {d.x}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {props.data.map(({ name, data }, j) => (
-            <tr key={j}>
-              <th
-                scope="row"
-                className="border-slate-400 p-4 border-t"
-              >
-                {name}
-              </th>
-              {data.map((d, i) => (
-                <td
-                  className="border-slate-400 p-4 border-l border-t"
-                  key={i}
-                >
-                  {d.y}℉
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
     </div>
   );
 }

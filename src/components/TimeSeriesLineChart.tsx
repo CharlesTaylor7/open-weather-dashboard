@@ -3,7 +3,7 @@ import ApexChart from 'apexcharts';
 import type { TimeSeries } from '@/weather-dashboard';
 
 type Props = {
-  'data-testid'?: string;
+  testId?: string;
   data: TimeSeries[];
 };
 
@@ -23,11 +23,7 @@ export default function TimeSeriesLineChart(props: Props) {
   }, [props.data]);
 
   return (
-    <div
-      className="w-full"
-      data-testid={props['data-testid']}
-      ref={chartRootDivRef}
-    />
+    <div className="w-full" data-testid={props.testId} ref={chartRootDivRef} />
   );
 }
 
