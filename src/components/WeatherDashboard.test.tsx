@@ -42,7 +42,7 @@ afterEach(() => {
 });
 
 describe('WeatherDashboard', () => {
-  // failing because the table is not rendered 
+  // failing because the table is not rendered
   // when there are no cities on the dashboard
   test.skip('Toggle Chart/Table view', async () => {
     const dom = render(<WeatherDashboard />);

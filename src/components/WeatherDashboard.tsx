@@ -1,32 +1,30 @@
 import { useState } from 'react';
-import searchIcon from '@/icons/search.svg';
 import Pill from '@/components/Pill';
 import Select from '@/components/Select';
 import ForecastChart from '@/components/ForecastChart';
 import ForecastTable from '@/components/ForecastTable';
-import WeatherDashboardState from '@/weather-dashboard';
+import CitySearch from '@/components/CitySearch';
 import type { TimeSeries } from '@/weather-dashboard';
+import WeatherDashboardState from '@/weather-dashboard';
+import { useDashboardState } from '@/useDashboardState';
 
 type View = 'chart' | 'table';
 type Props = {};
 
 export default function WeatherDashboard(props: Props) {
-  const [dashboard, updateDashboard] = useState<WeatherDashboardState>(
-    new WeatherDashboardState(),
-  );
-
+  const [dashboard, updateDashboard] = useDashboardState();
   return (
     <div className="flex w-full justify-center items-center">
       <div className="flex flex-col gap-5 m-5 max-w-4/5 justify-center items-start">
         <header className="self-center bold text-2xl">Weather Dashboard</header>
         <CitySearch />
-       <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2">
           {dashboard.cities.map((city, index) => (
             <Pill
               key={index}
               label={city.label}
               onClickRemove={() =>
-                setState((dashbord) => dashboard.removeCity(index))
+                updateDashboard((dashbord) => dashboard.removeCity(index))
               }
             />
           ))}
@@ -45,7 +43,7 @@ export default function WeatherDashboard(props: Props) {
             ]}
             default={dashboard.view}
             onSelect={(v: string) =>
-              setState((dashboard) => dashboard.changeView(v as View))
+              updateDashboard((dashboard) => dashboard.changeView(v as View))
             }
           />
           <Select
@@ -56,7 +54,9 @@ export default function WeatherDashboard(props: Props) {
             ]}
             default={String(dashboard.forecastDays)}
             onSelect={(n) =>
-              setState((dashboard) => dashboard.changeForecastDays(Number(n)))
+              updateDashboard((dashboard) =>
+                dashboard.changeForecastDays(Number(n)),
+              )
             }
           />
         </div>
