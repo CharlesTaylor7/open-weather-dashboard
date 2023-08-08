@@ -13,24 +13,28 @@ export default function CitySearch() {
   });
 
   const getForecast = useCallback(async (location: CityLocation) => {
+    updateCityQueryResult({ type: 'loading'})
     const data = await forecast(location);
     const city = {
       label: cityLabel(location),
       data,
     };
-
+    setSearchTerm('')
     updateDashboard((dashboard) => dashboard.appendCity(city));
     updateCityQueryResult({ type: 'no-active-query' });
   }, []);
 
   const search = useCallback(async (query: string) => {
+    if (query.length === 0) return;
+
     const locations = await geocode({ q: query, limit: 5 });
 
     if (locations.length === 0) {
       updateCityQueryResult({ type: 'error', 
-        message: 'no matching location; your search term should just be a city name without commas or other punctation' });
+        message: 'No matching location; your search term should just be a city name without commas or other punctation' });
       return;
     }
+
     if (locations.length === 1) {
       const first = locations[0];
       getForecast(first);
@@ -93,7 +97,7 @@ function CitySearchResult(props: Props) {
   }
 
   if (cityQueryResult.type === 'loading') {
-    return 'loading';
+    return 'loading...';
   }
 
   if (cityQueryResult.type === 'error') {

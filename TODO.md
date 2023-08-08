@@ -1,14 +1,11 @@
 ## Tweaks
-- [ ] Loading spinner
-- [ ] Transitions:
-  - typing text should clear errors and previous results
-
-
 - [ ] Day range doesn't work
 - Prevent duplicate entries
 - Omit country specifier if U.S.
 - Format the dates on the table view
 - min width, so chart & input box aren't so bouncy
+
+- [ ] Loading spinner
 
 ## Shortlist
 - [x] Setup tooling
