@@ -5,11 +5,8 @@ type ForecastQuery = {
   lat: number;
   lon: number;
   lang?: string;
-  // TODO: value object for unit types: Farenheight, Celsius, Standard
   units?: 'imperial' | 'metric';
 };
-
-// IDEA: include feels_like / humidity
 
 // We only need an array of time against temperature to build a chart
 export type Forecast = Array<{

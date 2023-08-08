@@ -73,18 +73,6 @@ export default function WeatherDashboard(props: Props) {
   );
 }
 
-type ButtonToggleProps = {
-  label: string;
-};
-
-function ButtonToggle(props: ButtonToggleProps) {
-  return (
-    <button className="bg-green-300 p-2 border rounded-lg">
-      {props.label}
-    </button>
-  );
-}
-
 type TableProps = {
   'data-testid'?: string;
   data: Array<TimeSeries>;
@@ -97,24 +85,34 @@ function Table(props: TableProps) {
       data-testid={props['data-testid']}
     >
       <table className="border-separate border-spacing-0">
+        <thead>
+          <tr>
+            <th scope="col" />
+            {props.data[0].data.map((d) => (
+              <th scope="col"
+                className="border-slate-400 p-4 border-l"
+              >{d.x}</th>
+            ))}
+          </tr>
+        </thead>
         <tbody>
           {props.data.map(({ name, data }, j) => (
             <tr key={j}>
               <th
+                scope="row"
                 className={`
-                border-slate-400 p-4
-                ${j !== 0 ? 'border-t' : ''} 
-              `}
+                  border-slate-400 p-4
+                  border-t
+                `}
               >
                 {name}
               </th>
               {data.map((d, i) => (
                 <td
                   className={`
-                  border-slate-400 p-4
-                  border-l
-                  ${j !== 0 ? 'border-t' : ''} 
-                `}
+                    border-slate-400 p-4
+                    border-l border-t
+                  `}
                   key={i}
                 >
                   {d.y}℉

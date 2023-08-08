@@ -10,6 +10,7 @@
 - [ ] Author unit tests for the dashboard domain model 
 - [ ] Gif recording of responsive screensize
 - [ ] Extract modular React Components
+- [ ] Table view should show dates
 
 ## UI Functionality
 - [x] City Temperature Chart with dates/times on the x axis

@@ -15,7 +15,7 @@ type Option = {
 export default function Select(props: Props) {
   // there are some negative margin shenanigans to replace the browser defualt caret icon.
   // "appearance-none" removes the default caret from the <select>
-  // the right padding + negative margin, "pr-9 -mr-9", 
+  // the right padding + negative margin, "pr-9 -mr-9",
   // shifts the custom caret to be within the border of the <select> element.
   //
   // There's some cleanup margin on the outer div: "mr-2". This ensures a list of multiple Select components don't overlap each other.
