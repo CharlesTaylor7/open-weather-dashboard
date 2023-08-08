@@ -12,27 +12,6 @@ export default function CitySearch() {
     type: 'no-active-query',
   });
 
-  const search = useCallback(async (query: string) => {
-    const locations = await geocode({ q: query, limit: 5 });
-
-    if (locations.length === 0) {
-      updateCityQueryResult({ type: 'error', message: 'no matching location' });
-      return;
-    }
-    if (locations.length === 1) {
-      const first = locations[0];
-      const data = await forecast({ lat: first.lat, lon: first.lon });
-      const city = {
-        label: cityLabel(first),
-        data,
-      };
-
-      updateDashboard((dashboard) => dashboard.appendCity(city));
-      return;
-    }
-    updateCityQueryResult({ type: 'geocoding', locations });
-  }, []);
-
   const getForecast = useCallback(async (location: CityLocation) => {
     const data = await forecast(location);
     const city = {
@@ -42,6 +21,22 @@ export default function CitySearch() {
 
     updateDashboard((dashboard) => dashboard.appendCity(city));
     updateCityQueryResult({ type: 'no-active-query' });
+  }, []);
+
+  const search = useCallback(async (query: string) => {
+    const locations = await geocode({ q: query, limit: 5 });
+
+    if (locations.length === 0) {
+      updateCityQueryResult({ type: 'error', 
+        message: 'no matching location; your search term should just be a city name without commas or other punctation' });
+      return;
+    }
+    if (locations.length === 1) {
+      const first = locations[0];
+      getForecast(first);
+      return;
+    }
+    updateCityQueryResult({ type: 'geocoding', locations });
   }, []);
   return (
     <>
@@ -68,7 +63,7 @@ export default function CitySearch() {
           <img src={searchIcon} height="20" width="20" />
         </button>
       </div>
-      <CitySearchResult result={cityQueryResult} onClick={(city) => {}} />
+      <CitySearchResult result={cityQueryResult} onClick={getForecast} />
     </>
   );
 }
@@ -83,10 +78,15 @@ function CitySearchResult(props: Props) {
   if (cityQueryResult.type === 'geocoding') {
     return (
       <div className="flex flex-col gap-3">
+        Multiple matching cities, select from:
         {cityQueryResult.locations.map((city, i) => (
-          <div key={i} onClick={() => props.onClick(city)}>
+          <button
+            className="bg-blue-200 py-1 px-2 rounded border"
+            key={i}
+            onClick={() => props.onClick(city)}
+          >
             {cityLabel(city)}
-          </div>
+          </button>
         ))}
       </div>
     );
