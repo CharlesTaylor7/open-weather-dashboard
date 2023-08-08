@@ -2,6 +2,7 @@ import { useState } from 'react';
 import caretIcon from '@/icons/dropdown-caret.svg';
 import searchIcon from '@/icons/search.svg';
 import TimeSeriesLineChart from '@/components/TimeSeriesLineChart';
+import Pill from '@/components/Pill';
 import WeatherDashboardState from '@/weather-dashboard';
 import type { TimeSeries } from '@/weather-dashboard';
 
@@ -114,24 +115,6 @@ function Dropdown(props: DropdownProps) {
       <span className="pointer-events-none pl-2">
         <img src={caretIcon} height="20" width="20" />
       </span>
-    </div>
-  );
-}
-
-type PillProps = {
-  label: string;
-  onClickRemove: () => void;
-};
-function Pill(props: PillProps) {
-  return (
-    <div className="flex items-center border rounded-3xl px-2 py-1 gap-2 bg-slate-200">
-      <span>{props.label}</span>
-      <button
-        className="flex items-center justify-center h-5 w-5 border rounded-full hover:bg-red-200"
-        onClick={props.onClickRemove}
-      >
-        ×
-      </button>
     </div>
   );
 }

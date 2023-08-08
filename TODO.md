@@ -13,13 +13,13 @@
 
 ## UI Functionality
 - [x] City Temperature Chart with dates/times on the x axis
-- [ ] Table view for Temperatures
+- [x] Table view for Temperatures
 - [ ] City Search Input
 - [ ] Add to list button
-- [ ] List of cities component
-- [ ] Remove city from list
-- [ ] Toggle between 3 day & 7 day forecast
-- [ ] Toggle between chart & table view
+- [x] List of cities component
+- [x] Remove city from list
+- [x] Toggle between 3 day & 7 day forecast
+- [x] Toggle between chart & table view
 
 ## Testing
 - [ ] End 2 end UI tests
