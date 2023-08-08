@@ -10,6 +10,7 @@ type Props = {
 
 export default function ForecastChart(props: Props) {
   if (props.data.length === 0) return null;
+
   return <NonEmptyForecastChart {...props} />;
 }
 
