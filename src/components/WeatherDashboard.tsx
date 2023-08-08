@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import caretIcon from '@/icons/dropdown-caret.svg';
 import searchIcon from '@/icons/search.svg';
 import TimeSeriesLineChart from '@/components/TimeSeriesLineChart';
 import Pill from '@/components/Pill';
+import Select from '@/components/Select';
 import WeatherDashboardState from '@/weather-dashboard';
 import type { TimeSeries } from '@/weather-dashboard';
 
@@ -45,7 +45,7 @@ export default function WeatherDashboard(props: Props) {
           <Table data-testid="table" data={dashboard.allCityTimeSeries()} />
         )}
         <div className="flex flex-wrap gap-3">
-          <Dropdown
+          <Select
             data-testid="dropdown-view-type"
             options={[
               { value: 'chart', label: 'Chart View' },
@@ -56,7 +56,7 @@ export default function WeatherDashboard(props: Props) {
               setState((dashboard) => dashboard.changeView(v as View))
             }
           />
-          <Dropdown
+          <Select
             data-testid="dropdown-day-range"
             options={[
               { value: '3', label: '3 Day View' },
@@ -82,40 +82,6 @@ function ButtonToggle(props: ButtonToggleProps) {
     <button className="bg-green-300 p-2 border rounded-lg">
       {props.label}
     </button>
-  );
-}
-
-type DropdownProps = {
-  'data-testid'?: string;
-  options: Array<Option>;
-  default: string;
-  onSelect: (value: string) => void;
-};
-
-type Option = {
-  value: string;
-  label: string;
-};
-
-function Dropdown(props: DropdownProps) {
-  return (
-    <div className="flex items-center mr-2">
-      <select
-        className="outline-0 appearance-none border rounded-lg bg-green-300 p-2 pr-9 -mr-9"
-        data-testid={props['data-testid']}
-        defaultValue={props.default}
-        onChange={(e) => props.onSelect(e.target.value)}
-      >
-        {props.options.map((o, i) => (
-          <option className="" key={o.value} value={o.value}>
-            {o.label}
-          </option>
-        ))}
-      </select>
-      <span className="pointer-events-none pl-2">
-        <img src={caretIcon} height="20" width="20" />
-      </span>
-    </div>
   );
 }
 
