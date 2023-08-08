@@ -5,6 +5,9 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import WeatherDashboard from '@/components/WeatherDashboard';
 
+// I want the test suite to be as close as simulcram to the browser as possible
+// I wasn't planning to mock out apexcharts
+// But it doesn't play nice with jsdom
 jest.mock(
   'apexcharts',
   () =>
@@ -13,6 +16,27 @@ jest.mock(
       render() {}
     },
 );
+
+// mock browser fetch calls
+// approved open weather apis succeed with fake results
+// other calls fail
+beforeAll(() => {
+  global.fetch = jest.fn((url) => {
+    json() {
+      if (url.startswith('https://api.openweathermap.org/geo/1.0/direct')) {
+        return Promise.resolve({})
+      } 
+      else if (url.startswith('https://api.openweathermap.org/data/3.0/onecall'))
+        return Promise.resolve({})
+      }
+      throw Error("unexpected fetch call")
+    }
+  })
+})
+
+afterEach(() => {
+  global.fetch.mockClear();
+})
 
 describe('WeatherDashboard', () => {
   test('Toggle Chart/Table view', async () => {
