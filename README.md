@@ -2,6 +2,8 @@
 
 This is a dashboard that uses Open Weather API to display weather conditions for nearly any city in the world.
 
+This project is deployed to github pages: https://charlestaylor7.github.io/open-weather-dashboard
+
 
 ## CI/CD
 Continuous Integration is implemented through Github actions.
@@ -12,12 +14,15 @@ If all the validation passed, the project is deployed to Github pages.
 Since this a solo project the CI configuration is setup for `main` only. 
 If this were a team project the CI, (but not the deployments), would be setup to run for Pull requests.
 
-## Implementation Notes
+## Implementation Notes / Known Defects
 
-As this is an MVP, I elected to omit things that are supported by the Open Weather API, but weren't requested in the project description:
+In the interest of time, I elected to omit things that would be nice to have but weren't required.
 
-- The first city matching the search terms is used. There is no way for the user to disambiguate results.
 - Temperatures are in Farenheit, can't request Celsius currently.
+- The search query doesn't handle abbreviated state codes.
+  e.g.
+  "Chattanooga, Tennessee", or "Chattanooga" yields search results.
+  "Chattanooga, TN" yields no results.
 
 
 ## Import style
