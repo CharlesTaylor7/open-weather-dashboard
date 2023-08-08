@@ -35,6 +35,16 @@ export default class WeatherDashboard {
     });
   }
 
+  removeCity(index: number): WeatherDashboard {
+    const copy = Array.from(this.cities);
+    // splice deletes and shifts elements in place
+    copy.splice(index, 1);
+    return new WeatherDashboard({
+      ...this,
+      cities: copy,
+    });
+  }
+
   allCityTimeSeries(): Array<TimeSeries> {
     return this.cities.map((city) =>
       randomTimeSeries(city.label, this.forecastDays),

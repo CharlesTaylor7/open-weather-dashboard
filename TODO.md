@@ -6,9 +6,10 @@
 - [x] Design a mockup of the site, and present it to others for feedback
 - [x] Build a static version of the site
 - [x] Dynamic views: day range, & table/chart
-- [ ] With TDD (unit tests), implement a Domain model for application state
 - [ ] With TDD (e2e tests), wire together the application state with the UI
+- [ ] Author unit tests for the dashboard domain model 
 - [ ] Gif recording of responsive screensize
+- [ ] Extract modular React Components
 
 ## UI Functionality
 - [x] City Temperature Chart with dates/times on the x axis
