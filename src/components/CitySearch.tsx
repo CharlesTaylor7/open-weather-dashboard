@@ -32,6 +32,17 @@ export default function CitySearch() {
     }
     updateCityQueryResult({ type: 'geocoding', locations });
   }, []);
+
+  const getForecast = useCallback(async (location: CityLocation) => {
+    const data = await forecast(location);
+    const city = {
+      label: cityLabel(location),
+      data,
+    };
+
+    updateDashboard((dashboard) => dashboard.appendCity(city));
+    updateCityQueryResult({ type: 'no-active-query' });
+  }, []);
   return (
     <>
       <div className="flex gap-2 items-center w-full">
@@ -57,23 +68,25 @@ export default function CitySearch() {
           <img src={searchIcon} height="20" width="20" />
         </button>
       </div>
-      <CitySearchResult result={cityQueryResult} />
+      <CitySearchResult result={cityQueryResult} onClick={(city) => {}} />
     </>
   );
 }
 
 type Props = {
   result: CityQueryResult;
+  onClick: (location: CityLocation) => void;
 };
 
 function CitySearchResult(props: Props) {
   const { result: cityQueryResult } = props;
-  // TODO: lat long
   if (cityQueryResult.type === 'geocoding') {
     return (
       <div className="flex flex-col gap-3">
-        {cityQueryResult.locations.map((city) => (
-          <div>{cityLabel(city)}</div>
+        {cityQueryResult.locations.map((city, i) => (
+          <div key={i} onClick={() => props.onClick(city)}>
+            {cityLabel(city)}
+          </div>
         ))}
       </div>
     );
@@ -84,7 +97,7 @@ function CitySearchResult(props: Props) {
   }
 
   if (cityQueryResult.type === 'error') {
-    return 'error';
+    return <span>{cityQueryResult.message}</span>;
   }
   return null;
 }
@@ -95,10 +108,16 @@ function cityLabel(location: CityLocation) {
     .join(', ');
 }
 
+type Coordinates = {
+  lat: number;
+  lon: number;
+};
+
 type CityQueryResult =
   | { type: 'no-active-query' }
   | {
       type: 'error';
+      message: string;
     }
   | {
       type: 'loading';
