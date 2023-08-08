@@ -11,14 +11,21 @@ export default function TimeSeriesLineChart(props: Props) {
   const chartRootDivRef = useRef<HTMLDivElement>(null);
   const apexChartRef = useRef<ApexChart | null>(null);
 
-  // render the chart
+  // initial render & unmount of the chart
   useEffect(() => {
-    let chart = apexChartRef.current;
-    if (chart === null) {
-      chart = new ApexChart(chartRootDivRef.current!, defaultChartOptions());
-      chart.render();
-      apexChartRef.current = chart;
-    }
+    const chart = new ApexChart(
+      chartRootDivRef.current!,
+      defaultChartOptions(),
+    );
+    chart.render();
+    apexChartRef.current = chart;
+    return () => apexChartRef.current?.destroy();
+  }, []);
+
+  // handle updates to the chart
+  useEffect(() => {
+    const chart = apexChartRef.current;
+    if (chart === null) return;
     chart.updateSeries(props.data);
   }, [props.data]);
 

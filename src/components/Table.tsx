@@ -14,7 +14,7 @@ type Coordinates = {
 
 export default function Table(props: Props) {
   if (props.rowCount === 0 || props.columnCount === 0) {
-    return null
+    return null;
   }
   return (
     <div
