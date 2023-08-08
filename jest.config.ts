@@ -6,6 +6,9 @@ export default {
   transform: {
     '^.+\\.tsx?$': ['@swc/jest'],
   },
+  setupFilesAfterEnv: [
+    '@testing-library/jest-dom/extend-expect'
+  ],
   testRegex: 'test\\.tsx?$',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'json'],
   moduleNameMapper: {
