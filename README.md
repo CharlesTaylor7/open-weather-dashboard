@@ -23,6 +23,9 @@ In the interest of time, I elected to omit things that would be nice to have but
   e.g.
   "Chattanooga, Tennessee", or "Chattanooga" yields search results.
   "Chattanooga, TN" yields no results.
+  Open Weather's api doesn't handle this, but a possible improvement would be to parse the search query and expand state code abbreviations before calling the Geocoding API.
+
+- ApexCharts starts recycling colors after 5 lines in a graph. So ideally we'd configure that to be a longer sequence of colors.
 
 
 ## Import style
