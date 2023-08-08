@@ -1,11 +1,6 @@
 export default class WeatherDashboard {
-  readonly cities: Array<City> = [
-    'Chattanooga',
-    'Knoxville',
-    'Cleveland',
-    'Atlanta',
-  ].map((label) => ({ label, data: [] }));
-  readonly cityQueryResult: CityQueryResult = { type: 'no-active-query' };
+  readonly cities: Array<CityForecast> = [];
+  //readonly cityQueryResult: CityQueryResult = { type: 'no-active-query' };
   readonly view: View = 'chart';
   readonly forecastDays: number = 3;
 
@@ -29,7 +24,7 @@ export default class WeatherDashboard {
     });
   }
 
-  appendCity(city: City): WeatherDashboard {
+  appendCity(city: CityForecast): WeatherDashboard {
     return new WeatherDashboard({
       ...this,
       cities: [...this.cities, city],
@@ -47,9 +42,13 @@ export default class WeatherDashboard {
   }
 
   allCityTimeSeries(): Array<TimeSeries> {
-    return this.cities.map((city) =>
-      randomTimeSeries(city.label, this.forecastDays),
-    );
+    return this.cities.map((city) => ({
+      name: city.label,
+      data: city.data.map((d) => ({
+        x: d.datetime.toISOString(),
+        y: d.temperature,
+      })),
+    }));
   }
 
   searchForCity(text: string) {}
@@ -57,7 +56,7 @@ export default class WeatherDashboard {
 
 export type View = 'chart' | 'table';
 
-export type City = {
+export type CityForecast = {
   label: string;
   data: Array<{
     datetime: Date;
@@ -76,6 +75,7 @@ export class City {
   }>;
 };
 */
+/*
 export type CityQueryResult =
   | { type: 'no-active-query' }
   | {
@@ -85,9 +85,10 @@ export type CityQueryResult =
       type: 'loading';
     }
   | {
-      type: 'success';
+      type: 'geocoding';
       cities: Array<{}>;
     };
+*/
 
 export type TimeSeries = {
   name: string;
@@ -101,13 +102,3 @@ export type TimeSeries = {
 type Fields<T> = {
   [K in keyof T as T[K] extends Function ? never : K]: T[K];
 };
-
-function randomTimeSeries(name: string, length: number): TimeSeries {
-  return {
-    name,
-    data: Array.from({ length }, (_, k) => ({
-      x: `01-${k + 1}`,
-      y: Math.floor(Math.random() * 100),
-    })),
-  };
-}
