@@ -4,6 +4,7 @@ import searchIcon from '@/icons/search.svg';
 import TimeSeriesLineChart, {
   TimeSeries,
 } from '@/components/TimeSeriesLineChart';
+import WeatherDashboardState from '@/weather-dashboard';
 
 type View = 'chart' | 'table';
 type Props = {};
@@ -11,8 +12,9 @@ type Props = {};
 const cities = ['Chattanooga', 'Knoxville', 'Cleveland', 'Atlanta'];
 
 export default function Mockup(props: Props) {
-  const [dayRange, setDayRange] = useState<number>(7);
-  const [view, setView] = useState<View>('table');
+  const [state, setState] = useState<WeatherDashboardState>(
+    new WeatherDashboardState(),
+  );
 
   return (
     <div className="flex w-full justify-center items-center">
@@ -48,8 +50,10 @@ export default function Mockup(props: Props) {
               { value: 'chart', label: 'Chart View' },
               { value: 'table', label: 'Table View' },
             ]}
-            default="table"
-            onSelect={(v: string) => setView(v as View)}
+            default={state.view}
+            onSelect={(v: string) =>
+              setState((dashboard) => dashboard.changeView(v as View))
+            }
           />
           <Dropdown
             data-testid="dropdown-day-range"
@@ -57,8 +61,10 @@ export default function Mockup(props: Props) {
               { value: '3', label: '3 Day View' },
               { value: '7', label: '7 Day View' },
             ]}
-            default="7"
-            onSelect={(n) => setDayRange(Number(n))}
+            default={String(dashboard.forecastDays)}
+            onSelect={(n) =>
+              setState((dashboard) => dashboard.changeForecastDays(Number(n)))
+            }
           />
         </div>
       </div>

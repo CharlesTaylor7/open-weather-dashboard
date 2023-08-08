@@ -51,13 +51,13 @@ describe('WeatherDashboard', () => {
       dom.getByTestId('dropdown-view-type'),
       dom.getByRole('option', { name: 'Table View' }),
     );
-    expect((await dom.findByTestId("table"))).toBeVisible();
+    expect(await dom.findByTestId('table')).toBeVisible();
 
     // view as chart
     await userEvent.selectOptions(
       dom.getByTestId('dropdown-view-type'),
       dom.getByRole('option', { name: 'Chart View' }),
     );
-    expect((await dom.findByTestId("chart"))).toBeVisible();
+    expect(await dom.findByTestId('chart')).toBeVisible();
   });
 });
