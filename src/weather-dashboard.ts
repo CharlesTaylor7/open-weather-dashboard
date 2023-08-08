@@ -1,6 +1,5 @@
 export default class WeatherDashboard {
   readonly cities: Array<CityForecast> = [];
-  readonly cityQueryResult: CityQueryResult = { type: 'no-active-query' };
   readonly view: View = 'chart';
   readonly forecastDays: number = 3;
 
@@ -76,20 +75,6 @@ export type CityLocation = {
   lat: number;
   lon: number;
 };
-
-export type CityQueryResult =
-  | { type: 'no-active-query' }
-  | {
-      type: 'error';
-    }
-  | {
-      type: 'loading';
-    }
-  | {
-      type: 'geocoding';
-      cities: Array<CityLocation>;
-    };
-
 export type TimeSeries = {
   name: string;
   data: Array<{ x: string; y: number }>;

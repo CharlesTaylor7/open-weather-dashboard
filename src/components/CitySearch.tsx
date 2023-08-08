@@ -7,6 +7,10 @@ import { RawGeocodingResponse, geocode } from '@/api/geocoding';
 
 export default function CitySearch() {
   const [dashboard, updateDashboard] = useDashboardState();
+  const [searchTerm, setSearchTerm] = useState('');
+  const [cityQueryResult, updateCityQueryResult] = useState<CityQueryResult>({
+    type: 'no-active-query',
+  });
 
   const textInputRef = useRef<HTMLInputElement>(null);
   const search = useCallback(async () => {
@@ -14,10 +18,19 @@ export default function CitySearch() {
     if (!textInput) {
       return;
     }
-    updateDashboard((dashboard) => dashboard.beginCityQuery());
-    const city = await fetchEightDayForecast(textInput.value);
-    updateDashboard((dashboard) => dashboard.appendCity(city));
+    const query = textInput.value;
     textInput.value = '';
+    const locations = await geocode({ q: textInput.value });
+    updateCityQueryResult({ type: 'geocoding', locations})
+
+    const first = locations[0];
+    const data = await forecast({ lat: first.lat, lon: first.lon });
+    const city = {
+      label: cityLabel(first),
+      data,
+    };
+
+    updateDashboard((dashboard) => dashboard.appendCity(city));
   }, []);
   // TODO:
   // - onkeyboard enter for search
@@ -33,46 +46,44 @@ export default function CitySearch() {
           ref={textInputRef}
           onKeyDown={(e) => (e.key === 'Enter' ? search() : undefined)}
         />
-        <button className="p-2 bg-blue-200 border rounded-lg" onClick={search}>
+        <button 
+          className="p-2 bg-blue-200 border rounded-lg" 
+          onClick={search}
+          disabled={searchTerm === '' || cityQueryResult.type === 'loading' }
+        >
           <img src={searchIcon} height="20" width="20" />
         </button>
       </div>
-      <CitySearchResult />
+      <CitySearchResult result={cityQueryResult} />
     </>
   );
 }
 
-function CitySearchResult() {
-  const [dashboard, updateDashboard] = useDashboardState();
+type Props = {
+  result: CityQueryResult;
+};
 
+function CitySearchResult(props: Props) {
+  const { result: cityQueryResult } = props;
   // TODO: lat long
-  if (dashboard.cityQueryResult.type === 'geocoding') {
+  if (cityQueryResult.type === 'geocoding') {
     return (
       <div className="flex flex-col gap-3">
-        {dashboard.cityQueryResult.cities.map((city) => (
+        {cityQueryResult.locations.map((city) => (
           <div>{cityLabel(city)}</div>
         ))}
       </div>
     );
   }
 
-  if (dashboard.cityQueryResult.type === 'loading') {
+  if (cityQueryResult.type === 'loading') {
     return 'loading';
   }
 
-  if (dashboard.cityQueryResult.type === 'error') {
+  if (cityQueryResult.type === 'error') {
     return 'error';
   }
   return null;
-}
-async function fetchEightDayForecast(query: string): Promise<CityForecast> {
-  const locations = await geocode({ q: query });
-  const first = locations[0];
-  const data = await forecast({ lat: first.lat, lon: first.lon });
-  return {
-    label: cityLabel(first),
-    data,
-  };
 }
 
 function cityLabel(location: CityLocation) {
@@ -80,3 +91,16 @@ function cityLabel(location: CityLocation) {
     .filter((term) => term)
     .join(', ');
 }
+
+type CityQueryResult =
+  | { type: 'no-active-query' }
+  | {
+      type: 'error';
+    }
+  | {
+      type: 'loading';
+    }
+  | {
+      type: 'geocoding';
+      locations: Array<CityLocation>;
+    };
