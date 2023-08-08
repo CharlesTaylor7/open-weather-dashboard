@@ -13,6 +13,9 @@ type Coordinates = {
 };
 
 export default function Table(props: Props) {
+  if (props.rowCount === 0 || props.columnCount === 0) {
+    return null
+  }
   return (
     <div
       className="border border-slate-400 rounded-2xl max-w-full overflow-x-scroll"
