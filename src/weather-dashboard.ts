@@ -43,4 +43,5 @@ export type City = {
 type FieldNames<T> = {
   [K in keyof T]: T[K] extends Function ? never : K;
 }[keyof T];
-type Fields<T> = { [K in FieldNames<T>]: T[K] };
+
+type Fields<T> = Pick<T, FieldNames<T>>
