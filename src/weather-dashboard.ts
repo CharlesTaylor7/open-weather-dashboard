@@ -43,11 +43,19 @@ export default class WeatherDashboard {
   allCityTimeSeries(): Array<TimeSeries> {
     return this.cities.map((city) => ({
       name: city.label,
-      data: city.data.map((d) => ({
-        x: d.datetime.toISOString(),
-        y: d.temperature,
-      })).slice(0, this.forecastDays),
+      data: city.data
+        .map((d) => ({
+          x: WeatherDashboard.formatDate(d.datetime),
+          y: d.temperature,
+        }))
+        .slice(0, this.forecastDays),
     }));
+  }
+
+  static formatDate(datetime: Date) {
+    const month = String(datetime.getMonth()).padStart(2, '0');
+    const day = String(datetime.getDay()).padStart(2, '0');
+    return `${month}-${day}`;
   }
 
   beginCityQuery(): WeatherDashboard {

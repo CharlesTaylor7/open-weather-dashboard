@@ -15,7 +15,7 @@ export default function ForecastTable(props: Props) {
       formatRowHeader={(rowIndex) => props.data[rowIndex].name}
       formatColumnHeader={(columnIndex) => props.data[0].data[columnIndex].x}
       formatCell={({ rowIndex, columnIndex }) =>
-        `${props.data[rowIndex].data[columnIndex].y}℉`
+        `${props.data[rowIndex].data[columnIndex].y.toFixed(0)}℉`
       }
     />
   );
