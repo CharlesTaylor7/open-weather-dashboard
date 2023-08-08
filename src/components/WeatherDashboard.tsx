@@ -2,7 +2,7 @@ import { useState } from 'react';
 import searchIcon from '@/icons/search.svg';
 import Pill from '@/components/Pill';
 import Select from '@/components/Select';
-import ForecastChart from '@/components/TimeSeriesLineChart';
+import ForecastChart from '@/components/ForecastChart';
 import ForecastTable from '@/components/ForecastTable';
 import WeatherDashboardState from '@/weather-dashboard';
 import type { TimeSeries } from '@/weather-dashboard';
