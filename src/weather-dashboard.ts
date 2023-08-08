@@ -5,6 +5,7 @@ export default class WeatherDashboard {
     'Cleveland',
     'Atlanta',
   ].map((label) => ({ label, data: [] }));
+  readonly cityQueryResult: CityQueryResult = { type: 'no-active-query' };
   readonly view: View = 'chart';
   readonly forecastDays: number = 3;
 
@@ -50,6 +51,8 @@ export default class WeatherDashboard {
       randomTimeSeries(city.label, this.forecastDays),
     );
   }
+
+  searchForCity(text: string) {}
 }
 
 export type View = 'chart' | 'table';
@@ -57,7 +60,7 @@ export type View = 'chart' | 'table';
 export type City = {
   label: string;
   data: Array<{
-    date: Date;
+    datetime: Date;
     temperature: number;
   }>;
 };
@@ -73,6 +76,18 @@ export class City {
   }>;
 };
 */
+export type CityQueryResult =
+  | { type: 'no-active-query' }
+  | {
+      type: 'error';
+    }
+  | {
+      type: 'loading';
+    }
+  | {
+      type: 'success';
+      cities: Array<{}>;
+    };
 
 export type TimeSeries = {
   name: string;

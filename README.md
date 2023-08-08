@@ -16,7 +16,7 @@ If this were a team project the CI, (but not the deployments), would be setup to
 
 As this is an MVP, I elected to omit things that are supported by the Open Weather API, but weren't requested in the project description:
 
-- The search format is simply city, state, non U.S. locations are not supported.
+- The first city matching the search terms is used. There is no way for the user to disambiguate results.
 - Temperatures are in Farenheit, can't request Celsius currently.
 
 

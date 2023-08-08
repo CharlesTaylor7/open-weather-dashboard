@@ -10,7 +10,7 @@ type ForecastQuery = {
 
 // We only need an array of time against temperature to build a chart
 export type Forecast = Array<{
-  timestamp: Date;
+  datetime: Date;
   temperature: number;
 }>;
 
@@ -25,6 +25,7 @@ type RawForecast = {
 };
 
 export function forecast(query: ForecastQuery): Promise<Forecast> {
+  console.log(query);
   let response;
 
   if (process.env.NODE_ENV === 'production') {
@@ -38,10 +39,14 @@ export function forecast(query: ForecastQuery): Promise<Forecast> {
 
   return response.then((forecast) =>
     forecast.daily.map((raw) => ({
-      timestamp: new Date(1000 * raw.dt),
+      datetime: new Date(1000 * raw.dt),
       temperature: raw.temp.day,
     })),
   );
+}
+function tap<T>(x: T): T {
+  console.log(x);
+  return x;
 }
 
 async function rawForecastWithLocalStorage(
