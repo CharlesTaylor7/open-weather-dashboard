@@ -10,7 +10,6 @@
 - [ ] With TDD (e2e tests), wire together the application state with the UI
 - [ ] Author unit tests for the dashboard domain model 
 - [ ] Gif recording of responsive screensize
-- [ ] Separate ForecastChart & Chart components
 
 ## UI Functionality
 - [x] City Temperature Chart with dates/times on the x axis

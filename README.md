@@ -2,18 +2,27 @@
 
 This is a dashboard that uses Open Weather API to display weather conditions for nearly any city in the world.
 
+
+## CI/CD
+Continuous Integration is implemented through Github actions.
+
+Every push to `main` validates the projects linting, test suite, typescript, and prettier format.
+If all the validation passed, the project is deployed to Github pages.
+
+Since this a solo project the CI configuration is setup for `main` only. 
+If this were a team project the CI, (but not the deployments), would be setup to run for Pull requests.
+
 ## Implementation Notes
 
-### Import style
-Javascript doesn't provide absolute imports by default.
+As this is an MVP, I elected to omit things that are supported by the Open Weather API, but weren't requested in the project description:
 
-A lot of the code in the wild imports code relatively:
+- The search format is simply city, state, non U.S. locations are not supported.
+- Temperatures are in Farenheit, can't request Celsius currently.
 
-```ts
-// In file src/bar.ts
-import foo from './foo'
-```
 
-This code works today, but if I want to move logic between files, the relative imports may become incorrect. You can make refactoring less of headache by using absolute imports everywhere.
+## Import style
+JS relative imports can make code refactoring tricky.
 
-So the project sets up a path alias, so that any prefix of `@/foo` resolves to an absolute import of `src/foo.ts`.
+So in the `tsconfig.json` & `vite.config.ts` files, I've setup a path alias for absolute imports.
+
+`@/foo` resolves to an absolute import of `src/foo.ts`.

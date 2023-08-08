@@ -11,7 +11,7 @@ type View = 'chart' | 'table';
 type Props = {};
 
 export default function WeatherDashboard(props: Props) {
-  const [dashboard, setState] = useState<WeatherDashboardState>(
+  const [dashboard, updateDashboard] = useState<WeatherDashboardState>(
     new WeatherDashboardState(),
   );
 
@@ -19,14 +19,8 @@ export default function WeatherDashboard(props: Props) {
     <div className="flex w-full justify-center items-center">
       <div className="flex flex-col gap-5 m-5 max-w-4/5 justify-center items-start">
         <header className="self-center bold text-2xl">Weather Dashboard</header>
-        <div className="flex gap-2 items-center w-full">
-          <label>City, State</label>
-          <input className="grow border rounded p-2" type="text" />
-          <button className="p-2 bg-blue-200 border rounded-lg">
-            <img src={searchIcon} height="20" width="20" />
-          </button>
-        </div>
-        <div className="flex flex-wrap gap-2">
+        <CitySearch />
+       <div className="flex flex-wrap gap-2">
           {dashboard.cities.map((city, index) => (
             <Pill
               key={index}
