@@ -43,7 +43,10 @@ export default function CitySearch() {
           className="grow border rounded p-2"
           type="text"
           value={searchTerm}
-          onChange={e => setSearchTerm(e.target.value)}
+          onChange={e => {
+            setSearchTerm(e.target.value)
+            updateCityQueryResult({ type: 'no-active-query'})
+          }}
           onKeyDown={(e) => (e.key === 'Enter' ? search(searchTerm) : undefined)}
         />
         <button 

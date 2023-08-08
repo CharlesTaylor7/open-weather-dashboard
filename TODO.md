@@ -1,7 +1,9 @@
 ## Tweaks
-- [x] Autofocus city search
-- [x] Keyboard enter to search
-- [ ] Loading state
+- [ ] Loading spinner
+- [ ] Transitions:
+  - typing text should clear errors and previous results
+
+
 - [ ] Day range doesn't work
 - Prevent duplicate entries
 - Omit country specifier if U.S.
