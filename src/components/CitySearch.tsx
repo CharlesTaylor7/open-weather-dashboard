@@ -12,28 +12,26 @@ export default function CitySearch() {
     type: 'no-active-query',
   });
 
-  const textInputRef = useRef<HTMLInputElement>(null);
   const search = useCallback(async (query: string) => {
-    const locations = await geocode({ q: query });
-    updateCityQueryResult({ type: 'geocoding', locations})
+    const locations = await geocode({ q: query, limit: 5 });
 
-    const first = locations[0];
-    if (!first) {
-      updateCityQueryResult({ type: 'error'})
-      return
+    if (locations.length === 0) {
+      updateCityQueryResult({ type: 'error', message: 'no matching location' });
+      return;
     }
+    if (locations.length === 1) {
+      const first = locations[0];
+      const data = await forecast({ lat: first.lat, lon: first.lon });
+      const city = {
+        label: cityLabel(first),
+        data,
+      };
 
-    const data = await forecast({ lat: first.lat, lon: first.lon });
-    const city = {
-      label: cityLabel(first),
-      data,
-    };
-
-    updateDashboard((dashboard) => dashboard.appendCity(city));
+      updateDashboard((dashboard) => dashboard.appendCity(city));
+      return;
+    }
+    updateCityQueryResult({ type: 'geocoding', locations });
   }, []);
-  // TODO:
-  // - onkeyboard enter for search
-  // - disambiguate search terms
   return (
     <>
       <div className="flex gap-2 items-center w-full">
@@ -43,16 +41,18 @@ export default function CitySearch() {
           className="grow border rounded p-2"
           type="text"
           value={searchTerm}
-          onChange={e => {
-            setSearchTerm(e.target.value)
-            updateCityQueryResult({ type: 'no-active-query'})
+          onChange={(e) => {
+            setSearchTerm(e.target.value);
+            updateCityQueryResult({ type: 'no-active-query' });
           }}
-          onKeyDown={(e) => (e.key === 'Enter' ? search(searchTerm) : undefined)}
+          onKeyDown={(e) =>
+            e.key === 'Enter' ? search(searchTerm) : undefined
+          }
         />
-        <button 
-          className="p-2 bg-blue-200 border rounded-lg" 
+        <button
+          className="p-2 bg-blue-200 border rounded-lg"
           onClick={() => search(searchTerm)}
-          disabled={searchTerm === '' || cityQueryResult.type === 'loading' }
+          disabled={searchTerm === '' || cityQueryResult.type === 'loading'}
         >
           <img src={searchIcon} height="20" width="20" />
         </button>

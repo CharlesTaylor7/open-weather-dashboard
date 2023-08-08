@@ -3,7 +3,7 @@ import type { CityLocation } from '@/weather-dashboard';
 
 type GeocodingQuery = {
   q: string;
-  limit?: number;
+  limit: number;
   lang?: string;
 };
 
@@ -15,7 +15,6 @@ export function geocode(query: GeocodingQuery): Promise<RawGeocodingResponse> {
     route: '/geo/1.0/direct',
     query: {
       lang: 'en',
-      limit: 1,
       ...query,
     },
   }) as Promise<RawGeocodingResponse>;
