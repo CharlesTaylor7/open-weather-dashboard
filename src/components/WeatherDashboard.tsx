@@ -30,9 +30,9 @@ export default function WeatherDashboard(props: Props) {
           ))}
         </div>
         {dashboard.view === 'chart' ? (
-          <ForecastChart testId="chart" data={dashboard.allCityTimeSeries()} />
+          <ForecastChart testId="chart" data={dashboard.forecasted()} />
         ) : (
-          <ForecastTable testId="table" data={dashboard.allCityTimeSeries()} />
+          <ForecastTable testId="table" data={dashboard.forecasted()} />
         )}
         <div className="flex flex-wrap gap-3">
           <Select

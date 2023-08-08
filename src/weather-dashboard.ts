@@ -40,22 +40,11 @@ export default class WeatherDashboard {
     });
   }
 
-  allCityTimeSeries(): Array<TimeSeries> {
+  forecasted(): Array<TimeSeries> {
     return this.cities.map((city) => ({
       name: city.label,
-      data: city.data
-        .map((d) => ({
-          x: WeatherDashboard.formatDate(d.datetime),
-          y: d.temperature,
-        }))
-        .slice(0, this.forecastDays),
+      data: city.data.map(d => ({ x: d.datetime, y: d.temperature })).slice(0, this.forecastDays),
     }));
-  }
-
-  static formatDate(datetime: Date) {
-    const month = String(datetime.getMonth() + 1).padStart(2, '0');
-    const day = String(datetime.getDate()).padStart(2, '0');
-    return `${month}-${day}`;
   }
 
   beginCityQuery(): WeatherDashboard {
@@ -64,6 +53,12 @@ export default class WeatherDashboard {
       cityQueryResult: { type: 'loading' },
     });
   }
+}
+
+export function formatDate(datetime: Date) {
+  const month = String(datetime.getMonth() + 1).padStart(2, '0');
+  const day = String(datetime.getDate()).padStart(2, '0');
+  return `${month}-${day}`;
 }
 
 export type View = 'chart' | 'table';
@@ -85,7 +80,7 @@ export type CityLocation = {
 };
 export type TimeSeries = {
   name: string;
-  data: Array<{ x: string; y: number }>;
+  data: Array<{ x: Date; y: number }>;
 };
 
 // This type magic grabs every property of a class that isn't a method.

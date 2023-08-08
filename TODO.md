@@ -2,45 +2,15 @@
 - Prevent duplicate entries
 - Omit country specifier if U.S.
 - min width, so chart & input box aren't so bouncy
+- [ ] Dynamic options for x axis
 
 
 ## Shortlist
-- [x] Setup tooling
-- [x] Setup CI/CD deployments to github pages
-- [x] Initial exploration of the apex chart API
-- [x] Initial exploration of open weather API
-- [x] Design a mockup of the site, and present it to others for feedback
-- [x] Build a static version of the site
-- [x] Dynamic views: day range, & table/chart
-- [x] Table view should show dates
+- [ ] DDDify the city search component state stuff
+- [ ] Unit tests
 - [ ] Rip out test ids, and e2e tests
 - [ ] Author unit tests for the dashboard domain model 
 - [ ] Gif recording of responsive screensize
-
-## UI Functionality
-- [x] City Temperature Chart with dates/times on the x axis
-- [x] Table view for Temperatures
-- [x] City Search Input
-- [x] Add to list button
-- [x] List of cities component
-- [x] Remove city from list
-- [x] Toggle between 3 day & 7 day forecast
-- [x] Toggle between chart & table view
-
-## Testing
-- [ ] End 2 end UI tests
-- [ ] Unit tests
-
-## Mprocs
-- [ ] Use nodemon or something for linting & formatting
-- [ ] Fix Jest code coverage command
-
-## Eventual
-- [ ] Move index.html to public/
-- [ ] Handle api errors, 400, 429, 5xx, etc.
-- [ ] Validate latitude & longitude before making api calls
-- [ ] DDDify the app
-- [ ] Allow the user to pick between ambiguous city search results. Example: "London"
 
 ## Not Doing
 - [ ] Implement simple express server to avoid leaking api key

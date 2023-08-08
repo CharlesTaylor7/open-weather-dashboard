@@ -1,5 +1,6 @@
 import { useRef, useEffect } from 'react';
 import ApexChart from 'apexcharts';
+import WeatherDashboard, { formatDate } from '@/weather-dashboard';
 import type { TimeSeries } from '@/weather-dashboard';
 
 type Props = {
@@ -51,15 +52,9 @@ function defaultChartOptions() {
     },
     xaxis: {
       type: 'datetime',
-      categories: [
-        '01-01',
-        '01-02',
-        '01-03',
-        '01-04',
-        '01-05',
-        '01-06',
-        '01-07',
-      ],
+      labels: {
+        formatter: (value: Date) => formatDate(value),
+      },
     },
   };
 }
