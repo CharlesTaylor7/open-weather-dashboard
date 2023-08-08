@@ -1,3 +1,13 @@
+## Tweaks
+- [x] Autofocus city search
+- [x] Keyboard enter to search
+- [ ] Loading state
+- [ ] Day range doesn't work
+- Prevent duplicate entries
+- Omit country specifier if U.S.
+- Format the dates on the table view
+- min width, so chart & input box aren't so bouncy
+
 ## Shortlist
 - [x] Setup tooling
 - [x] Setup CI/CD deployments to github pages
@@ -7,15 +17,15 @@
 - [x] Build a static version of the site
 - [x] Dynamic views: day range, & table/chart
 - [x] Table view should show dates
-- [ ] With TDD (e2e tests), wire together the application state with the UI
+- [ ] Rip out test ids, and e2e tests
 - [ ] Author unit tests for the dashboard domain model 
 - [ ] Gif recording of responsive screensize
 
 ## UI Functionality
 - [x] City Temperature Chart with dates/times on the x axis
 - [x] Table view for Temperatures
-- [ ] City Search Input
-- [ ] Add to list button
+- [x] City Search Input
+- [x] Add to list button
 - [x] List of cities component
 - [x] Remove city from list
 - [x] Toggle between 3 day & 7 day forecast

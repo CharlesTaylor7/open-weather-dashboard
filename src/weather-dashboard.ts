@@ -1,6 +1,6 @@
 export default class WeatherDashboard {
   readonly cities: Array<CityForecast> = [];
-  //readonly cityQueryResult: CityQueryResult = { type: 'no-active-query' };
+  readonly cityQueryResult: CityQueryResult = { type: 'no-active-query' };
   readonly view: View = 'chart';
   readonly forecastDays: number = 3;
 
@@ -51,7 +51,12 @@ export default class WeatherDashboard {
     }));
   }
 
-  searchForCity(text: string) {}
+  beginCityQuery(): WeatherDashboard {
+    return new WeatherDashboard({
+      ...this,
+      cityQueryResult: { type: 'loading' },
+    });
+  }
 }
 
 export type View = 'chart' | 'table';
@@ -64,18 +69,14 @@ export type CityForecast = {
   }>;
 };
 
-/* TODO: consider
-export class City {
-  city: string;
-  state: string;
+export type CityLocation = {
+  name: string;
   country: string;
-  data: Array<{
-    date: Date;
-    temperature: number;
-  }>;
+  state: string;
+  lat: number;
+  lon: number;
 };
-*/
-/*
+
 export type CityQueryResult =
   | { type: 'no-active-query' }
   | {
@@ -86,9 +87,8 @@ export type CityQueryResult =
     }
   | {
       type: 'geocoding';
-      cities: Array<{}>;
+      cities: Array<CityLocation>;
     };
-*/
 
 export type TimeSeries = {
   name: string;
