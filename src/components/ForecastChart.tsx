@@ -7,7 +7,7 @@ type Props = {
   data: TimeSeries[];
 };
 
-export default function TimeSeriesLineChart(props: Props) {
+export default function ForecastChart(props: Props) {
   const chartRootDivRef = useRef<HTMLDivElement>(null);
   const apexChartRef = useRef<ApexChart | null>(null);
 

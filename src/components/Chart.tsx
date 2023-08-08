@@ -1,10 +1,20 @@
+// @ts-nocheck
+// TODO: discard or salvage later
 import { useRef, useEffect } from 'react';
-import ApexChart from 'apexcharts';
+import ApexChart, { ApexOptions } from 'apexcharts';
 import type { TimeSeries } from '@/weather-dashboard';
 
 type Props = {
   testId?: string;
   data: TimeSeries[];
+  // only sets options on chart mount;
+  // does not react to changes
+  initialOptions: object;
+};
+
+export type Series<X, Y> = {
+  name: string;
+  data: Array<{ x: X; y: Y }>;
 };
 
 export default function TimeSeriesLineChart(props: Props) {
@@ -34,7 +44,7 @@ export default function TimeSeriesLineChart(props: Props) {
   );
 }
 
-function defaultChartOptions() {
+export function defaultChartOptions() {
   return {
     chart: {
       type: 'line',
@@ -43,6 +53,12 @@ function defaultChartOptions() {
       curve: 'smooth',
     },
     series: [],
+  };
+}
+
+function forecastOptions(): ApexOptions {
+  return {
+    ...defaultChartOptions(),
     yaxis: {
       type: 'numeric',
       labels: {
