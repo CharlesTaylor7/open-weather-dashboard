@@ -1,7 +1,7 @@
 export default class WeatherDashboard {
   readonly cities: Array<CityForecast> = [];
   readonly view: View = 'chart';
-  readonly forecastDays: number = 3;
+  readonly forecastDays: number = 7;
 
   constructor(fields?: Fields<WeatherDashboard>) {
     if (fields !== undefined) {
@@ -46,7 +46,7 @@ export default class WeatherDashboard {
       data: city.data.map((d) => ({
         x: d.datetime.toISOString(),
         y: d.temperature,
-      })),
+      })).slice(0, this.forecastDays),
     }));
   }
 
