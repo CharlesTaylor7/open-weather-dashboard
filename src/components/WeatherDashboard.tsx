@@ -89,9 +89,9 @@ function Table(props: TableProps) {
           <tr>
             <th scope="col" />
             {props.data[0].data.map((d) => (
-              <th scope="col"
-                className="border-slate-400 p-4 border-l"
-              >{d.x}</th>
+              <th scope="col" className="border-slate-400 p-4 border-l">
+                {d.x}
+              </th>
             ))}
           </tr>
         </thead>
@@ -100,19 +100,13 @@ function Table(props: TableProps) {
             <tr key={j}>
               <th
                 scope="row"
-                className={`
-                  border-slate-400 p-4
-                  border-t
-                `}
+                className="border-slate-400 p-4 border-t"
               >
                 {name}
               </th>
               {data.map((d, i) => (
                 <td
-                  className={`
-                    border-slate-400 p-4
-                    border-l border-t
-                  `}
+                  className="border-slate-400 p-4 border-l border-t"
                   key={i}
                 >
                   {d.y}℉
