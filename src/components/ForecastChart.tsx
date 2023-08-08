@@ -29,7 +29,6 @@ export default function ForecastChart(props: Props) {
     if (chart === null) return;
     chart.updateSeries(props.data);
   }, [props.data]);
-
   return (
     <div className="w-full" data-testid={props.testId} ref={chartRootDivRef} />
   );
@@ -47,13 +46,13 @@ function defaultChartOptions() {
     yaxis: {
       type: 'numeric',
       labels: {
-        formatter: (value: number) => `${value}℉`,
+        formatter: (value: number) => `${value.toFixed(0)}℉`,
       },
     },
     xaxis: {
       type: 'datetime',
       labels: {
-        formatter: (value: Date) => formatDate(value),
+        format: 'MMM dd',
       },
     },
   };
