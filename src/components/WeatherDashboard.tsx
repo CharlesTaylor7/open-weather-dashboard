@@ -55,7 +55,7 @@ export default function WeatherDashboard(props: Props) {
             }
           />
           <Select
-            data-testid="dropdown-day-range"
+            testId="dropdown-day-range"
             options={[
               { value: '3', label: '3 Day View' },
               { value: '7', label: '7 Day View' },

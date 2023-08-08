@@ -35,7 +35,7 @@ export default function Table(props: Props) {
         </thead>
         <tbody>
           {Array.from({ length: props.rowCount }, (_, rowIndex) => (
-            <tr>
+            <tr key={rowIndex}>
               <th scope="row" className="border-slate-400 p-4 border-t">
                 {props.formatRowHeader(rowIndex)}
               </th>
