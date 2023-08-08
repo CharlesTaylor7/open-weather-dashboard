@@ -1,5 +1,10 @@
 export default class WeatherDashboard {
-  readonly cities: Array<City> = [];
+  readonly cities: Array<City> = [
+    'Chattanooga',
+    'Knoxville',
+    'Cleveland',
+    'Atlanta',
+  ].map((label) => ({ label, data: [] }));
   readonly view: View = 'chart';
   readonly forecastDays: number = 3;
 
@@ -31,11 +36,14 @@ export default class WeatherDashboard {
   }
 
   allCityTimeSeries(): Array<TimeSeries> {
-    return this.cities.map((city) => randomTimeSeries(city.label, this.forecastDays));
+    return this.cities.map((city) =>
+      randomTimeSeries(city.label, this.forecastDays),
+    );
   }
 }
 
 export type View = 'chart' | 'table';
+
 export type City = {
   label: string;
   data: Array<{
@@ -43,6 +51,18 @@ export type City = {
     temperature: number;
   }>;
 };
+
+/* TODO: consider
+export class City {
+  city: string;
+  state: string;
+  country: string;
+  data: Array<{
+    date: Date;
+    temperature: number;
+  }>;
+};
+*/
 
 export type TimeSeries = {
   name: string;

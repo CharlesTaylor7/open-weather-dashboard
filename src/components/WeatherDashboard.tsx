@@ -1,14 +1,12 @@
 import { useState } from 'react';
 import caretIcon from '@/icons/dropdown-caret.svg';
 import searchIcon from '@/icons/search.svg';
-import TimeSeriesLineChart  from '@/components/TimeSeriesLineChart';
+import TimeSeriesLineChart from '@/components/TimeSeriesLineChart';
 import WeatherDashboardState from '@/weather-dashboard';
 import type { TimeSeries } from '@/weather-dashboard';
 
 type View = 'chart' | 'table';
 type Props = {};
-
-//const cities = ['Chattanooga', 'Knoxville', 'Cleveland', 'Atlanta'];
 
 export default function WeatherDashboard(props: Props) {
   const [dashboard, setState] = useState<WeatherDashboardState>(
@@ -32,12 +30,12 @@ export default function WeatherDashboard(props: Props) {
           ))}
         </div>
         {dashboard.view === 'chart' ? (
-          <TimeSeriesLineChart data-testid="chart" data={dashboard.allCityTimeSeries()} />
-        ) : (
-          <Table
-            data-testid="table"
+          <TimeSeriesLineChart
+            data-testid="chart"
             data={dashboard.allCityTimeSeries()}
           />
+        ) : (
+          <Table data-testid="table" data={dashboard.allCityTimeSeries()} />
         )}
         <div className="flex flex-wrap gap-3">
           <Dropdown
