@@ -40,8 +40,11 @@ export type City = {
   }>;
 };
 
-type FieldNames<T> = {
-  [K in keyof T]: T[K] extends Function ? never : K;
-}[keyof T];
-
-type Fields<T> = Pick<T, FieldNames<T>>
+// This type magic grabs every property of a class that isn't a method.
+// This allows me to use typechecked "keyword argument" style initialization.
+// e.g.
+// new WeatherDashboard({ cities: [], forecastDays: 3, view: 'table' })
+type Fields<T> = {
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  [K in keyof T as T[K] extends Function ? never : K]: T[K];
+};

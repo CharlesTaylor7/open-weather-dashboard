@@ -5,11 +5,12 @@ procs:
   Typescript:
     shell: yarn typecheck --watch
 
-  ESLint:
-    shell: find src/ | entr -s 'yarn lint'
-
   Prettier:
     shell: yarn format
+    autostart: false
+
+  ESLint:
+    shell: find src/ | entr -s 'yarn lint'
     autostart: false
 
   Dev Server:
