@@ -53,8 +53,8 @@ export default class WeatherDashboard {
   }
 
   static formatDate(datetime: Date) {
-    const month = String(datetime.getMonth()).padStart(2, '0');
-    const day = String(datetime.getDay()).padStart(2, '0');
+    const month = String(datetime.getMonth() + 1).padStart(2, '0');
+    const day = String(datetime.getDate()).padStart(2, '0');
     return `${month}-${day}`;
   }
 
