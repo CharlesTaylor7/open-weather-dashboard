@@ -15,7 +15,7 @@ export default class WeatherDashboard {
     return this.cities.map((city) => ({
       name: city.label,
       data: city.data
-        .map((d) => ({ x: d.datetime, y: d.temperature }))
+        .map((d) => ({ x: normalizeDate(d.datetime), y: d.temperature }))
         .slice(0, this.forecastDays),
     }));
   }
@@ -87,6 +87,12 @@ export default class WeatherDashboard {
       cityQueryResult: { type: 'no-active-query' },
     });
   }
+}
+// truncates the datetimes to just a date, so it's easy to compare cities in different timezones
+export function normalizeDate(datetime: Date) {
+  const month = datetime.getMonth() + 1
+  const day = datetime.getDate()
+  return new Date(`${datetime.getFullYear()}-${month}-${day}`);
 }
 
 export function formatDate(datetime: Date) {
