@@ -6,39 +6,32 @@ import { forecast } from '@/api/weather';
 import { geocode } from '@/api/geocoding';
 
 export default function CitySearch() {
-  const [_, updateDashboard] = useDashboardState();
-  const [searchTerm, setSearchTerm] = useState('');
-  const [cityQueryResult, updateCityQueryResult] = useState<CityQueryResult>({
-    type: 'no-active-query',
-  });
+  const [dashboard, updateDashboard] = useDashboardState();
 
   const getForecast = useCallback(
     async (location: CityLocation) => {
-      updateCityQueryResult({ type: 'loading' });
+      updateDashboard((dashboard) => dashboard.showSearchLoading());
       const data = await forecast(location);
       const city = {
         label: cityLabel(location),
         data,
       };
-      setSearchTerm('');
-      updateDashboard((dashboard) => dashboard.appendCity(city));
-      updateCityQueryResult({ type: 'no-active-query' });
+      updateDashboard((dashboard) => dashboard.completeCitySearch(city));
     },
-    [updateDashboard, setSearchTerm, updateCityQueryResult],
+    [updateDashboard],
   );
 
   const search = useCallback(
-    async (query: string) => {
-      if (query.length === 0) return;
-
-      const locations = await geocode({ q: query, limit: 5 });
+    async () => {
+      if (dashboard.searchIsDisabled()) return;
+      updateDashboard((dashboard) => dashboard.showSearchLoading());
+      const locations = await geocode({ q: dashboard.citySearchTerm, limit: 5 });
 
       if (locations.length === 0) {
-        updateCityQueryResult({
-          type: 'error',
-          message:
-            'No matching location; your search term should just be a city name without commas or other punctation',
-        });
+        updateDashboard(dashboard => dashboard.showSearchError(
+          'No matching location; double check your spelling?'
+        ));
+
         return;
       }
 
@@ -47,9 +40,9 @@ export default function CitySearch() {
         getForecast(first);
         return;
       }
-      updateCityQueryResult({ type: 'geocoding', locations });
+      updateDashboard(dashboard => dashboard.showSearchOptions(locations));
     },
-    [updateCityQueryResult, getForecast],
+    [dashboard, getForecast],
   );
   return (
     <>
@@ -59,35 +52,31 @@ export default function CitySearch() {
           autoFocus
           className="grow border rounded p-2"
           type="text"
-          value={searchTerm}
-          onChange={(e) => {
-            setSearchTerm(e.target.value);
-            updateCityQueryResult({ type: 'no-active-query' });
-          }}
+          value={dashboard.citySearchTerm}
+          onChange={(event) =>  updateDashboard(dashboard => dashboard.setSearchTerm(event.target.value)) }
           onKeyDown={(e) =>
-            e.key === 'Enter' ? search(searchTerm) : undefined
+            e.key === 'Enter' ? search() : undefined
           }
         />
         <button
           className="p-2 bg-blue-200 border rounded-lg"
-          onClick={() => search(searchTerm)}
-          disabled={searchTerm === '' || cityQueryResult.type === 'loading'}
+          onClick={search}
+          disabled={dashboard.searchIsDisabled()}
         >
           <img src={searchIcon} height="20" width="20" />
         </button>
       </div>
-      <CitySearchResult result={cityQueryResult} onClick={getForecast} />
+      <CitySearchResult onClick={getForecast} />
     </>
   );
 }
 
 type Props = {
-  result: CityQueryResult;
   onClick: (location: CityLocation) => void;
 };
 
 function CitySearchResult(props: Props) {
-  const { result: cityQueryResult } = props;
+  const [{ cityQueryResult }] = useDashboardState();
   if (cityQueryResult.type === 'geocoding') {
     return (
       <div className="flex flex-col gap-3">
@@ -120,17 +109,3 @@ function cityLabel(location: CityLocation) {
     .filter((term) => term)
     .join(', ');
 }
-
-type CityQueryResult =
-  | { type: 'no-active-query' }
-  | {
-      type: 'error';
-      message: string;
-    }
-  | {
-      type: 'loading';
-    }
-  | {
-      type: 'geocoding';
-      locations: Array<CityLocation>;
-    };

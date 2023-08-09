@@ -1,6 +1,3 @@
-## Tweaks
-- min width, so chart & input box aren't so bouncy
-
 ## Shortlist
 - [ ] DDDify the city search component state stuff
 - [ ] Unit tests

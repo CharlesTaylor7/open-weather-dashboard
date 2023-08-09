@@ -2,6 +2,8 @@ export default class WeatherDashboard {
   readonly cities: Array<CityForecast> = [];
   readonly view: View = 'chart';
   readonly forecastDays: number = 7;
+  readonly citySearchTerm: string = '';
+  readonly cityQueryResult: CityQueryResult = {type: 'no-active-query'};
 
   constructor(fields?: Fields<WeatherDashboard>) {
     if (fields !== undefined) {
@@ -9,6 +11,19 @@ export default class WeatherDashboard {
     }
   }
 
+  forecasted(): Array<TimeSeries> {
+    return this.cities.map((city) => ({
+      name: city.label,
+      data: city.data
+        .map((d) => ({ x: d.datetime, y: d.temperature }))
+        .slice(0, this.forecastDays),
+    }));
+  }
+
+  searchIsDisabled(): boolean {
+    return this.citySearchTerm === '' || this.cityQueryResult.type === 'loading'
+  }
+  
   changeView(view: View): WeatherDashboard {
     return new WeatherDashboard({
       ...this,
@@ -23,13 +38,6 @@ export default class WeatherDashboard {
     });
   }
 
-  appendCity(city: CityForecast): WeatherDashboard {
-    return new WeatherDashboard({
-      ...this,
-      cities: [...this.cities, city],
-    });
-  }
-
   removeCity(index: number): WeatherDashboard {
     const copy = Array.from(this.cities);
     // splice deletes and shifts elements in place
@@ -40,19 +48,41 @@ export default class WeatherDashboard {
     });
   }
 
-  forecasted(): Array<TimeSeries> {
-    return this.cities.map((city) => ({
-      name: city.label,
-      data: city.data
-        .map((d) => ({ x: d.datetime, y: d.temperature }))
-        .slice(0, this.forecastDays),
-    }));
+  setSearchTerm(query: string) {
+    return new WeatherDashboard({
+      ...this,
+      citySearchTerm: query,
+      cityQueryResult: { type: 'no-active-query' },
+    });
   }
 
-  beginCityQuery(): WeatherDashboard {
+  showSearchLoading(): WeatherDashboard {
     return new WeatherDashboard({
       ...this,
       cityQueryResult: { type: 'loading' },
+    });
+  }
+
+  showSearchError(message: string): WeatherDashboard {
+    return new WeatherDashboard({
+      ...this,
+      cityQueryResult: { type: 'error', message },
+    });
+  }
+
+  showSearchOptions(locations: Array<CityLocation>): WeatherDashboard {
+    return new WeatherDashboard({
+      ...this,
+      cityQueryResult: { type: 'geocoding', locations },
+    });
+  }
+  
+  completeCitySearch(city: CityForecast): WeatherDashboard {
+    return new WeatherDashboard({
+      ...this,
+      cities: [...this.cities, city],
+      citySearchTerm: '',
+      cityQueryResult: { type: 'no-active-query' },
     });
   }
 }
@@ -63,6 +93,22 @@ export function formatDate(datetime: Date) {
   return `${month}-${day}`;
 }
 
+type CityQueryResult =
+  | { type: 'no-active-query' }
+  | {
+      type: 'error';
+      message: string;
+    }
+  | {
+      type: 'loading';
+    }
+  | {
+      type: 'geocoding';
+      locations: Array<CityLocation>;
+    };
+
+
+
 export type View = 'chart' | 'table';
 
 export type CityForecast = {
@@ -72,7 +118,6 @@ export type CityForecast = {
     temperature: number;
   }>;
 };
-
 export type CityLocation = {
   name: string;
   country: string;

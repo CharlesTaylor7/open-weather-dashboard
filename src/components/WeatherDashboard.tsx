@@ -5,8 +5,6 @@ import ForecastTable from '@/components/ForecastTable';
 import CitySearch from '@/components/CitySearch';
 import { useDashboardState } from '@/useDashboardState';
 
-type View = 'chart' | 'table';
-
 export default function WeatherDashboard() {
   const [dashboard, updateDashboard] = useDashboardState();
   return (
@@ -62,3 +60,6 @@ export default function WeatherDashboard() {
     </div>
   );
 }
+
+type View = 'chart' | 'table';
+
