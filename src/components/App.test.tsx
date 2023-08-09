@@ -4,7 +4,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '@/components/App';
-import testData from '@/components/App.test.json';
+import testData from '@/test.json';
 
 // I want the test suite to be as close as simulcram to the browser as possible
 // I wasn't planning to mock out apexcharts
@@ -21,14 +21,14 @@ jest.mock(
 // approved open weather apis succeed with fake results
 // other calls fail
 beforeAll(() => {
-  global.OPEN_WEATHER_API_KEY = 'test-api-key'
+  (global as any).OPEN_WEATHER_API_KEY = 'test-api-key';
   global.fetch = jest.fn((url) => ({
     json() {
       if (typeof url !== 'string') {
         throw Error('unexpected fetch call');
       }
       if (url.startsWith('https://api.openweathermap.org/geo/1.0/direct')) {
-        return Promise.resolve(testData.geocode)
+        return Promise.resolve(testData.geocode);
       } else if (
         url.startsWith('https://api.openweathermap.org/data/3.0/onecall')
       ) {
@@ -50,10 +50,8 @@ describe('App', () => {
     const dom = render(<App />);
     const user = await userEvent.setup();
 
-    await user.keyboard("Chattanooga{Enter}")
-    await user.click(
-      (await dom.findByText("Chattanooga, Tennessee, US")),
-    )
+    await user.keyboard('Chattanooga{Enter}');
+    await user.click(await dom.findByText('Chattanooga, Tennessee, US'));
 
     // view as table
     await user.selectOptions(
