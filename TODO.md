@@ -1,12 +1,7 @@
 ## Shortlist
-- [ ] DDDify the city search component state stuff
-- [ ] Unit tests
-- [ ] Rip out test ids, and e2e tests
-- [ ] Author unit tests for the dashboard domain model 
+- [ ] Flesh out e2e tests
 - [ ] Gif recording of responsive screensize
+- [ ] ESlint
 
-## Grading Criteria
-Recommended practices:
-- [x] Responsive Design
-- [ ] Test Driven Development
-- [ ] Domain Driven Design
+## Bugs
+- [ ] Fix the mismatched days on the chart view
