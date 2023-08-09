@@ -15,6 +15,7 @@ jest.mock(
     class MockApexChart {
       updateSeries(o: any) {}
       render() {}
+      destroy() {}
     },
 );
 // mock browser fetch calls
@@ -22,7 +23,7 @@ jest.mock(
 // other calls fail
 beforeAll(() => {
   (global as any).OPEN_WEATHER_API_KEY = 'test-api-key';
-  global.fetch = jest.fn((url) => ({
+  global.fetch = jest.fn(async (url) => ({
     json() {
       if (typeof url !== 'string') {
         throw Error('unexpected fetch call');
@@ -50,7 +51,10 @@ describe('App', () => {
     const dom = render(<App />);
     const user = await userEvent.setup();
 
+    // search
     await user.keyboard('Chattanooga{Enter}');
+
+    // select specific search term
     await user.click(await dom.findByText('Chattanooga, Tennessee, US'));
 
     // view as table
