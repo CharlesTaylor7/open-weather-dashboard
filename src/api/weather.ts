@@ -16,8 +16,9 @@ export type Forecast = Array<{
 
 // This type lists only fields of the api response that we are parsing into the forecast response. The actual response type is quite large
 type RawForecast = {
+  timezone_offset: number; // utc offset seconds
   daily: Array<{
-    dt: number;
+    dt: number; // utc epoch seconds
     temp: {
       day: number;
     };
@@ -37,11 +38,24 @@ export function forecast(query: ForecastQuery): Promise<Forecast> {
   }
 
   return response.then((forecast) =>
-    forecast.daily.map((raw) => ({
-      datetime: new Date(1000 * raw.dt),
-      temperature: raw.temp.day,
-    })),
+    forecast.daily.map((raw) => {
+      console.log({
+        timezone: forecast.timezone,
+        offset: `${forecast.timezone_offset / 3600} hours`,
+        secs: raw.dt,
+        date: new Date(1000 * raw.dt),
+      });
+      return {
+        datetime: new Date(1000 * raw.dt),
+        temperature: raw.temp.day,
+      };
+    }),
   );
+}
+
+function tap(label, x) {
+  console.log(label, x);
+  return x;
 }
 
 async function rawForecastWithLocalStorage(

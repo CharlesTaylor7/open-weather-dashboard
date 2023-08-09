@@ -9,5 +9,11 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      (async function () {
+        const package = await import('/src/weather-dashboard.ts');
+        Object.assign(window, package);
+      })();
+    </script>
   </body>
 </html>

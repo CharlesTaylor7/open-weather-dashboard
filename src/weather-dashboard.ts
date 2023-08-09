@@ -15,7 +15,7 @@ export default class WeatherDashboard {
     return this.cities.map((city) => ({
       name: city.label,
       data: city.data
-        .map((d) => ({ x: normalizeDate(d.datetime), y: d.temperature }))
+        .map((d) => ({ x: d.datetime, y: d.temperature }))
         .slice(0, this.forecastDays),
     }));
   }
@@ -88,16 +88,24 @@ export default class WeatherDashboard {
     });
   }
 }
+
 // truncates the datetimes to just a date, so it's easy to compare cities in different timezones
 export function normalizeDate(datetime: Date) {
-  const month = datetime.getMonth() + 1;
-  const day = datetime.getDate();
-  return new Date(`${datetime.getFullYear()}-${month}-${day}`);
+  const year = datetime.getUTCFullYear();
+  const month = datetime.getUTCMonth();
+  const day = datetime.getUTCDate();
+  return new Date(Date.UTC(year, month, day));
 }
 
-export function formatDate(datetime: Date) {
+export function formatLocalDate(datetime: Date) {
   const month = String(datetime.getMonth() + 1).padStart(2, '0');
   const day = String(datetime.getDate()).padStart(2, '0');
+  return `${month}-${day}`;
+}
+
+export function formatUTCDate(datetime: Date) {
+  const month = String(datetime.getUTCMonth() + 1).padStart(2, '0');
+  const day = String(datetime.getUTCDate()).padStart(2, '0');
   return `${month}-${day}`;
 }
 
