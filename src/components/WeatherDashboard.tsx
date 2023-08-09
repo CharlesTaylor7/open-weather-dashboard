@@ -30,32 +30,34 @@ export default function WeatherDashboard() {
         ) : (
           <ForecastTable testId="table" data={dashboard.forecasted()} />
         )}
-        <div className="flex flex-wrap gap-3">
-          <Select
-            testId="dropdown-view-type"
-            options={[
-              { value: 'chart', label: 'Chart View' },
-              { value: 'table', label: 'Table View' },
-            ]}
-            default={dashboard.view}
-            onSelect={(v: string) =>
-              updateDashboard((dashboard) => dashboard.changeView(v as View))
-            }
-          />
-          <Select
-            testId="dropdown-day-range"
-            options={[
-              { value: '3', label: '3 Day View' },
-              { value: '7', label: '7 Day View' },
-            ]}
-            default={String(dashboard.forecastDays)}
-            onSelect={(n) =>
-              updateDashboard((dashboard) =>
-                dashboard.changeForecastDays(Number(n)),
-              )
-            }
-          />
-        </div>
+        {dashboard.cities.length > 0 ? (
+          <div className="flex flex-wrap gap-3">
+            <Select
+              testId="dropdown-view-type"
+              options={[
+                { value: 'chart', label: 'Chart View' },
+                { value: 'table', label: 'Table View' },
+              ]}
+              default={dashboard.view}
+              onSelect={(v: string) =>
+                updateDashboard((dashboard) => dashboard.changeView(v as View))
+              }
+            />
+            <Select
+              testId="dropdown-day-range"
+              options={[
+                { value: '3', label: '3 Day View' },
+                { value: '7', label: '7 Day View' },
+              ]}
+              default={String(dashboard.forecastDays)}
+              onSelect={(n) =>
+                updateDashboard((dashboard) =>
+                  dashboard.changeForecastDays(Number(n)),
+                )
+              }
+            />
+          </div>
+        ) : null}
       </div>
     </div>
   );
