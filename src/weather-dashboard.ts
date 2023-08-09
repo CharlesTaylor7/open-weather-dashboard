@@ -90,8 +90,8 @@ export default class WeatherDashboard {
 }
 // truncates the datetimes to just a date, so it's easy to compare cities in different timezones
 export function normalizeDate(datetime: Date) {
-  const month = datetime.getMonth() + 1
-  const day = datetime.getDate()
+  const month = datetime.getMonth() + 1;
+  const day = datetime.getDate();
   return new Date(`${datetime.getFullYear()}-${month}-${day}`);
 }
 
