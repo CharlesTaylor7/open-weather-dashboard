@@ -36,8 +36,7 @@ export default function CitySearch() {
       }
 
       if (locations.length === 1) {
-        const first = locations[0];
-        getForecast(first);
+        getForecast(locations[0]);
         return;
       }
       updateDashboard(dashboard => dashboard.showSearchOptions(locations));
