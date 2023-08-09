@@ -25,11 +25,11 @@ export default function Select(props: Props) {
         className="outline-0 appearance-none border rounded-lg bg-green-300 p-2 pr-9 -mr-9"
         data-testid={props.testId}
         defaultValue={props.default}
-        onChange={(e) => props.onSelect(e.target.value)}
+        onChange={(event) => props.onSelect(event.target.value)}
       >
-        {props.options.map((o, i) => (
-          <option className="" key={o.value} value={o.value}>
-            {o.label}
+        {props.options.map((option) => (
+          <option className="" key={option.value} value={option.value}>
+            {option.label}
           </option>
         ))}
       </select>

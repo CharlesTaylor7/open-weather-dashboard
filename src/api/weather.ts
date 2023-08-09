@@ -25,7 +25,6 @@ type RawForecast = {
 };
 
 export function forecast(query: ForecastQuery): Promise<Forecast> {
-  console.log(query);
   let response;
 
   if (process.env.NODE_ENV === 'production') {
@@ -43,10 +42,6 @@ export function forecast(query: ForecastQuery): Promise<Forecast> {
       temperature: raw.temp.day,
     })),
   );
-}
-function tap<T>(x: T): T {
-  console.log(x);
-  return x;
 }
 
 async function rawForecastWithLocalStorage(

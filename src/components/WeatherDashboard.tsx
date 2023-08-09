@@ -1,17 +1,13 @@
-import { useState } from 'react';
 import Pill from '@/components/Pill';
 import Select from '@/components/Select';
 import ForecastChart from '@/components/ForecastChart';
 import ForecastTable from '@/components/ForecastTable';
 import CitySearch from '@/components/CitySearch';
-import type { TimeSeries } from '@/weather-dashboard';
-import WeatherDashboardState from '@/weather-dashboard';
 import { useDashboardState } from '@/useDashboardState';
 
 type View = 'chart' | 'table';
-type Props = {};
 
-export default function WeatherDashboard(props: Props) {
+export default function WeatherDashboard() {
   const [dashboard, updateDashboard] = useDashboardState();
   return (
     <div className="flex w-full justify-center items-center">
@@ -24,7 +20,7 @@ export default function WeatherDashboard(props: Props) {
               key={index}
               label={city.label}
               onClickRemove={() =>
-                updateDashboard((dashbord) => dashboard.removeCity(index))
+                updateDashboard((dashboard) => dashboard.removeCity(index))
               }
             />
           ))}

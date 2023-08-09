@@ -1,50 +1,56 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import searchIcon from '@/icons/search.svg';
 import { useDashboardState } from '@/useDashboardState';
-import type { CityForecast, CityLocation } from '@/weather-dashboard';
-import { Forecast, forecast } from '@/api/weather';
-import { RawGeocodingResponse, geocode } from '@/api/geocoding';
+import type { CityLocation } from '@/weather-dashboard';
+import { forecast } from '@/api/weather';
+import { geocode } from '@/api/geocoding';
 
 export default function CitySearch() {
-  const [dashboard, updateDashboard] = useDashboardState();
+  const [_, updateDashboard] = useDashboardState();
   const [searchTerm, setSearchTerm] = useState('');
   const [cityQueryResult, updateCityQueryResult] = useState<CityQueryResult>({
     type: 'no-active-query',
   });
 
-  const getForecast = useCallback(async (location: CityLocation) => {
-    updateCityQueryResult({ type: 'loading' });
-    const data = await forecast(location);
-    const city = {
-      label: cityLabel(location),
-      data,
-    };
-    setSearchTerm('');
-    updateDashboard((dashboard) => dashboard.appendCity(city));
-    updateCityQueryResult({ type: 'no-active-query' });
-  }, []);
+  const getForecast = useCallback(
+    async (location: CityLocation) => {
+      updateCityQueryResult({ type: 'loading' });
+      const data = await forecast(location);
+      const city = {
+        label: cityLabel(location),
+        data,
+      };
+      setSearchTerm('');
+      updateDashboard((dashboard) => dashboard.appendCity(city));
+      updateCityQueryResult({ type: 'no-active-query' });
+    },
+    [updateDashboard, setSearchTerm, updateCityQueryResult],
+  );
 
-  const search = useCallback(async (query: string) => {
-    if (query.length === 0) return;
+  const search = useCallback(
+    async (query: string) => {
+      if (query.length === 0) return;
 
-    const locations = await geocode({ q: query, limit: 5 });
+      const locations = await geocode({ q: query, limit: 5 });
 
-    if (locations.length === 0) {
-      updateCityQueryResult({
-        type: 'error',
-        message:
-          'No matching location; your search term should just be a city name without commas or other punctation',
-      });
-      return;
-    }
+      if (locations.length === 0) {
+        updateCityQueryResult({
+          type: 'error',
+          message:
+            'No matching location; your search term should just be a city name without commas or other punctation',
+        });
+        return;
+      }
 
-    if (locations.length === 1) {
-      const first = locations[0];
-      getForecast(first);
-      return;
-    }
-    updateCityQueryResult({ type: 'geocoding', locations });
-  }, []);
+      if (locations.length === 1) {
+        const first = locations[0];
+        getForecast(first);
+        return;
+      }
+      updateCityQueryResult({ type: 'geocoding', locations });
+    },
+    [updateCityQueryResult, getForecast],
+  );
   return (
     <>
       <div className="flex gap-2 items-center w-full">
@@ -114,11 +120,6 @@ function cityLabel(location: CityLocation) {
     .filter((term) => term)
     .join(', ');
 }
-
-type Coordinates = {
-  lat: number;
-  lon: number;
-};
 
 type CityQueryResult =
   | { type: 'no-active-query' }
