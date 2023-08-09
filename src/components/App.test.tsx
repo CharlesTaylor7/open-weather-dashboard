@@ -4,6 +4,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '@/components/App';
+import testData from '@/components/App.test.json';
 
 // I want the test suite to be as close as simulcram to the browser as possible
 // I wasn't planning to mock out apexcharts
@@ -27,11 +28,11 @@ beforeAll(() => {
         throw Error('unexpected fetch call');
       }
       if (url.startsWith('https://api.openweathermap.org/geo/1.0/direct')) {
-        return Promise.resolve({});
+        return Promise.resolve(testData.geocode)
       } else if (
         url.startsWith('https://api.openweathermap.org/data/3.0/onecall')
       ) {
-        return Promise.resolve({});
+        return Promise.resolve(testData.forecast);
       }
       throw Error('unexpected fetch call');
     },
