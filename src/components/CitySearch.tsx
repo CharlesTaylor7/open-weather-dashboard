@@ -47,9 +47,9 @@ export default function CitySearch() {
       <div className="flex gap-2 items-center w-full">
         <label>City:</label>
         <input
-          autoFocus
           className="grow border rounded p-2"
           type="text"
+          autoFocus
           value={dashboard.citySearchTerm}
           onChange={(event) =>
             updateDashboard((dashboard) =>
