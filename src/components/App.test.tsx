@@ -1,10 +1,11 @@
 /**
  * @jest-environment jsdom
  */
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '@/components/App';
 import testData from '@/test.json';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 // I want the test suite to be as close as simulcram to the browser as possible
 // I wasn't planning to mock out apexcharts
@@ -13,7 +14,7 @@ jest.mock(
   'apexcharts',
   () =>
     class MockApexChart {
-      updateSeries(o: any) {}
+      updateSeries() {}
       render() {}
       destroy() {}
     },
