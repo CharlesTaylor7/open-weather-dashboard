@@ -11,7 +11,7 @@ export default function WeatherDashboard() {
   const [dashboard, updateDashboard] = useDashboardState();
   return (
     <div className="flex w-full justify-center items-center">
-      <div className="flex flex-col gap-5 m-5 max-w-4/5 justify-center items-start">
+      <div className="flex flex-col gap-5 m-5 w-4/5 justify-center items-start">
         <header className="self-center bold text-2xl">Weather Dashboard</header>
         <CitySearch />
         <div className="flex flex-wrap gap-2">
