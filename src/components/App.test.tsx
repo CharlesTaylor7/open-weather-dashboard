@@ -3,7 +3,7 @@
  */
 import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import WeatherDashboard from '@/components/WeatherDashboard';
+import App from '@/components/App';
 
 // I want the test suite to be as close as simulcram to the browser as possible
 // I wasn't planning to mock out apexcharts
@@ -20,6 +20,7 @@ jest.mock(
 // approved open weather apis succeed with fake results
 // other calls fail
 beforeAll(() => {
+  global.OPEN_WEATHER_API_KEY = 'test-api-key'
   global.fetch = jest.fn((url) => ({
     json() {
       if (typeof url !== 'string') {
@@ -41,22 +42,27 @@ afterEach(() => {
   (global.fetch as any).mockClear();
 });
 
-describe('WeatherDashboard', () => {
+describe('App', () => {
   // failing because the table is not rendered
   // when there are no cities on the dashboard
-  test.skip('Toggle Chart/Table view', async () => {
-    const dom = render(<WeatherDashboard />);
+  test('End 2 end', async () => {
+    const dom = render(<App />);
     const user = await userEvent.setup();
 
+    await user.keyboard("Chattanooga{Enter}")
+    await user.click(
+      (await dom.findByText("Chattanooga, Tennessee, US")),
+    )
+
     // view as table
-    await userEvent.selectOptions(
+    await user.selectOptions(
       dom.getByTestId('dropdown-view-type'),
       dom.getByRole('option', { name: 'Table View' }),
     );
     expect(await dom.findByTestId('table')).toBeVisible();
 
     // view as chart
-    await userEvent.selectOptions(
+    await user.selectOptions(
       dom.getByTestId('dropdown-view-type'),
       dom.getByRole('option', { name: 'Chart View' }),
     );
