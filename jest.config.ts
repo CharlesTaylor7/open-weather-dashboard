@@ -3,6 +3,7 @@ import { compilerOptions } from './tsconfig.json';
 
 export default {
   roots: ['<rootDir>'],
+  collectCoverageFrom: ['src/**/*.ts', 'src/**/*.tsx'],
   transform: {
     '^.+\\.tsx?$': ['@swc/jest'],
   },
