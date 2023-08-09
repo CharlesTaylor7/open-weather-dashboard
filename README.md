@@ -20,7 +20,8 @@ In the interest of time, I elected to omit things that would be nice to have but
 
 - My open search api key is exposed in the frontend JS code. Theoretically, I could create a server with apis that call out to Open Weather. And thus avoid passing my api key to the frontend. The worst can happen here is, that someone steals the key and I run out of free credits. I won't be charged for calls. For a production app, I would definitely introduce a server.
 
-- Temperatures are in Farenheit, can't request Celsius currently.
+- Temperatures are in Farenheit, no way to toggle to Celsius currently.
+
 - The search query doesn't handle abbreviated state codes.
   e.g.
   "Chattanooga, Tennessee", or "Chattanooga" yields search results.
