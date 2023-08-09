@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useCallback } from 'react';
 import searchIcon from '@/icons/search.svg';
 import { useDashboardState } from '@/useDashboardState';
 import type { CityLocation } from '@/weather-dashboard';
@@ -21,28 +21,27 @@ export default function CitySearch() {
     [updateDashboard],
   );
 
-  const search = useCallback(
-    async () => {
-      if (dashboard.searchIsDisabled()) return;
-      updateDashboard((dashboard) => dashboard.showSearchLoading());
-      const locations = await geocode({ q: dashboard.citySearchTerm, limit: 5 });
+  const search = useCallback(async () => {
+    if (dashboard.searchIsDisabled()) return;
+    updateDashboard((dashboard) => dashboard.showSearchLoading());
+    const locations = await geocode({ q: dashboard.citySearchTerm, limit: 5 });
 
-      if (locations.length === 0) {
-        updateDashboard(dashboard => dashboard.showSearchError(
-          'No matching location; double check your spelling?'
-        ));
+    if (locations.length === 0) {
+      updateDashboard((dashboard) =>
+        dashboard.showSearchError(
+          'No matching location; double check your spelling?',
+        ),
+      );
 
-        return;
-      }
+      return;
+    }
 
-      if (locations.length === 1) {
-        getForecast(locations[0]);
-        return;
-      }
-      updateDashboard(dashboard => dashboard.showSearchOptions(locations));
-    },
-    [dashboard, getForecast],
-  );
+    if (locations.length === 1) {
+      getForecast(locations[0]);
+      return;
+    }
+    updateDashboard((dashboard) => dashboard.showSearchOptions(locations));
+  }, [dashboard, updateDashboard, getForecast]);
   return (
     <>
       <div className="flex gap-2 items-center w-full">
@@ -52,10 +51,12 @@ export default function CitySearch() {
           className="grow border rounded p-2"
           type="text"
           value={dashboard.citySearchTerm}
-          onChange={(event) =>  updateDashboard(dashboard => dashboard.setSearchTerm(event.target.value)) }
-          onKeyDown={(e) =>
-            e.key === 'Enter' ? search() : undefined
+          onChange={(event) =>
+            updateDashboard((dashboard) =>
+              dashboard.setSearchTerm(event.target.value),
+            )
           }
+          onKeyDown={(e) => (e.key === 'Enter' ? search() : undefined)}
         />
         <button
           className="p-2 bg-blue-200 border rounded-lg"

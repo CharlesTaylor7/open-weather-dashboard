@@ -3,7 +3,7 @@ export default class WeatherDashboard {
   readonly view: View = 'chart';
   readonly forecastDays: number = 7;
   readonly citySearchTerm: string = '';
-  readonly cityQueryResult: CityQueryResult = {type: 'no-active-query'};
+  readonly cityQueryResult: CityQueryResult = { type: 'no-active-query' };
 
   constructor(fields?: Fields<WeatherDashboard>) {
     if (fields !== undefined) {
@@ -21,9 +21,11 @@ export default class WeatherDashboard {
   }
 
   searchIsDisabled(): boolean {
-    return this.citySearchTerm === '' || this.cityQueryResult.type === 'loading'
+    return (
+      this.citySearchTerm === '' || this.cityQueryResult.type === 'loading'
+    );
   }
-  
+
   changeView(view: View): WeatherDashboard {
     return new WeatherDashboard({
       ...this,
@@ -76,7 +78,7 @@ export default class WeatherDashboard {
       cityQueryResult: { type: 'geocoding', locations },
     });
   }
-  
+
   completeCitySearch(city: CityForecast): WeatherDashboard {
     return new WeatherDashboard({
       ...this,
@@ -106,8 +108,6 @@ type CityQueryResult =
       type: 'geocoding';
       locations: Array<CityLocation>;
     };
-
-
 
 export type View = 'chart' | 'table';
 

@@ -1,6 +1,5 @@
 import { useRef, useEffect } from 'react';
 import ApexChart from 'apexcharts';
-import WeatherDashboard, { formatDate } from '@/weather-dashboard';
 import type { TimeSeries } from '@/weather-dashboard';
 
 type Props = {

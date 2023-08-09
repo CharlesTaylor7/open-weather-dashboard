@@ -62,4 +62,3 @@ export default function WeatherDashboard() {
 }
 
 type View = 'chart' | 'table';
-
