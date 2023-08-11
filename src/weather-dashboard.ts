@@ -1,3 +1,7 @@
+import { forecast } from '@/api/weather';
+import { geocode } from '@/api/geocoding';
+
+
 export default class WeatherDashboard {
   readonly cities: Array<CityForecast> = [];
   readonly view: View = 'chart';
@@ -89,25 +93,24 @@ export default class WeatherDashboard {
   }
 
   async *forecast(location: CityLocation) {
-    yield dashboard.showSearchLoading();
+    yield (d) => d.showSearchLoading();
 
     const data = await forecast(location);
     const city = {
       label: cityLabel(location),
       data,
     };
-    yield dashboard.completeCitySearch(city);
+    yield (d) => d.completeCitySearch(city);
   }
 
   async *search() {
     if (this.searchIsDisabled()) return;
-    yield this.showSearchLoading();
-    const locations = await geocode({ q: this.citySearchTerm, limit: 5 });
+    yield (d) => d.showSearchLoading();
 
+    const locations = await geocode({ q: this.citySearchTerm, limit: 5 });
     if (locations.length === 0) {
-      yield this.showSearchError(
-        'No matching location; double check your spelling?',
-      );
+      yield (d) =>
+        d.showSearchError('No matching location; double check your spelling?');
 
       return;
     }
@@ -115,7 +118,7 @@ export default class WeatherDashboard {
     if (locations.length === 1) {
       return this.forecast(locations[0]);
     }
-    yield dashboard.showSearchOptions(locations);
+    yield (d) => d.showSearchOptions(locations);
   }
 }
 

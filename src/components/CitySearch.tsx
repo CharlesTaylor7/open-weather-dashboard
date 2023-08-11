@@ -2,8 +2,6 @@ import { useCallback } from 'react';
 import searchIcon from '@/icons/search.svg';
 import { useDashboardState } from '@/useDashboardState';
 import type { CityLocation } from '@/weather-dashboard';
-import { forecast } from '@/api/weather';
-import { geocode } from '@/api/geocoding';
 
 export default function CitySearch() {
   const [dashboard, updateDashboard] = useDashboardState();
