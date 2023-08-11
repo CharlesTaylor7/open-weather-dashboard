@@ -87,6 +87,36 @@ export default class WeatherDashboard {
       cityQueryResult: { type: 'no-active-query' },
     });
   }
+
+  async *forecast(location: CityLocation) {
+    yield dashboard.showSearchLoading();
+
+    const data = await forecast(location);
+    const city = {
+      label: cityLabel(location),
+      data,
+    };
+    yield dashboard.completeCitySearch(city);
+  }
+
+  async *search() {
+    if (this.searchIsDisabled()) return;
+    yield this.showSearchLoading();
+    const locations = await geocode({ q: this.citySearchTerm, limit: 5 });
+
+    if (locations.length === 0) {
+      yield this.showSearchError(
+        'No matching location; double check your spelling?',
+      );
+
+      return;
+    }
+
+    if (locations.length === 1) {
+      return this.forecast(locations[0]);
+    }
+    yield dashboard.showSearchOptions(locations);
+  }
 }
 
 // truncates the datetimes to just a date, so it's easy to compare cities in different timezones

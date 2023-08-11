@@ -8,40 +8,6 @@ import { geocode } from '@/api/geocoding';
 export default function CitySearch() {
   const [dashboard, updateDashboard] = useDashboardState();
 
-  const getForecast = useCallback(
-    async (location: CityLocation) => {
-      updateDashboard((dashboard) => dashboard.showSearchLoading());
-      const data = await forecast(location);
-      const city = {
-        label: cityLabel(location),
-        data,
-      };
-      updateDashboard((dashboard) => dashboard.completeCitySearch(city));
-    },
-    [updateDashboard],
-  );
-
-  const search = useCallback(async () => {
-    if (dashboard.searchIsDisabled()) return;
-    updateDashboard((dashboard) => dashboard.showSearchLoading());
-    const locations = await geocode({ q: dashboard.citySearchTerm, limit: 5 });
-
-    if (locations.length === 0) {
-      updateDashboard((dashboard) =>
-        dashboard.showSearchError(
-          'No matching location; double check your spelling?',
-        ),
-      );
-
-      return;
-    }
-
-    if (locations.length === 1) {
-      getForecast(locations[0]);
-      return;
-    }
-    updateDashboard((dashboard) => dashboard.showSearchOptions(locations));
-  }, [dashboard, updateDashboard, getForecast]);
   return (
     <>
       <div className="flex gap-2 items-center w-full">
