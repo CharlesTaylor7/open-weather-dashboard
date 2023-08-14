@@ -7,6 +7,7 @@ export default defineConfig({
   plugins: [reactPlugin()],
   base: '/open-weather-dashboard/',
   server: {
+    open: true,
     port: process.env.PORT,
   },
   esbuild: {
