@@ -1,18 +1,33 @@
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import Fastify from 'fastify';
+import FastifyStatic from '@fastify/static';
 
 const fastify = Fastify({
   logger: true,
 });
 
-fastify.get('/', async (request, reply) => {
-  return { hello: 'world' };
+const root = path.resolve(
+  path.dirname(fileURLToPath(import.meta.url)),
+  '../../',
+  'public',
+);
+fastify.register(FastifyStatic, { root });
+
+fastify.get('/', (request, reply) => {
+  reply.send({ hello: 'world' });
 });
 
-async function main() {
-  try {
-    await fastify.listen({ port: process.env.PORT, host: '0.0.0.0' });
-  } catch (err) {
-    fastify.log.error(err);
+fastify.get('/open-weather-dashboard', (request, reply) => {
+  reply.sendFile('index.html');
+});
+
+const port: number = Number(process.env.PORT);
+
+fastify.listen({ port, host: '0.0.0.0' }, function (error, address) {
+  if (error) {
+    fastify.log.error(error);
+    return;
   }
-}
-main();
+  console.log(`Weather Dashboard API running at ${address}`);
+});
