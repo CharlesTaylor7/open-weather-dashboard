@@ -10,6 +10,10 @@ export default defineConfig({
     open: true,
     port: process.env.PORT,
   },
+  manifest: true,
+  rollupOptions: {
+    input: '/src/client/main.tsx',
+  },
   esbuild: {
     // Prevents minification of React Component names,
     // for a better experience with the React Dev Tools browser extension
