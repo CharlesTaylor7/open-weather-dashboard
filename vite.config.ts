@@ -14,7 +14,8 @@ export default defineConfig({
     manifest: true,
     rollupOptions: {
       input: '/src/client/main.tsx',
-      external: ['react', 'react-dom', 'apexcharts'],
+      // TODO: externalize large dependencies
+      // external: ['react', 'react-dom', 'apexcharts'],
     },
   },
   esbuild: {
