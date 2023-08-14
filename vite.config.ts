@@ -10,9 +10,12 @@ export default defineConfig({
     open: true,
     port: process.env.PORT,
   },
-  manifest: true,
-  rollupOptions: {
-    input: '/src/client/main.tsx',
+  build: {
+    manifest: true,
+    rollupOptions: {
+      input: '/src/client/main.tsx',
+      external: ['react', 'react-dom', 'apexcharts'],
+    },
   },
   esbuild: {
     // Prevents minification of React Component names,
