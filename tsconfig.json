@@ -16,9 +16,9 @@
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/client/*"]
     },
     "strict": true
   },
-  "include": ["src", "src/test.json"]
+  "include": ["src", "src/client/test.json"]
 }
