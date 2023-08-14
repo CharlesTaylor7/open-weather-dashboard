@@ -1,33 +1,19 @@
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-import Fastify from 'fastify';
-import FastifyStatic from '@fastify/static';
+import Fastify from 'fastify'
+import FastifyVite from '@fastify/vite'
+import { renderToString } from 'react-dom/server'
 
-const fastify = Fastify({
-  logger: true,
-});
+const server = Fastify()
 
-const root = path.resolve(
-  path.dirname(fileURLToPath(import.meta.url)),
-  '../../',
-  'public',
-);
-fastify.register(FastifyStatic, { root });
-
-fastify.get('/', (request, reply) => {
-  reply.send({ hello: 'world' });
-});
-
-fastify.get('/open-weather-dashboard', (request, reply) => {
-  reply.sendFile('index.html');
-});
-
-const port: number = Number(process.env.PORT);
-
-fastify.listen({ port, host: '0.0.0.0' }, function (error, address) {
-  if (error) {
-    fastify.log.error(error);
-    return;
+await server.register(FastifyVite, { 
+  root: import.meta.url, 
+  createRenderFunction ({ createApp }) {
+    return () => {
+      return {
+        element: renderToString(createApp())
+      }
+    }
   }
-  console.log(`Weather Dashboard API running at ${address}`);
-});
+})
+
+await server.vite.ready()
+await server.listen({ port: 3000 })
