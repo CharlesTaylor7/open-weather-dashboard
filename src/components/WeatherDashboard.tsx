@@ -42,19 +42,6 @@ export default function WeatherDashboard() {
                 updateDashboard((dashboard) => dashboard.changeView(v as View))
               }
             />
-            <Select
-              testId="dropdown-day-range"
-              options={[
-                { value: '3', label: '3 Day View' },
-                { value: '7', label: '7 Day View' },
-              ]}
-              default={String(dashboard.forecastDays)}
-              onSelect={(n) =>
-                updateDashboard((dashboard) =>
-                  dashboard.changeForecastDays(Number(n)),
-                )
-              }
-            />
           </div>
         ) : null}
       </div>

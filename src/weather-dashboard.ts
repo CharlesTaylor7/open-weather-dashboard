@@ -1,7 +1,6 @@
 export default class WeatherDashboard {
   readonly cities: Array<CityForecast> = [];
   readonly view: View = 'chart';
-  readonly forecastDays: number = 7;
   readonly citySearchTerm: string = '';
   readonly cityQueryResult: CityQueryResult = { type: 'no-active-query' };
 
@@ -16,7 +15,6 @@ export default class WeatherDashboard {
       name: city.label,
       data: city.data
         .map((d) => ({ x: normalizeDate(d.datetime), y: d.temperature }))
-        .slice(0, this.forecastDays),
     }));
   }
 
