@@ -13,8 +13,10 @@ export default class WeatherDashboard {
   forecasted(): Array<TimeSeries> {
     return this.cities.map((city) => ({
       name: city.label,
-      data: city.data
-        .map((d) => ({ x: normalizeDate(d.datetime), y: d.temperature }))
+      data: city.data.map((d) => ({
+        x: normalizeDate(d.datetime),
+        y: d.temperature,
+      })),
     }));
   }
 
