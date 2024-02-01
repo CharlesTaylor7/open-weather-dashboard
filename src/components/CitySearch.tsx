@@ -1,9 +1,10 @@
 import { useCallback } from 'react';
-import searchIcon from '@/icons/search.svg';
+import SearchIcon from '@/icons/search';
 import { useDashboardState } from '@/useDashboardState';
 import type { CityLocation } from '@/weather-dashboard';
 import { forecast } from '@/api/weather';
 import { geocode } from '@/api/geocoding';
+import debounce from 'lodash/debounce';
 
 export default function CitySearch() {
   const [dashboard, updateDashboard] = useDashboardState();
@@ -21,7 +22,7 @@ export default function CitySearch() {
     [updateDashboard],
   );
 
-  const search = useCallback(async () => {
+  const search = useCallback(debounce(async (dashboard) => {
     if (dashboard.searchIsDisabled()) return;
     updateDashboard((dashboard) => dashboard.showSearchLoading());
     const locations = await geocode({ q: dashboard.citySearchTerm, limit: 5 });
@@ -41,31 +42,27 @@ export default function CitySearch() {
       return;
     }
     updateDashboard((dashboard) => dashboard.showSearchOptions(locations));
-  }, [dashboard, updateDashboard, getForecast]);
+  }, 400), [updateDashboard, getForecast]);
   return (
     <>
       <div className="flex gap-2 items-center w-full">
+        <SearchIcon />
         <input
           placeholder="Search for a city here..."
-          className="input input-bordered w-full"
+          className="input input-accent w-full"
           type="text"
           autoFocus
           value={dashboard.citySearchTerm}
           onChange={(event) => {
-            console.log(event);
-            updateDashboard((dashboard) =>
-              dashboard.setSearchTerm(event.target.value),
+            updateDashboard((dashboard) => {
+              let d = dashboard.setSearchTerm(event.target.value);
+              search(d);
+              return d
+              }
             )
           }}
-          onKeyDown={(e) => (e.key === 'Enter' ? search() : undefined)}
+          onKeyDown={(e) => (e.key === 'Enter' ? search(dashboard) : undefined)}
         />
-        <button
-          className="btn btn-primary"
-          onClick={search}
-          disabled={dashboard.searchIsDisabled()}
-        >
-          <img src={searchIcon} height="20" width="20" />
-        </button>
       </div>
       <CitySearchResult onClick={getForecast} />
     </>
