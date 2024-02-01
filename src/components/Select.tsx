@@ -12,17 +12,17 @@ type Option = {
 
 export default function Select(props: Props) {
   return (
-      <select
-        className="select select-accent"
-        data-testid={props.testId}
-        defaultValue={props.default}
-        onChange={(event) => props.onSelect(event.target.value)}
-      >
-        {props.options.map((option) => (
-          <option className="" key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
+    <select
+      className="select select-accent"
+      data-testid={props.testId}
+      defaultValue={props.default}
+      onChange={(event) => props.onSelect(event.target.value)}
+    >
+      {props.options.map((option) => (
+        <option className="" key={option.value} value={option.value}>
+          {option.label}
+        </option>
+      ))}
+    </select>
   );
 }

@@ -46,7 +46,7 @@ export default function CitySearch() {
     <>
       <div className="flex gap-2 items-center w-full">
         <input
-          placeholder='Search for a city here...'
+          placeholder="Search for a city here..."
           className="input input-bordered w-full"
           type="text"
           autoFocus
@@ -95,7 +95,7 @@ function CitySearchResult(props: Props) {
   }
 
   if (cityQueryResult.type === 'loading') {
-    return <span className="loading loading-dots loading-lg" />
+    return <span className="loading loading-dots loading-lg" />;
   }
 
   if (cityQueryResult.type === 'error') {
