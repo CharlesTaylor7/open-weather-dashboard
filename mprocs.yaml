@@ -10,7 +10,7 @@ procs:
     autostart: false
 
   ESLint:
-    shell: find src/ | entr -s 'yarn lint'
+    shell: watchexec -c -e ts,tsx -- yarn lint
     autostart: false
 
   Dev Server:

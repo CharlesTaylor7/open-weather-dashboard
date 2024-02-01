@@ -9,9 +9,9 @@ import type { View } from '@/weather-dashboard';
 export default function WeatherDashboard() {
   const [dashboard, updateDashboard] = useDashboardState();
   return (
-    <div className="flex w-full justify-center items-center">
-      <div className="w-4/5 md:w-2/3 flex flex-col gap-5 m-5 justify-center items-start">
-        <header className="self-center bold text-2xl">Weather Dashboard</header>
+    <main data-theme="dark" className="flex h-screen w-full justify-center">
+      <div className="w-4/5 md:w-2/3 flex flex-col gap-5 m-5 items-start">
+        <header className="w-full text-center bold text-2xl">Weather Dashboard</header>
         <CitySearch />
         <div className="flex flex-wrap gap-2">
           {dashboard.cities.map((city, index) => (
@@ -45,6 +45,6 @@ export default function WeatherDashboard() {
           </div>
         ) : null}
       </div>
-    </div>
+    </main>
   );
 }

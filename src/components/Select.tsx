@@ -1,5 +1,3 @@
-import caretIcon from '@/icons/dropdown-caret.svg';
-
 type Props = {
   testId?: string;
   options: Array<Option>;
@@ -13,16 +11,9 @@ type Option = {
 };
 
 export default function Select(props: Props) {
-  // there are some negative margin shenanigans to replace the browser defualt caret icon.
-  // "appearance-none" removes the default caret from the <select>
-  // the right padding + negative margin, "pr-9 -mr-9",
-  // shifts the custom caret to be within the border of the <select> element.
-  //
-  // There's some cleanup margin on the outer div: "mr-2". This ensures a list of multiple Select components don't overlap each other.
   return (
-    <div className="flex items-center mr-2">
       <select
-        className="outline-0 appearance-none border rounded-lg bg-green-300 p-2 pr-9 -mr-9"
+        className="select select-accent"
         data-testid={props.testId}
         defaultValue={props.default}
         onChange={(event) => props.onSelect(event.target.value)}
@@ -33,9 +24,5 @@ export default function Select(props: Props) {
           </option>
         ))}
       </select>
-      <span className="pointer-events-none pl-2">
-        <img src={caretIcon} height="20" width="20" />
-      </span>
-    </div>
   );
 }

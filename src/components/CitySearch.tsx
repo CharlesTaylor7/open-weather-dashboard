@@ -45,9 +45,9 @@ export default function CitySearch() {
   return (
     <>
       <div className="flex gap-2 items-center w-full">
-        <label>City:</label>
         <input
-          className="grow border rounded p-2"
+          placeholder='Search for a city here...'
+          className="input input-bordered w-full"
           type="text"
           autoFocus
           value={dashboard.citySearchTerm}
@@ -59,7 +59,7 @@ export default function CitySearch() {
           onKeyDown={(e) => (e.key === 'Enter' ? search() : undefined)}
         />
         <button
-          className="p-2 bg-blue-200 border rounded-lg"
+          className="btn btn-primary"
           onClick={search}
           disabled={dashboard.searchIsDisabled()}
         >
@@ -83,7 +83,7 @@ function CitySearchResult(props: Props) {
         Multiple matching cities, select from:
         {cityQueryResult.locations.map((city, i) => (
           <button
-            className="bg-blue-200 py-1 px-2 rounded border"
+            className="btn btn-primary"
             key={i}
             onClick={() => props.onClick(city)}
           >
@@ -95,7 +95,7 @@ function CitySearchResult(props: Props) {
   }
 
   if (cityQueryResult.type === 'loading') {
-    return 'loading...';
+    return <span className="loading loading-dots loading-lg" />
   }
 
   if (cityQueryResult.type === 'error') {
