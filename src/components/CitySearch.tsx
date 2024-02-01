@@ -22,27 +22,33 @@ export default function CitySearch() {
     [updateDashboard],
   );
 
-  const search = useCallback(debounce(async (dashboard) => {
-    if (dashboard.searchIsDisabled()) return;
-    updateDashboard((dashboard) => dashboard.showSearchLoading());
-    const locations = await geocode({ q: dashboard.citySearchTerm, limit: 5 });
+  const search = useCallback(
+    debounce(async (dashboard) => {
+      if (dashboard.searchIsDisabled()) return;
+      updateDashboard((dashboard) => dashboard.showSearchLoading());
+      const locations = await geocode({
+        q: dashboard.citySearchTerm,
+        limit: 5,
+      });
 
-    if (locations.length === 0) {
-      updateDashboard((dashboard) =>
-        dashboard.showSearchError(
-          'No matching location; double check your spelling?',
-        ),
-      );
+      if (locations.length === 0) {
+        updateDashboard((dashboard) =>
+          dashboard.showSearchError(
+            'No matching location; double check your spelling?',
+          ),
+        );
 
-      return;
-    }
+        return;
+      }
 
-    if (locations.length === 1) {
-      getForecast(locations[0]);
-      return;
-    }
-    updateDashboard((dashboard) => dashboard.showSearchOptions(locations));
-  }, 400), [updateDashboard, getForecast]);
+      if (locations.length === 1) {
+        getForecast(locations[0]);
+        return;
+      }
+      updateDashboard((dashboard) => dashboard.showSearchOptions(locations));
+    }, 400),
+    [updateDashboard, getForecast],
+  );
   return (
     <>
       <div className="flex gap-2 items-center w-full">
@@ -57,9 +63,8 @@ export default function CitySearch() {
             updateDashboard((dashboard) => {
               let d = dashboard.setSearchTerm(event.target.value);
               search(d);
-              return d
-              }
-            )
+              return d;
+            });
           }}
           onKeyDown={(e) => (e.key === 'Enter' ? search(dashboard) : undefined)}
         />
