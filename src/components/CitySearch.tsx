@@ -51,11 +51,12 @@ export default function CitySearch() {
           type="text"
           autoFocus
           value={dashboard.citySearchTerm}
-          onChange={(event) =>
+          onChange={(event) => {
+            console.log(event);
             updateDashboard((dashboard) =>
               dashboard.setSearchTerm(event.target.value),
             )
-          }
+          }}
           onKeyDown={(e) => (e.key === 'Enter' ? search() : undefined)}
         />
         <button
