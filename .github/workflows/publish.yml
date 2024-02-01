@@ -41,9 +41,7 @@ jobs:
     permissions:
       pages: write
     needs:
-      - check-format
       - test
-      - lint
       - typecheck
     runs-on: ubuntu-latest
     env:
