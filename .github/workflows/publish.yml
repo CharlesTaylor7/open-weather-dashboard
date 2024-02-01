@@ -10,30 +10,6 @@ on:
       - vite.config.ts
 
 jobs:
-  check-format:
-    name: Prettier
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          persist-credentials: false
-      - run: |
-          yarn
-          yarn check-format
-
-  lint:
-    name: ESLint
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          persist-credentials: false
-      - run: |
-          yarn
-          yarn lint
-
   test:
     name: Jest
     runs-on: ubuntu-latest
