@@ -33,13 +33,6 @@ export default class WeatherDashboard {
     });
   }
 
-  changeForecastDays(forecastDays: number): WeatherDashboard {
-    return new WeatherDashboard({
-      ...this,
-      forecastDays,
-    });
-  }
-
   removeCity(index: number): WeatherDashboard {
     const copy = Array.from(this.cities);
     // splice deletes and shifts elements in place
@@ -139,7 +132,7 @@ export type TimeSeries = {
 // This type magic grabs every property of a class that isn't a method.
 // This allows me to use typechecked "keyword argument" style initialization.
 // e.g.
-// new WeatherDashboard({ cities: [], forecastDays: 3, view: 'table' })
+// new WeatherDashboard({ cities: [], view: 'table' })
 type Fields<T> = {
   [K in keyof T as T[K] extends Function ? never : K]: T[K];
 };
