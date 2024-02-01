@@ -41,10 +41,6 @@ export default function CitySearch() {
         return;
       }
 
-      if (locations.length === 1) {
-        getForecast(locations[0]);
-        return;
-      }
       updateDashboard((dashboard) => dashboard.showSearchOptions(locations));
     }, 400),
     [updateDashboard, getForecast],
