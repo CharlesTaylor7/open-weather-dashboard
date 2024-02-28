@@ -57,7 +57,7 @@ export default function CitySearch() {
           value={dashboard.citySearchTerm}
           onChange={(event) => {
             updateDashboard((dashboard) => {
-              let d = dashboard.setSearchTerm(event.target.value);
+              const d = dashboard.setSearchTerm(event.target.value);
               search(d);
               return d;
             });
