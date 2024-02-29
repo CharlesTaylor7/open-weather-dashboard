@@ -1,4 +1,3 @@
 - [ ] Cleanup source code
-- [ ] CSS transitions for table to grid swap
 - [ ] ESLINT and prettier check go back into Github workflow
-- [ ] Fix padding and margin around the Close pill buttons
+- [x] Fix padding and margin around the Close pill buttons

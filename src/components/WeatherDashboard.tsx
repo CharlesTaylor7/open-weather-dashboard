@@ -1,10 +1,7 @@
 import Pill from '@/components/Pill';
-import Select from '@/components/Select';
 import ForecastChart from '@/components/ForecastChart';
-import ForecastTable from '@/components/ForecastTable';
 import CitySearch from '@/components/CitySearch';
 import { useDashboardState } from '@/useDashboardState';
-import type { View } from '@/weather-dashboard';
 
 export default function WeatherDashboard() {
   const [dashboard, updateDashboard] = useDashboardState();
@@ -26,26 +23,7 @@ export default function WeatherDashboard() {
             />
           ))}
         </div>
-        {dashboard.view === 'chart' ? (
-          <ForecastChart testId="chart" data={dashboard.forecasted()} />
-        ) : (
-          <ForecastTable testId="table" data={dashboard.forecasted()} />
-        )}
-        {dashboard.cities.length > 0 ? (
-          <div className="flex flex-wrap gap-3">
-            <Select
-              testId="dropdown-view-type"
-              options={[
-                { value: 'chart', label: 'Chart View' },
-                { value: 'table', label: 'Table View' },
-              ]}
-              default={dashboard.view}
-              onSelect={(v: string) =>
-                updateDashboard((dashboard) => dashboard.changeView(v as View))
-              }
-            />
-          </div>
-        ) : null}
+        <ForecastChart testId="chart" data={dashboard.forecasted()} />
       </div>
     </main>
   );

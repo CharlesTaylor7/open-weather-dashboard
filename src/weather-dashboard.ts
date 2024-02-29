@@ -1,6 +1,5 @@
 export default class WeatherDashboard {
   readonly cities: Array<CityForecast> = [];
-  readonly view: View = 'chart';
   readonly citySearchTerm: string = '';
   readonly cityQueryResult: CityQueryResult = { type: 'no-active-query' };
 
@@ -24,13 +23,6 @@ export default class WeatherDashboard {
     return (
       this.citySearchTerm === '' || this.cityQueryResult.type === 'loading'
     );
-  }
-
-  changeView(view: View): WeatherDashboard {
-    return new WeatherDashboard({
-      ...this,
-      view,
-    });
   }
 
   removeCity(index: number): WeatherDashboard {

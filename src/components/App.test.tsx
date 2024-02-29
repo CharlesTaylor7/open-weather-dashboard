@@ -50,7 +50,7 @@ describe('App', () => {
   // when there are no cities on the dashboard
   test('End 2 end', async () => {
     const dom = render(<App />);
-    const user = await userEvent.setup();
+    const user = userEvent.setup();
 
     // search
     await user.keyboard('Chattanooga{Enter}');
@@ -58,18 +58,6 @@ describe('App', () => {
     // select specific search term
     await user.click(await dom.findByText('Chattanooga, Tennessee, US'));
 
-    // view as table
-    await user.selectOptions(
-      dom.getByTestId('dropdown-view-type'),
-      dom.getByRole('option', { name: 'Table View' }),
-    );
-    expect(await dom.findByTestId('table')).toBeVisible();
-
-    // view as chart
-    await user.selectOptions(
-      dom.getByTestId('dropdown-view-type'),
-      dom.getByRole('option', { name: 'Chart View' }),
-    );
     expect(await dom.findByTestId('chart')).toBeVisible();
   });
 });
