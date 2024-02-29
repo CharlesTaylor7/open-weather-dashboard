@@ -1,7 +1,7 @@
-import Pill from '@/components/Pill';
-import ForecastChart from '@/components/ForecastChart';
-import CitySearch from '@/components/CitySearch';
-import { useDashboardState } from '@/useDashboardState';
+import Pill from "@/components/Pill";
+import ForecastChart from "@/components/ForecastChart";
+import CitySearch from "@/components/CitySearch";
+import { useDashboardState } from "@/useDashboardState";
 
 export default function WeatherDashboard() {
   const [dashboard, updateDashboard] = useDashboardState();

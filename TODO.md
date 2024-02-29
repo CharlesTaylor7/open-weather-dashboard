@@ -1,2 +1,0 @@
-- [ ] Cleanup source code
-- [ ] ESLINT and prettier check go back into Github workflow

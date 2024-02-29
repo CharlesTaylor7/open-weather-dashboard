@@ -1,10 +1,10 @@
-import { useCallback } from 'react';
-import SearchIcon from '@/icons/search';
-import { useDashboardState } from '@/useDashboardState';
-import type { CityLocation } from '@/weather-dashboard';
-import { forecast } from '@/api/weather';
-import { geocode } from '@/api/geocoding';
-import debounce from 'lodash/debounce';
+import { useCallback } from "react";
+import SearchIcon from "@/icons/search";
+import { useDashboardState } from "@/useDashboardState";
+import type { CityLocation } from "@/weather-dashboard";
+import { forecast } from "@/api/weather";
+import { geocode } from "@/api/geocoding";
+import debounce from "lodash/debounce";
 
 export default function CitySearch() {
   const [dashboard, updateDashboard] = useDashboardState();
@@ -35,7 +35,7 @@ export default function CitySearch() {
       if (locations.length === 0) {
         updateDashboard((dashboard) =>
           dashboard.showSearchError(
-            'No matching location; double check your spelling?',
+            "No matching location; double check your spelling?",
           ),
         );
 
@@ -63,7 +63,7 @@ export default function CitySearch() {
               return d;
             });
           }}
-          onKeyDown={(e) => (e.key === 'Enter' ? search(dashboard) : undefined)}
+          onKeyDown={(e) => (e.key === "Enter" ? search(dashboard) : undefined)}
         />
       </div>
       <CitySearchResult onClick={getForecast} />
@@ -77,7 +77,7 @@ type Props = {
 
 function CitySearchResult(props: Props) {
   const [{ cityQueryResult }] = useDashboardState();
-  if (cityQueryResult.type === 'geocoding') {
+  if (cityQueryResult.type === "geocoding") {
     return (
       <div className="flex flex-col gap-3">
         Multiple matching cities, select from:
@@ -94,11 +94,11 @@ function CitySearchResult(props: Props) {
     );
   }
 
-  if (cityQueryResult.type === 'loading') {
+  if (cityQueryResult.type === "loading") {
     return <span className="loading loading-dots loading-lg" />;
   }
 
-  if (cityQueryResult.type === 'error') {
+  if (cityQueryResult.type === "error") {
     return <span>{cityQueryResult.message}</span>;
   }
   return null;
@@ -107,5 +107,5 @@ function CitySearchResult(props: Props) {
 function cityLabel(location: CityLocation) {
   return [location.name, location.state, location.country]
     .filter((term) => term)
-    .join(', ');
+    .join(", ");
 }

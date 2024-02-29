@@ -1,11 +1,11 @@
-import { fetchFromOpenWeatherApi } from '@/api/base';
+import { fetchFromOpenWeatherApi } from "@/api/base";
 
 ///data/3.0/onecall?lat=35&lon=-85&appid=32462e94fa616cc6f77157cc3c965959&lang=en
 type ForecastQuery = {
   lat: number;
   lon: number;
   lang?: string;
-  units?: 'imperial' | 'metric';
+  units?: "imperial" | "metric";
 };
 
 // We only need an array of time against temperature to build a chart
@@ -27,7 +27,7 @@ type RawForecast = {
 export function forecast(query: ForecastQuery): Promise<Forecast> {
   let response;
 
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === "production") {
     response = rawForecast(query);
   } else {
     // local development uses localstorage to prevent excessive calls to the API
@@ -59,10 +59,10 @@ async function rawForecastWithLocalStorage(
 
 function rawForecast(query: ForecastQuery): Promise<RawForecast> {
   return fetchFromOpenWeatherApi({
-    route: '/data/3.0/onecall',
+    route: "/data/3.0/onecall",
     query: {
-      lang: 'en',
-      units: 'imperial',
+      lang: "en",
+      units: "imperial",
       ...query,
     },
   }) as Promise<RawForecast>;

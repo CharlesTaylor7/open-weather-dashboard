@@ -1,4 +1,4 @@
-const OPEN_WEATHER_BASE_URL = 'https://api.openweathermap.org';
+const OPEN_WEATHER_BASE_URL = "https://api.openweathermap.org";
 
 type ApiCall = {
   route: string;
@@ -19,6 +19,6 @@ export function fetchFromOpenWeatherApi(apiCall: ApiCall): Promise<object> {
 function toQueryString(query: Query) {
   const params = Object.entries(query)
     .map(([k, v]) => `${k}=${encodeURIComponent(v)}`)
-    .join('&');
+    .join("&");
   return `?${params}`;
 }

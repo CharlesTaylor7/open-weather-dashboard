@@ -1,7 +1,7 @@
 export default class WeatherDashboard {
   readonly cities: Array<CityForecast> = [];
-  readonly citySearchTerm: string = '';
-  readonly cityQueryResult: CityQueryResult = { type: 'no-active-query' };
+  readonly citySearchTerm: string = "";
+  readonly cityQueryResult: CityQueryResult = { type: "no-active-query" };
 
   constructor(fields?: Fields<WeatherDashboard>) {
     if (fields !== undefined) {
@@ -21,7 +21,7 @@ export default class WeatherDashboard {
 
   searchIsDisabled(): boolean {
     return (
-      this.citySearchTerm === '' || this.cityQueryResult.type === 'loading'
+      this.citySearchTerm === "" || this.cityQueryResult.type === "loading"
     );
   }
 
@@ -39,28 +39,28 @@ export default class WeatherDashboard {
     return new WeatherDashboard({
       ...this,
       citySearchTerm: query,
-      cityQueryResult: { type: 'no-active-query' },
+      cityQueryResult: { type: "no-active-query" },
     });
   }
 
   showSearchLoading(): WeatherDashboard {
     return new WeatherDashboard({
       ...this,
-      cityQueryResult: { type: 'loading' },
+      cityQueryResult: { type: "loading" },
     });
   }
 
   showSearchError(message: string): WeatherDashboard {
     return new WeatherDashboard({
       ...this,
-      cityQueryResult: { type: 'error', message },
+      cityQueryResult: { type: "error", message },
     });
   }
 
   showSearchOptions(locations: Array<CityLocation>): WeatherDashboard {
     return new WeatherDashboard({
       ...this,
-      cityQueryResult: { type: 'geocoding', locations },
+      cityQueryResult: { type: "geocoding", locations },
     });
   }
 
@@ -68,8 +68,8 @@ export default class WeatherDashboard {
     return new WeatherDashboard({
       ...this,
       cities: [...this.cities, city],
-      citySearchTerm: '',
-      cityQueryResult: { type: 'no-active-query' },
+      citySearchTerm: "",
+      cityQueryResult: { type: "no-active-query" },
     });
   }
 }
@@ -81,26 +81,26 @@ export function normalizeDate(datetime: Date) {
 }
 
 export function formatDate(datetime: Date) {
-  const month = String(datetime.getMonth() + 1).padStart(2, '0');
-  const day = String(datetime.getDate()).padStart(2, '0');
+  const month = String(datetime.getMonth() + 1).padStart(2, "0");
+  const day = String(datetime.getDate()).padStart(2, "0");
   return `${month}-${day}`;
 }
 
 type CityQueryResult =
-  | { type: 'no-active-query' }
+  | { type: "no-active-query" }
   | {
-      type: 'error';
+      type: "error";
       message: string;
     }
   | {
-      type: 'loading';
+      type: "loading";
     }
   | {
-      type: 'geocoding';
+      type: "geocoding";
       locations: Array<CityLocation>;
     };
 
-export type View = 'chart' | 'table';
+export type View = "chart" | "table";
 
 export type CityForecast = {
   label: string;

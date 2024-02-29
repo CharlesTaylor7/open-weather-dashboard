@@ -1,6 +1,6 @@
-import { useRef, useEffect } from 'react';
-import ApexChart from 'apexcharts';
-import type { TimeSeries } from '@/weather-dashboard';
+import { useRef, useEffect } from "react";
+import ApexChart from "apexcharts";
+import type { TimeSeries } from "@/weather-dashboard";
 
 type Props = {
   testId?: string;
@@ -42,22 +42,22 @@ function NonEmptyForecastChart(props: Props) {
 function defaultChartOptions() {
   return {
     chart: {
-      type: 'line',
+      type: "line",
     },
     stroke: {
-      curve: 'smooth',
+      curve: "smooth",
     },
     series: [],
     yaxis: {
-      type: 'numeric',
+      type: "numeric",
       labels: {
         formatter: (value: number) => `${value.toFixed(0)}℉`,
       },
     },
     xaxis: {
-      type: 'datetime',
+      type: "datetime",
       labels: {
-        format: 'MMM dd',
+        format: "MMM dd",
       },
     },
   };
