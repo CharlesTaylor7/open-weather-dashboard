@@ -22,6 +22,7 @@ export default function CitySearch() {
     [updateDashboard],
   );
 
+  // eslint-disable-next-line
   const search = useCallback(
     debounce(async (dashboard) => {
       if (dashboard.searchIsDisabled()) return;
