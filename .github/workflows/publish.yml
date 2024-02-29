@@ -10,39 +10,10 @@ on:
       - vite.config.ts
 
 jobs:
-  test:
-    name: Jest
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          persist-credentials: false
-
-      - run: |
-          yarn
-          yarn test
-
-  typecheck:
-    name: Typescript
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          persist-credentials: false
-
-      - run: |
-          yarn
-          yarn typecheck
-
   deploy:
     name: Deploy to Github Pages
     permissions:
       pages: write
-    needs:
-      - test
-      - typecheck
     runs-on: ubuntu-latest
     env:
       OPEN_WEATHER_API_KEY: ${{ secrets.OPEN_WEATHER_API_KEY }}
@@ -52,9 +23,17 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Build
+
+      - name: Validate
         run: |
           yarn
+          yarn typecheck
+          yarn check-format
+          yarn lint
+          yarn test
+
+      - name: Build
+        run: |
           yarn tailwind
           yarn build
 

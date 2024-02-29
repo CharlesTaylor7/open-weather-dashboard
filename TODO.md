@@ -1,3 +1,2 @@
 - [ ] Cleanup source code
 - [ ] ESLINT and prettier check go back into Github workflow
-- [x] Fix padding and margin around the Close pill buttons

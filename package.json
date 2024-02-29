@@ -8,9 +8,9 @@
     "typecheck": "tsc --pretty --noEmit",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "format": "prettier --write src",
+    "check-format": "prettier --check src",
     "tailwind": "tailwindcss -i tailwind.source.css -o styles/tailwind.css",
     "build": "vite build",
-    "preview": "vite preview",
     "test": "jest"
   },
   "dependencies": {
