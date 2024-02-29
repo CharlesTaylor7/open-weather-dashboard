@@ -4,6 +4,7 @@ yarn-error.log
 
 # Vite build
 /dist/
+/dev-dist/
 
 # Typescript
 *.tsbuildinfo
