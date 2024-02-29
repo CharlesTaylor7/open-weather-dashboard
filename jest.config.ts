@@ -11,7 +11,6 @@ export default {
   testRegex: 'test\\.tsx?$',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'json'],
   moduleNameMapper: {
-    '.+\\.svg$': '<rootDir>/__mocks__/empty.js',
     ...pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }),
   },
 };
