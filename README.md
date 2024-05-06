@@ -1,5 +1,5 @@
 # Open Weather Dashboard
-Powered by [Open Weather API], this dashboard lets you compare weather forecasts between cities across the world. 
+Powered by [Open Weather API](https://openweathermap.org/api), this dashboard lets you compare weather forecasts between cities across the world. 
 
 Deployed to github pages: https://charlestaylor7.github.io/open-weather-dashboard
 
