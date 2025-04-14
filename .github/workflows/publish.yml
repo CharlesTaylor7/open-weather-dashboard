@@ -8,6 +8,7 @@ on:
       - src/**
       - index.html
       - vite.config.ts
+      - yarn.lock
 
 jobs:
   deploy:
