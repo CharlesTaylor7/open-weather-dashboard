@@ -7,6 +7,11 @@ type ApiCall = {
 
 type Query = Record<string, number | string>;
 
+// Note: this api key is embedded in my app for simplicity of keeping this app deployed to github pages
+// Since the worst that can happen is my key is stolen; I'm ok with that and won't have to write a backend service just to hide my api key.
+
+const OPEN_WEATHER_API_KEY = "02470d658aee99a90d54f82c91474564";
+
 export function fetchFromOpenWeatherApi(apiCall: ApiCall): Promise<object> {
   const { route, query } = apiCall;
   const queryWithApiKey = { appid: OPEN_WEATHER_API_KEY, ...query };
