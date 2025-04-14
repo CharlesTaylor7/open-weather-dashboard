@@ -3,6 +3,7 @@ const OPEN_WEATHER_BASE_URL = "https://api.openweathermap.org";
 type ApiCall = {
   route: string;
   query: Query;
+  options: object;
 };
 
 type Query = Record<string, number | string>;
@@ -13,11 +14,12 @@ type Query = Record<string, number | string>;
 const OPEN_WEATHER_API_KEY = "02470d658aee99a90d54f82c91474564";
 
 export function fetchFromOpenWeatherApi(apiCall: ApiCall): Promise<object> {
-  const { route, query } = apiCall;
+  const { route, query, options } = apiCall;
   const queryWithApiKey = { appid: OPEN_WEATHER_API_KEY, ...query };
 
   return fetch(
     `${OPEN_WEATHER_BASE_URL}${route}${toQueryString(queryWithApiKey)}`,
+    options,
   ).then((response) => response.json());
 }
 

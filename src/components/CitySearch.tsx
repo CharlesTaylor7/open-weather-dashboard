@@ -1,51 +1,41 @@
-import { useCallback } from "react";
+import { useDeferredValue, useEffect, useState } from "react";
 import SearchIcon from "@/icons/search";
-import { useDashboardState } from "@/useDashboardState";
-import type { CityLocation } from "@/weather-dashboard";
 import { forecast } from "@/api/weather";
 import { geocode } from "@/api/geocoding";
-import debounce from "lodash/debounce";
+import { useAppState } from "@/store";
+import { useQuery } from "@tanstack/react-query";
 
 export default function CitySearch() {
-  const [dashboard, updateDashboard] = useDashboardState();
+  const { appendForecast } = useAppState();
+  const [rawQuery, setQuery] = useState("");
+  const query = useDeferredValue(rawQuery);
+  const [location, setLocation] = useState<CityLocation | null>(null);
 
-  const getForecast = useCallback(
-    async (location: CityLocation) => {
-      updateDashboard((dashboard) => dashboard.showSearchLoading());
-      const data = await forecast(location);
-      const city = {
-        label: cityLabel(location),
-        data,
-      };
-      updateDashboard((dashboard) => dashboard.completeCitySearch(city));
+  const geocoding = useQuery({
+    queryKey: ["geocode", query],
+    queryFn: ({ signal }) => geocode({ q: query, limit: 5 }, signal),
+    enabled: query.length > 0,
+  });
+
+  const cityForecast = useQuery({
+    queryKey: ["forecast", location],
+    queryFn: async ({ signal }) => {
+      const result = await forecast(
+        { lat: location!.lat, lon: location!.lon },
+        signal,
+      );
+      appendForecast({ label: cityLabel(location!), forecast: result });
+      setQuery("");
+      setLocation(null);
     },
-    [updateDashboard],
-  );
+    enabled: location != null,
+  });
 
-  // eslint-disable-next-line
-  const search = useCallback(
-    debounce(async (dashboard) => {
-      if (dashboard.searchIsDisabled()) return;
-      updateDashboard((dashboard) => dashboard.showSearchLoading());
-      const locations = await geocode({
-        q: dashboard.citySearchTerm,
-        limit: 5,
-      });
+  const error =
+    geocoding.data?.length === 0
+      ? "No matching location; double check your spelling?"
+      : geocoding.error?.message;
 
-      if (locations.length === 0) {
-        updateDashboard((dashboard) =>
-          dashboard.showSearchError(
-            "No matching location; double check your spelling?",
-          ),
-        );
-
-        return;
-      }
-
-      updateDashboard((dashboard) => dashboard.showSearchOptions(locations));
-    }, 400),
-    [updateDashboard, getForecast],
-  );
   return (
     <>
       <div className="flex gap-2 items-center w-full">
@@ -55,53 +45,30 @@ export default function CitySearch() {
           className="input input-accent w-full"
           type="text"
           autoFocus
-          value={dashboard.citySearchTerm}
-          onChange={(event) => {
-            updateDashboard((dashboard) => {
-              const d = dashboard.setSearchTerm(event.target.value);
-              search(d);
-              return d;
-            });
-          }}
-          onKeyDown={(e) => (e.key === "Enter" ? search(dashboard) : undefined)}
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
         />
       </div>
-      <CitySearchResult onClick={getForecast} />
+
+      <span>{error}</span>
+      {geocoding.isLoading || cityForecast.isLoading ? (
+        <span className="loading loading-dots loading-lg" />
+      ) : null}
+      {geocoding.data?.length ? (
+        <div className="flex flex-col gap-3">
+          {geocoding.data.map((city, i) => (
+            <button
+              className="btn btn-primary"
+              key={i}
+              onClick={() => setLocation(city)}
+            >
+              {cityLabel(city)}
+            </button>
+          ))}
+        </div>
+      ) : null}
     </>
   );
-}
-
-type Props = {
-  onClick: (location: CityLocation) => void;
-};
-
-function CitySearchResult(props: Props) {
-  const [{ cityQueryResult }] = useDashboardState();
-  if (cityQueryResult.type === "geocoding") {
-    return (
-      <div className="flex flex-col gap-3">
-        Multiple matching cities, select from:
-        {cityQueryResult.locations.map((city, i) => (
-          <button
-            className="btn btn-primary"
-            key={i}
-            onClick={() => props.onClick(city)}
-          >
-            {cityLabel(city)}
-          </button>
-        ))}
-      </div>
-    );
-  }
-
-  if (cityQueryResult.type === "loading") {
-    return <span className="loading loading-dots loading-lg" />;
-  }
-
-  if (cityQueryResult.type === "error") {
-    return <span>{cityQueryResult.message}</span>;
-  }
-  return null;
 }
 
 function cityLabel(location: CityLocation) {
@@ -109,3 +76,10 @@ function cityLabel(location: CityLocation) {
     .filter((term) => term)
     .join(", ");
 }
+export type CityLocation = {
+  name: string;
+  country: string;
+  state: string;
+  lat: number;
+  lon: number;
+};

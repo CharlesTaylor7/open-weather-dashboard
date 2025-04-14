@@ -7,7 +7,7 @@ import App from "@/components/App";
 import testData from "@/test.json";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-// I want the test suite to be as close as simulcram to the browser as possible
+// I want the test suite to be as close as a simulacrum to the browser as possible
 // I wasn't planning to mock out apexcharts
 // But it doesn't play nice with jsdom
 jest.mock(

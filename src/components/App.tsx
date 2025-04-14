@@ -1,12 +1,12 @@
-import { useState } from "react";
-import { DashboardContext, initialState } from "@/useDashboardState";
 import WeatherDashboard from "@/components/WeatherDashboard";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 export default function App() {
-  const stateHook = useState(initialState);
   return (
-    <DashboardContext.Provider value={stateHook}>
+    <QueryClientProvider client={queryClient}>
       <WeatherDashboard />
-    </DashboardContext.Provider>
+    </QueryClientProvider>
   );
 }

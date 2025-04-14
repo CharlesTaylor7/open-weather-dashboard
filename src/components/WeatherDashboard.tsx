@@ -1,10 +1,8 @@
-import Pill from "@/components/Pill";
 import ForecastChart from "@/components/ForecastChart";
 import CitySearch from "@/components/CitySearch";
-import { useDashboardState } from "@/useDashboardState";
+import CityPillList from "@/components/CityPillList";
 
-export default function WeatherDashboard() {
-  const [dashboard, updateDashboard] = useDashboardState();
+export default function App() {
   return (
     <main data-theme="dark" className="flex h-screen w-full justify-center">
       <div className="w-4/5 md:w-2/3 flex flex-col gap-5 m-5 items-start">
@@ -12,18 +10,8 @@ export default function WeatherDashboard() {
           Weather Dashboard
         </header>
         <CitySearch />
-        <div className="flex flex-wrap gap-2">
-          {dashboard.cities.map((city, index) => (
-            <Pill
-              key={index}
-              label={city.label}
-              onClickRemove={() =>
-                updateDashboard((dashboard) => dashboard.removeCity(index))
-              }
-            />
-          ))}
-        </div>
-        <ForecastChart testId="chart" data={dashboard.forecasted()} />
+        <CityPillList />
+        <ForecastChart />
       </div>
     </main>
   );
