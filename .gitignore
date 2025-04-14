@@ -1,15 +1,6 @@
 /node_modules/
-# Vite build
+.yarn
 /dist/
-
-# Typescript
 *.tsbuildinfo
-
-# Tailwind
 styles/tailwind.output.css
-
-# Jest Coverage
 /coverage/
-
-# Environment
-.env
