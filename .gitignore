@@ -1,7 +1,4 @@
-# Yarn
-yarn-error.log
 /node_modules/
-
 # Vite build
 /dist/
 
@@ -13,9 +10,6 @@ styles/tailwind.output.css
 
 # Jest Coverage
 /coverage/
-
-# Mac OS
-.DS_Store
 
 # Environment
 .env

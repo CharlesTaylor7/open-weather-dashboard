@@ -1,14 +1,14 @@
-import path from 'node:path';
-import { defineConfig } from 'vite';
-import reactPlugin from '@vitejs/plugin-react-swc';
+import path from "node:path";
+import { defineConfig } from "vite";
+import reactPlugin from "@vitejs/plugin-react-swc";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [reactPlugin()],
-  base: '/open-weather-dashboard/',
+  base: "/open-weather-dashboard/",
   server: {
     open: true,
-    port: process.env.PORT,
+    port: process.env.PORT != null ? Number(process.env.PORT) : 3000,
   },
   esbuild: {
     // Prevents minification of React Component names,
@@ -21,7 +21,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
+      "@": path.resolve(__dirname, "./src"),
     },
   },
 });
