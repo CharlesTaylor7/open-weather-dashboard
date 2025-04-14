@@ -1,6 +1,4 @@
 import { fetchFromOpenWeatherApi } from "@/api/base";
-import type { CityLocation } from "@/store";
-import { useQuery } from "@tanstack/react-query";
 
 type GeocodingQuery = {
   q: string;
@@ -23,3 +21,11 @@ export function geocode(
 }
 
 export type GeocodingResponse = Array<CityLocation>;
+
+export type CityLocation = {
+  name: string;
+  country: string;
+  state: string;
+  lat: number;
+  lon: number;
+};

@@ -1,4 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
 import { fetchFromOpenWeatherApi } from "@/api/base";
 
 ///data/3.0/onecall?lat=35&lon=-85&appid=32462e94fa616cc6f77157cc3c965959&lang=en

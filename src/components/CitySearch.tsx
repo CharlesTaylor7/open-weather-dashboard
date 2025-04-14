@@ -1,7 +1,7 @@
-import { useDeferredValue, useEffect, useState } from "react";
+import { useDeferredValue, useState } from "react";
 import SearchIcon from "@/icons/search";
 import { forecast } from "@/api/weather";
-import { geocode } from "@/api/geocoding";
+import { CityLocation, geocode } from "@/api/geocoding";
 import { useAppState } from "@/store";
 import { useQuery } from "@tanstack/react-query";
 
@@ -76,10 +76,3 @@ function cityLabel(location: CityLocation) {
     .filter((term) => term)
     .join(", ");
 }
-export type CityLocation = {
-  name: string;
-  country: string;
-  state: string;
-  lat: number;
-  lon: number;
-};
