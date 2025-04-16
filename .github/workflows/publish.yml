@@ -26,11 +26,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: 'yarn'
+          cache: "yarn"
+
+      - name: corepack
+        run: |
+          corepack enable
+          yarn install
 
       - name: Validate
         run: |
-          yarn install
           yarn typecheck
           yarn check-format
           yarn lint
