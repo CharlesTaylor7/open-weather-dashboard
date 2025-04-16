@@ -17,7 +17,7 @@ procs:
     shell: yarn dev
 
   Tailwind:
-    shell: yarn tailwind --watch
+    shell: yarn build:css --watch
 
   Test Coverage:
     # Mac only; sorry
