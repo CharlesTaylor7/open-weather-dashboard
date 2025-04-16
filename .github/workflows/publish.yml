@@ -22,11 +22,13 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Run install
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: install 
 
       - name: Validate
         run: |
-          yarn
-          corepack enable
           yarn typecheck
           yarn check-format
           yarn lint
@@ -34,8 +36,6 @@ jobs:
 
       - name: Build
         run: |
-          yarn
-          corepack enable
           yarn tailwind
           yarn build
 
