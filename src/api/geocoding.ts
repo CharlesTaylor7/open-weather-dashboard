@@ -5,22 +5,22 @@ type GeocodingQuery = {
   limit: number;
 };
 
-// https://api.openweathermap.org/geo/1.0/direct?q=chattanooga,TN,US&limit=5&appid={appid}&lang=en
+// https://openweathermap.org/api/geocoding-api#direct_name
 export function geocode(
   query: GeocodingQuery,
   signal: AbortSignal,
-): Promise<GeocodingResponse> {
-  return fetchFromOpenWeatherApi({
+): Promise<GeocodeResponse> {
+  return fetchFromOpenWeatherApi<GeocodeResponse>({
     options: { signal },
     route: "/geo/1.0/direct",
     query: {
       lang: "en",
       ...query,
     },
-  }) as Promise<GeocodingResponse>;
+  });
 }
 
-export type GeocodingResponse = Array<CityLocation>;
+export type GeocodeResponse = Array<CityLocation>;
 
 export type CityLocation = {
   name: string;
@@ -29,3 +29,25 @@ export type CityLocation = {
   lat: number;
   lon: number;
 };
+
+type ReverseGeocodeQuery = {
+  lat: number;
+  lon: number;
+};
+
+// https://openweathermap.org/api/geocoding-api#reverse
+export function reverseGeocode(
+  query: ReverseGeocodeQuery,
+  signal: AbortSignal,
+): Promise<ReverseGeocodeResponse> {
+  return fetchFromOpenWeatherApi<ReverseGeocodeResponse>({
+    options: { signal },
+    route: "/geo/1.0/reverse",
+    query: {
+      lang: "en",
+      ...query,
+    },
+  });
+}
+
+type ReverseGeocodeResponse = Array<CityLocation>;

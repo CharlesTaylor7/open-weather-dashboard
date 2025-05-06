@@ -13,7 +13,7 @@ type Query = Record<string, number | string>;
 
 const OPEN_WEATHER_API_KEY = "02470d658aee99a90d54f82c91474564";
 
-export function fetchFromOpenWeatherApi(apiCall: ApiCall): Promise<object> {
+export function fetchFromOpenWeatherApi<T>(apiCall: ApiCall): Promise<T> {
   const { route, query, options } = apiCall;
   const queryWithApiKey = { appid: OPEN_WEATHER_API_KEY, ...query };
 
