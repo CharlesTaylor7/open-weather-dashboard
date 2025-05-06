@@ -1,13 +1,14 @@
 import path from "node:path";
 import { defineConfig } from "vite";
 import reactPlugin from "@vitejs/plugin-react-swc";
+import tailwindPlugin from "@tailwindcss/vite";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [reactPlugin()],
+  plugins: [reactPlugin(), tailwindPlugin()],
   base: "/open-weather-dashboard/",
   server: {
-    port: process.env.PORT != null ? Number(process.env.PORT) : 3000,
+    port: 3000,
   },
   esbuild: {
     // Prevents minification of React Component names,
