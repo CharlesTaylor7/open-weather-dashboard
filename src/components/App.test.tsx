@@ -1,30 +1,30 @@
 /**
- * @jest-environment jsdom
+ * @vitest-environment jsdom
  */
 import { render } from "@testing-library/react";
+import "@testing-library/jest-dom/vitest";
 import userEvent from "@testing-library/user-event";
 import App from "@/components/App";
 import testData from "@/test.json";
+import { vitest, beforeAll, afterEach, describe, test, expect } from "vitest";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 // I want the test suite to be as close as a simulacrum to the browser as possible
 // I wasn't planning to mock out apexcharts
 // But it doesn't play nice with jsdom
-jest.mock(
-  "apexcharts",
-  () =>
-    class MockApexChart {
-      updateSeries() {}
-      render() {}
-      destroy() {}
-    },
-);
+vitest.mock("apexcharts", () => ({
+  default: class MockApexChart {
+    updateSeries() {}
+    render() {}
+    destroy() {}
+  },
+}));
 // mock browser fetch calls
 // approved open weather apis succeed with fake results
 // other calls fail
 beforeAll(() => {
   (global as any).OPEN_WEATHER_API_KEY = "test-api-key";
-  global.fetch = jest.fn(async (url) => ({
+  global.fetch = vitest.fn(async (url: string) => ({
     json() {
       if (typeof url !== "string") {
         throw Error("unexpected fetch call");
