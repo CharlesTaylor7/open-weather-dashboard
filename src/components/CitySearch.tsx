@@ -88,6 +88,7 @@ export default function CitySearch() {
       <Map ref={mapRef} />
       <div className="flex gap-2 items-center w-full">
         <SearchIcon />
+
         <input
           placeholder="Search for a city here..."
           className="input input-accent w-full"
@@ -98,25 +99,30 @@ export default function CitySearch() {
         />
       </div>
 
-      <span>{error}</span>
+      {!citySelection && geocoding.data?.length ? (
+        <div className="relative w-full">
+          <div className="absolute bg-base-300 z-100 w-full shadow-lg">
+            <div className="flex flex-col gap-3 items-start">
+              {geocoding.data.map((city, i) => (
+                <button
+                  className="btn btn-primary"
+                  key={i}
+                  onClick={() => {
+                    const label = cityLabel(city);
+                    setCitySelection({ ...city, label });
+                  }}
+                >
+                  {cityLabel(city)}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      ) : null}
+
+      {error && <span>{error}</span>}
       {geocoding.isLoading || cityForecast.isLoading ? (
         <span className="loading loading-dots loading-lg" />
-      ) : null}
-      {!citySelection && geocoding.data?.length ? (
-        <div className="flex flex-col gap-3">
-          {geocoding.data.map((city, i) => (
-            <button
-              className="btn btn-primary"
-              key={i}
-              onClick={() => {
-                const label = cityLabel(city);
-                setCitySelection({ ...city, label });
-              }}
-            >
-              {cityLabel(city)}
-            </button>
-          ))}
-        </div>
       ) : null}
     </>
   );

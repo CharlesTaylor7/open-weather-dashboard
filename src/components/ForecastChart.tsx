@@ -44,6 +44,9 @@ function NonEmptyForecastChart({ data }: Props) {
 
 function defaultChartOptions() {
   return {
+    title: {
+      text: "Week Forecast",
+    },
     chart: {
       type: "line",
     },
