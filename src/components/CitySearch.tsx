@@ -22,6 +22,7 @@ interface Coordinates {
 interface CitySelection extends Coordinates {
   label?: string;
 }
+function noOp() {}
 
 export default function CitySearch() {
   const { appendForecast } = useAppState();
@@ -84,7 +85,7 @@ export default function CitySearch() {
 
   return (
     <>
-      <Map ref={mapRef} onClick={setCitySelection} />
+      <Map ref={mapRef} />
       <div className="flex gap-2 items-center w-full">
         <SearchIcon />
         <input
@@ -101,7 +102,7 @@ export default function CitySearch() {
       {geocoding.isLoading || cityForecast.isLoading ? (
         <span className="loading loading-dots loading-lg" />
       ) : null}
-      {geocoding.data?.length ? (
+      {!citySelection && geocoding.data?.length ? (
         <div className="flex flex-col gap-3">
           {geocoding.data.map((city, i) => (
             <button
@@ -129,9 +130,9 @@ function cityLabel(location: CityLocation) {
 
 interface MapProps {
   ref: React.RefObject<Leaflet.Map | null>;
-  onClick: (event: Coordinates) => void;
+  onClick?: (event: Coordinates) => void;
 }
-function Map({ ref, onClick }: MapProps) {
+function Map({ ref, onClick = noOp }: MapProps) {
   const mapId = useId();
   useEffect(() => {
     const map = Leaflet.map(mapId).setView([51.505, -0.09], 13);
