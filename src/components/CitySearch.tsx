@@ -1,4 +1,11 @@
-import { useDeferredValue, useEffect, useId, useState } from "react";
+import {
+  useCallback,
+  useDeferredValue,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+} from "react";
 import SearchIcon from "@/icons/search";
 import { forecast } from "@/api/weather";
 import { CityLocation, geocode, reverseGeocode } from "@/api/geocoding";
@@ -20,30 +27,54 @@ export default function CitySearch() {
   const { appendForecast } = useAppState();
   const [rawQuery, setQuery] = useState("");
   const query = useDeferredValue(rawQuery);
+  const mapRef = useRef<Leaflet.Map | null>(null);
 
-  const [citySelection, setCitySelection] = useState<CitySelection | null>(
+  const [citySelection, setRawCitySelection] = useState<CitySelection | null>(
     null,
+  );
+  const setCitySelection = useCallback(
+    (city: CitySelection | null) => {
+      setRawCitySelection(city);
+      const map = mapRef.current;
+      let marker: Leaflet.Marker | null = null;
+      if (map && city) {
+        map.flyTo([city.lat, city.lon], 13, {
+          duration: 1, // Animation duration in seconds
+        });
+        marker = Leaflet.marker([city.lat, city.lon]).addTo(map);
+        if (city.label) {
+          marker.bindPopup(city.label).openPopup();
+        }
+      }
+    },
+    [mapRef],
   );
 
   const geocoding = useQuery({
+    enabled: query.length > 0,
     queryKey: ["geocode", query],
     queryFn: ({ signal }) => geocode({ q: query, limit: 5 }, signal),
-    enabled: query.length > 0,
+  });
+
+  useQuery({
+    enabled: !!citySelection && citySelection.label == null,
+    queryKey: ["geocode", query],
+    queryFn: ({ signal }) =>
+      reverseGeocode(citySelection!, signal).then((data) => {
+        setCitySelection(data[0]);
+        return data;
+      }),
   });
   const cityForecast = useQuery({
+    enabled: !!citySelection && citySelection.label != null,
     queryKey: ["forecast", citySelection],
     queryFn: async ({ signal }) => {
-      const forecastData = await forecast(citySelection!, signal);
-      const label =
-        citySelection!.label ||
-        (await reverseGeocode(citySelection!, signal).then((data) =>
-          cityLabel(data[0]),
-        ));
-      appendForecast({ label: label!, forecast: forecastData });
+      if (!citySelection) return;
+      const forecastData = await forecast(citySelection, signal);
+      appendForecast({ label: citySelection.label!, forecast: forecastData });
       setQuery("");
       setCitySelection(null);
     },
-    enabled: citySelection != null,
   });
 
   const error =
@@ -53,7 +84,7 @@ export default function CitySearch() {
 
   return (
     <>
-      <Map onClick={setCitySelection} />
+      <Map ref={mapRef} onClick={setCitySelection} />
       <div className="flex gap-2 items-center w-full">
         <SearchIcon />
         <input
@@ -77,7 +108,15 @@ export default function CitySearch() {
               className="btn btn-primary"
               key={i}
               onClick={() => {
-                setCitySelection({ ...city, label: cityLabel(city) });
+                const label = cityLabel(city);
+                setCitySelection({ ...city, label });
+                //                const map = mapRef.current;
+                // if (map) {
+                //   Leaflet.marker([city.lat, city.lon])
+                //     .addTo(map)
+                //     .bindPopup(label)
+                //     .openPopup();
+                // }
               }}
             >
               {cityLabel(city)}
@@ -96,9 +135,10 @@ function cityLabel(location: CityLocation) {
 }
 
 interface MapProps {
+  ref: React.RefObject<Leaflet.Map | null>;
   onClick: (event: Coordinates) => void;
 }
-function Map({ onClick }: MapProps) {
+function Map({ ref, onClick }: MapProps) {
   const mapId = useId();
   useEffect(() => {
     const map = Leaflet.map(mapId).setView([51.505, -0.09], 13);
@@ -113,10 +153,11 @@ function Map({ onClick }: MapProps) {
       onClick({ lat: e.latlng.lat, lon: e.latlng.lng });
     });
 
+    ref.current = map;
     return () => {
       map.remove();
     };
-  }, [mapId, onClick]);
+  }, [ref, mapId, onClick]);
 
   return <div id={mapId} style={{ height: "400px", width: "100%" }}></div>;
 }
