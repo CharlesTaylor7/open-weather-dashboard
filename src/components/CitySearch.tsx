@@ -51,7 +51,7 @@ export default function CitySearch() {
   );
 
   const geocoding = useQuery({
-    enabled: query.length > 0,
+    enabled: query.length > 0 && !citySelection,
     queryKey: ["geocode", query],
     queryFn: ({ signal }) => geocode({ q: query, limit: 5 }, signal),
   });
@@ -110,13 +110,6 @@ export default function CitySearch() {
               onClick={() => {
                 const label = cityLabel(city);
                 setCitySelection({ ...city, label });
-                //                const map = mapRef.current;
-                // if (map) {
-                //   Leaflet.marker([city.lat, city.lon])
-                //     .addTo(map)
-                //     .bindPopup(label)
-                //     .openPopup();
-                // }
               }}
             >
               {cityLabel(city)}
