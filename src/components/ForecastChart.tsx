@@ -60,9 +60,9 @@ function NonEmptyForecastChart({ data }: Props) {
     chart.updateSeries(data);
   }, [data]);
   return (
-    <div className="w-full h-50 ">
+    <div className="w-full h-50">
       <div
-        className="shadow-lg rounded-lg"
+        className="h-50 **:rounded-lg **:shadow-lg"
         data-testid="chart"
         ref={chartRootDivRef}
       />
