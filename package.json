@@ -10,7 +10,8 @@
     "format": "prettier --write src",
     "check-format": "prettier --check src",
     "build": "vite build",
-    "test": "vitest"
+    "test": "vitest",
+    "ci": "yarn check-format && yarn typecheck && yarn lint && yarn test"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.74.3",

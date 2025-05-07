@@ -12,7 +12,7 @@ export const useAppState = create(
         forecasts: new Map<string, Forecast>(),
         locations: [] as Array<Location>,
       },
-      (set, get) => ({
+      (set) => ({
         removeLocationByIndex(index: number) {
           set((state) => {
             state.locations.splice(index, 1);

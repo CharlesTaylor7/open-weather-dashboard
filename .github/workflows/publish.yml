@@ -33,10 +33,7 @@ jobs:
       - name: Validate
         run: |
           yarn install
-          yarn typecheck
-          yarn check-format
-          yarn lint
-          yarn test
+          yarn ci
 
       - name: Build
         run: |

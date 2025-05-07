@@ -1,11 +1,7 @@
-import { useCallback, useDeferredValue, useRef, useState } from "react";
+import { useDeferredValue, useState } from "react";
 import SearchIcon from "@/icons/search";
 import { getForecast } from "@/api/weather";
-import {
-  WeatherApiLocation,
-  getGeocoding,
-  getReverseGeocoding,
-} from "@/api/geocoding";
+import { WeatherApiLocation, getGeocoding } from "@/api/geocoding";
 import { useAppState, type Location } from "@/store";
 import { useQuery } from "@tanstack/react-query";
 
