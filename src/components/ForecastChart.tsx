@@ -58,6 +58,7 @@ function NonEmptyForecastChart({ data }: Props) {
     const chart = apexChartRef.current;
     if (chart === null) return;
     chart.updateSeries(data);
+    //  console.log(chart.w.globals.colors);
   }, [data]);
   return (
     <div className="w-full h-50">

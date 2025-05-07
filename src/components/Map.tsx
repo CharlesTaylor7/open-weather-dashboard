@@ -1,10 +1,36 @@
 import { useId, useEffect, useRef } from "react";
 import Leaflet from "leaflet";
 import "leaflet/dist/leaflet.css";
+import { useAppState } from "@/store";
 
 export default function Map() {
+  const { locations } = useAppState();
+
   const mapId = useId();
-  const ref = useRef<Leaflet.Map | null>(null);
+  const mapRef = useRef<Leaflet.Map | null>(null);
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || locations.length === 0) return;
+
+    const last = locations[locations.length - 1];
+    const group = Leaflet.layerGroup(
+      locations.map(({ label, coordinates: { lat, lon } }) =>
+        Leaflet.marker({ lat, lng: lon }).bindPopup(label!).openPopup(),
+      ),
+    ).addTo(map);
+    map.flyTo(
+      {
+        lat: last.coordinates.lat,
+        lng: last.coordinates.lon,
+      },
+      13,
+      {
+        duration: 1,
+      },
+    );
+
+    return () => void group.remove();
+  }, [mapRef, locations]);
 
   useEffect(() => {
     const map = Leaflet.map(mapId).setView([51.505, -0.09], 13);
@@ -19,11 +45,9 @@ export default function Map() {
       console.log({ lat: e.latlng.lat, lon: e.latlng.lng });
     });
 
-    ref.current = map;
-    return () => {
-      map.remove();
-    };
-  }, [ref, mapId]);
+    mapRef.current = map;
+    return () => void map.remove();
+  }, [mapRef, mapId]);
 
   return <div id={mapId} style={{ height: "400px", width: "100%" }}></div>;
 }
