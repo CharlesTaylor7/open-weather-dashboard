@@ -60,8 +60,12 @@ function NonEmptyForecastChart({ data }: Props) {
     chart.updateSeries(data);
   }, [data]);
   return (
-    <div className="w-full h-50">
-      <div className="" data-testid="chart" ref={chartRootDivRef} />
+    <div className="w-full h-50 ">
+      <div
+        className="shadow-lg rounded-lg"
+        data-testid="chart"
+        ref={chartRootDivRef}
+      />
     </div>
   );
 }
@@ -75,12 +79,14 @@ function defaultChartOptions(): ApexChart.ApexOptions {
       type: "line",
       zoom: { enabled: false, allowMouseWheelZoom: false },
     },
+    theme: {
+      mode: "dark",
+    },
     stroke: {
       curve: "smooth",
     },
     series: [],
     yaxis: {
-      // type: "numeric",
       labels: {
         formatter: (value: number) => `${value.toFixed(0)}℉`,
       },
