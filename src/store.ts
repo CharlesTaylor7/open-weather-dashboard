@@ -9,7 +9,15 @@ export const useAppState = create(
         forecasts: {} as Map<string, Forecast>,
         locations: [] as Array<Location>,
       },
-      (set) => ({
+      (set, get) => ({
+        getForecast(coordinates: Coordinates) {
+          return get().forecasts.get(toKey(coordinates));
+        },
+        removeLocationByIndex(index: number) {
+          set((state) => {
+            state.locations.splice(index, 1);
+          });
+        },
         removeLocation(location: Location) {
           set((state) => {
             const index = state.locations.findIndex(

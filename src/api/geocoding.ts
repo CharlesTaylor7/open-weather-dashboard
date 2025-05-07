@@ -6,7 +6,7 @@ type GeocodingQuery = {
 };
 
 // https://openweathermap.org/api/geocoding-api#direct_name
-export function geocode(
+export function getGeocoding(
   query: GeocodingQuery,
   signal: AbortSignal,
 ): Promise<GeocodeResponse> {
@@ -20,15 +20,15 @@ export function geocode(
   });
 }
 
-export type GeocodeResponse = Array<Location>;
+export type GeocodeResponse = Array<WeatherApiLocation>;
 
-export type Location = {
+export interface WeatherApiLocation {
   name: string;
   country: string;
   state: string;
   lat: number;
   lon: number;
-};
+}
 
 type ReverseGeocodeQuery = {
   lat: number;
@@ -36,7 +36,7 @@ type ReverseGeocodeQuery = {
 };
 
 // https://openweathermap.org/api/geocoding-api#reverse
-export function reverseGeocode(
+export function getReverseGeocoding(
   query: ReverseGeocodeQuery,
   signal: AbortSignal,
 ): Promise<ReverseGeocodeResponse> {
@@ -50,4 +50,4 @@ export function reverseGeocode(
   });
 }
 
-type ReverseGeocodeResponse = Array<Location>;
+type ReverseGeocodeResponse = Array<WeatherApiLocation>;

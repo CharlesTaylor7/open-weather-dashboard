@@ -1,13 +1,31 @@
 import { useRef, useEffect } from "react";
 import ApexChart from "apexcharts";
-import { useAppState, type CityForecast } from "@/store";
+import { useAppState } from "@/store";
 
 export default function ForecastChart() {
-  const { forecasts } = useAppState();
-  if (forecasts.length === 0) return null;
-  const timeSeries = toTimeSeries(forecasts);
+  const { locations, getForecast } = useAppState();
+  const data = locations
+    .map((city) => ({
+      label: city.label,
+      forecast: getForecast(city.coordinates),
+    }))
+    .filter((city) => city.label && city.forecast)
+    .map((city) => ({
+      name: city.label!,
+      data: city.forecast!.map((d) => ({
+        x: normalizeDate(d.datetime),
+        y: d.temperature,
+      })),
+    }));
+  if (data.length === 0) return null;
 
-  return <NonEmptyForecastChart data={timeSeries} />;
+  return <NonEmptyForecastChart data={data} />;
+}
+// truncates the datetimes to just a date, so it's easy to compare cities in different timezones
+function normalizeDate(datetime: Date) {
+  const month = datetime.getMonth() + 1;
+  const day = datetime.getDate();
+  return new Date(`${datetime.getFullYear()}-${month}-${day}`);
 }
 
 type Props = {
@@ -67,21 +85,4 @@ function defaultChartOptions() {
       },
     },
   };
-}
-
-function toTimeSeries(cities: CityForecast[]): TimeSeries[] {
-  return cities.map((city) => ({
-    name: city.label,
-    data: city.forecast.map((d) => ({
-      x: normalizeDate(d.datetime),
-      y: d.temperature,
-    })),
-  }));
-}
-
-// truncates the datetimes to just a date, so it's easy to compare cities in different timezones
-function normalizeDate(datetime: Date) {
-  const month = datetime.getMonth() + 1;
-  const day = datetime.getDate();
-  return new Date(`${datetime.getFullYear()}-${month}-${day}`);
 }

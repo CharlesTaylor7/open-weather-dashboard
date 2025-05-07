@@ -22,7 +22,7 @@ type RawForecast = {
     };
   }>;
 };
-export function forecast(
+export function getForecast(
   query: ForecastQuery,
   signal: AbortSignal,
 ): Promise<Forecast> {
@@ -38,7 +38,7 @@ function rawForecast(
   query: ForecastQuery,
   signal: AbortSignal,
 ): Promise<RawForecast> {
-  return fetchFromOpenWeatherApi({
+  return fetchFromOpenWeatherApi<RawForecast>({
     options: { signal },
     route: "/data/3.0/onecall",
     query: {
@@ -46,5 +46,5 @@ function rawForecast(
       units: "imperial",
       ...query,
     },
-  }) as Promise<RawForecast>;
+  });
 }

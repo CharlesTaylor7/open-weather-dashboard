@@ -3,7 +3,7 @@ type Props = {
   onClickRemove: () => void;
 };
 
-export default function Pill(props: Props) {
+export default function Badge(props: Props) {
   return (
     <div className="badge badge-lg badge-secondary">
       <span>{props.label}</span>
