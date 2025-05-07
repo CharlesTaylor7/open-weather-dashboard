@@ -59,23 +59,28 @@ function NonEmptyForecastChart({ data }: Props) {
     if (chart === null) return;
     chart.updateSeries(data);
   }, [data]);
-  return <div className="w-full" data-testid="chart" ref={chartRootDivRef} />;
+  return (
+    <div className="w-full h-50">
+      <div className="" data-testid="chart" ref={chartRootDivRef} />
+    </div>
+  );
 }
 
-function defaultChartOptions() {
+function defaultChartOptions(): ApexChart.ApexOptions {
   return {
     title: {
       text: "Week Forecast",
     },
     chart: {
       type: "line",
+      zoom: { enabled: false, allowMouseWheelZoom: false },
     },
     stroke: {
       curve: "smooth",
     },
     series: [],
     yaxis: {
-      type: "numeric",
+      // type: "numeric",
       labels: {
         formatter: (value: number) => `${value.toFixed(0)}℉`,
       },
