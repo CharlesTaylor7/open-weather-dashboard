@@ -4,6 +4,18 @@ import "leaflet/dist/leaflet.css";
 import { Coordinates, useAppState } from "@/store";
 import { getReverseGeocoding } from "@/api/geocoding";
 import { getForecast } from "@/api/weather";
+import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
+import markerIcon from "leaflet/dist/images/marker-icon.png";
+import markerShadow from "leaflet/dist/images/marker-shadow.png";
+
+// @ts-expect-error vite patch icons
+delete Leaflet.Icon.Default.prototype._getIconUrl;
+
+Leaflet.Icon.Default.mergeOptions({
+  iconRetinaUrl: markerIcon2x,
+  iconUrl: markerIcon,
+  shadowUrl: markerShadow,
+});
 
 export default function Map() {
   const { locations } = useAppState();
