@@ -1,10 +1,13 @@
-import { useId, useEffect, useRef } from "react";
+import { useId, useEffect, useRef, useCallback } from "react";
 import Leaflet from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { useAppState } from "@/store";
+import { Coordinates, useAppState } from "@/store";
+import { getReverseGeocoding } from "@/api/geocoding";
+import { getForecast } from "@/api/weather";
 
 export default function Map() {
   const { locations } = useAppState();
+  const addLocation = useMapLocation();
 
   const mapId = useId();
   const mapRef = useRef<Leaflet.Map | null>(null);
@@ -42,41 +45,36 @@ export default function Map() {
     }).addTo(map);
 
     map.on("click", (e) => {
-      console.log({ lat: e.latlng.lat, lon: e.latlng.lng });
+      addLocation({ lat: e.latlng.lat, lon: e.latlng.lng });
     });
 
     mapRef.current = map;
     return () => void map.remove();
-  }, [mapRef, mapId]);
+  }, [addLocation, mapId]);
 
   return <div id={mapId} style={{ height: "400px", width: "100%" }}></div>;
 }
 
-//
-// const setCitySelection = useCallback(
-//   (city: CitySelection | null) => {
-//     setRawCitySelection(city);
-//     const map = mapRef.current;
-//     let marker: Leaflet.Marker | null = null;
-//     if (map && city) {
-//       map.flyTo([city.lat, city.lon], 13, {
-//         duration: 1, // Animation duration in seconds
-//       });
-//       marker = Leaflet.marker([city.lat, city.lon]).addTo(map);
-//       if (city.label) {
-//         marker.bindPopup(city.label).openPopup();
-//       }
-//     }
-//   },
-//   [mapRef],
-// );
-//
-// useQuery({
-//   enabled: !!citySelection && citySelection.label == null,
-//   queryKey: ["geocode", query],
-//   queryFn: ({ signal }) =>
-//     reverseGeocode(citySelection!, signal).then((data) => {
-//       setCitySelection(data[0]);
-//       return data;
-//     }),
-// });
+function useMapLocation() {
+  const { addLocation, setLabel, saveForecast } = useAppState();
+  const abortControllerRef = useRef(new AbortController());
+  return useCallback(
+    (coordinates: Coordinates) => {
+      addLocation({ coordinates });
+      Promise.all([
+        getReverseGeocoding(
+          coordinates,
+          abortControllerRef.current.signal,
+        ).then((response) => {
+          setLabel({ label: response[0].name, coordinates });
+        }),
+        getForecast(coordinates, abortControllerRef.current.signal).then(
+          (forecast) => {
+            saveForecast(coordinates, forecast);
+          },
+        ),
+      ]);
+    },
+    [addLocation, setLabel, saveForecast],
+  );
+}
