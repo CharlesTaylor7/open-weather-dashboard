@@ -1,13 +1,14 @@
 import { useRef, useEffect } from "react";
 import ApexChart from "apexcharts";
-import { useAppState } from "@/store";
+import { toKey, useAppState } from "@/store";
 
 export default function ForecastChart() {
-  const { locations, getForecast } = useAppState();
+  const { locations, forecasts } = useAppState();
+
   const data = locations
     .map((city) => ({
       label: city.label,
-      forecast: getForecast(city.coordinates),
+      forecast: forecasts.get(toKey(city.coordinates)),
     }))
     .filter((city) => city.label && city.forecast)
     .map((city) => ({
@@ -21,6 +22,7 @@ export default function ForecastChart() {
 
   return <NonEmptyForecastChart data={data} />;
 }
+
 // truncates the datetimes to just a date, so it's easy to compare cities in different timezones
 function normalizeDate(datetime: Date) {
   const month = datetime.getMonth() + 1;

@@ -1,18 +1,18 @@
 import { create } from "zustand";
 import { combine } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
+import { enableMapSet } from "immer";
+// https://immerjs.github.io/immer/installation#pick-your-immer-version
+enableMapSet();
 
 export const useAppState = create(
   immer(
     combine(
       {
-        forecasts: {} as Map<string, Forecast>,
+        forecasts: new Map<string, Forecast>(),
         locations: [] as Array<Location>,
       },
       (set, get) => ({
-        getForecast(coordinates: Coordinates) {
-          return get().forecasts.get(toKey(coordinates));
-        },
         removeLocationByIndex(index: number) {
           set((state) => {
             state.locations.splice(index, 1);
@@ -55,7 +55,7 @@ export const useAppState = create(
   ),
 );
 
-function toKey(coordinates: Coordinates) {
+export function toKey(coordinates: Coordinates) {
   return `${coordinates.lat},${coordinates.lon}`;
 }
 export type View = "chart" | "table";

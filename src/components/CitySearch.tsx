@@ -66,6 +66,7 @@ export default function CitySearch() {
                   onClick={() => {
                     const label = cityLabel(city);
                     setLocation({ coordinates: city, label });
+                    addLocation({ coordinates: city, label });
                   }}
                 >
                   {cityLabel(city)}
