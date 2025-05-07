@@ -20,9 +20,9 @@ export function geocode(
   });
 }
 
-export type GeocodeResponse = Array<CityLocation>;
+export type GeocodeResponse = Array<Location>;
 
-export type CityLocation = {
+export type Location = {
   name: string;
   country: string;
   state: string;
@@ -50,4 +50,4 @@ export function reverseGeocode(
   });
 }
 
-type ReverseGeocodeResponse = Array<CityLocation>;
+type ReverseGeocodeResponse = Array<Location>;

@@ -8,7 +8,7 @@ import {
 } from "react";
 import SearchIcon from "@/icons/search";
 import { forecast } from "@/api/weather";
-import { CityLocation, geocode, reverseGeocode } from "@/api/geocoding";
+import { Location, geocode, reverseGeocode } from "@/api/geocoding";
 import { useAppState } from "@/store";
 import { useQuery } from "@tanstack/react-query";
 import Leaflet from "leaflet";
@@ -128,7 +128,7 @@ export default function CitySearch() {
   );
 }
 
-function cityLabel(location: CityLocation) {
+function cityLabel(location: Location) {
   return [location.name, location.state, location.country]
     .filter((term) => term)
     .join(", ");
